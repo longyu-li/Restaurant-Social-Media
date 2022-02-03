@@ -11,3 +11,12 @@ nav {
 nav a {
     color: white !important;
 }
+
+#logo {
+    height: 30px;
+    margin-right: 2px;
+}
+
+.navbar-brand {
+    display: flex;
+}
