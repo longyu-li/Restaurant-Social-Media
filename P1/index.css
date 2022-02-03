@@ -1,0 +1,12 @@
+#search {
+    margin-top: 100px;
+    width: max(40%, 50ch);
+}
+
+#search select {
+    flex: 0 0 15ch;
+}
+
+#search input {
+    flex: 3 0 30ch;
+}
