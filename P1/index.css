@@ -10,3 +10,8 @@
 #search input {
     flex: 1 0 25ch;
 }
+
+#restaurants {
+    display: flex;
+    gap: 25px;
+}
