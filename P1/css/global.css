@@ -14,3 +14,7 @@ nav a {
 .navbar-brand {
     display: flex;
 }
+
+.bg-red {
+    background-color: rgb(165, 4, 4) !important;
+}
