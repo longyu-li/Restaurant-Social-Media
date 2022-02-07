@@ -32,11 +32,18 @@
     </nav>
 
     <main class="align-self-center d-flex flex-column align-items-center justify-content-center flex-grow-1 form-width">
-        <h1>Sign Up For Restify</h1>
+        <h1 class="mb-4">Sign Up For Restify</h1>
         <form class="row g-3 needs-validation" novalidate action="/"> <!-- using bootstrap validation -->
             <div class="col-12 text-center">
-                <!-- bootstrap icons -->
-                <img src="assets/person-circle.svg">
+                <label for="avatar" class="btn border rounded">
+                    <!-- bootstrap icons (placeholder for actual image) -->
+                    <i class="bi bi-person-circle d-block display-2 mb-1"></i>
+                    <span>Upload Avatar</span>
+                </label>
+                <input type="file" id="avatar" name="avatar" required accept="image/*" class="visually-hidden">
+                <div class="invalid-feedback">
+                    An avatar is required.
+                </div>
             </div>
             <div class="col-6">
                 <label class="visually-hidden" for="firstName">First Name</label>
