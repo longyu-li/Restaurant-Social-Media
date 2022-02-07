@@ -22,3 +22,7 @@ nav a {
 .hover-fg-red:hover {
     color: rgb(165, 4, 4) !important;
 }
+
+.profile {
+    width: 10rem;
+}
