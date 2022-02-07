@@ -18,3 +18,7 @@ nav a {
 .bg-red {
     background-color: rgb(165, 4, 4) !important;
 }
+
+.hover-fg-red:hover {
+    color: rgb(165, 4, 4) !important;
+}
