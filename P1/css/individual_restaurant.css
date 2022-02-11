@@ -1,0 +1,22 @@
+.nav-item {
+    background-color: rgb(255, 195, 0) ;
+    color: #000;
+}
+.nav-pills .nav-link.active {
+    background-color: rgb(219, 128, 23);
+  }
+
+#icon{
+    float: left;
+}
+
+#heart{
+    float: right;
+    margin: 5px 10px 10px 10px;
+}
+
+.btn-primary{
+    float: right;
+    background-color: rgb(0, 140, 255) ;
+    margin: 0px 10px 10px 10px;
+}
