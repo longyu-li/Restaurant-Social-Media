@@ -13,7 +13,7 @@
 
 
     <link href="css/global.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="css/results.css" rel="stylesheet">
 </head>
 <body class="min-vw-100 min-vh-100 d-flex flex-column">
     <nav class="navbar navbar-expand-sm">
@@ -50,42 +50,56 @@
       </nav>
 
     <main class="d-flex flex-column align-items-stretch flex-grow-1 justify-content-around">
-        <div class="d-flex align-items-stretch justify-content-center" id="search-container">
+        <div class="d-flex flex-column align-items-center justify-content-center" id="search-container">
             <div class="input-group" id="search">
                 <select class="form-select">
-                    <option selected value="restaurants">Restaurants</option>
-                    <option value="food">Food</option>
+                    <option value="restaurants">Restaurants</option>
+                    <option selected value="food">Food</option>
                     <option value="address">Address</option>
                 </select>
-                <input type="text" class="form-control" placeholder="Search Restaurants...">
+                <input type="text" class="form-control" placeholder="Search Restaurants..." value="Sushi">
                 <button class="btn" type="button" id="search-btn">
                     <img src="assets/arrow.svg">
                 </button>
             </div>
         </div>
 
-        <div class="d-flex flex-column align-items-center">
-            <h2 class="mb-3" id="featured">Featured</h2>
-            <div id="restaurants">
+        <div id="results" class="d-flex flex-grow-1 flex-column gap-3 justify-content-around align-items-stretch">
+            <h2>5 Restaurants Found</h2>
+            <div id="restaurants" class="d-flex flex-grow-1 gap-4 flex-wrap justify-content-center align-items-start align-content-start">
                 <div class="card restaurant-card">
-                    <img src="assets/burger.jpg" class="card-img-top">
+                    <img src="assets/sushi-1.jpg" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Bogdan's Burgers</h5>
+                        <h5 class="card-title">Hoseki Sushi</h5>
+                        <h6 class="card-subtitle text-muted">4.7/5 ⭐</h6>
+                    </div>
+                </div>
+                <div class="card restaurant-card">
+                    <img src="assets/sushi-2.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">August 8</h5>
                         <h6 class="card-subtitle text-muted">3.9/5 ⭐</h6>
                     </div>
                 </div>
                 <div class="card restaurant-card">
-                    <img src="assets/kabob.jpg" class="card-img-top">
+                    <img src="assets/sushi-3.jpg" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Kianoosh Kabob</h5>
-                        <h6 class="card-subtitle text-muted">4.6/5 ⭐</h6>
+                        <h5 class="card-title">Bento Box</h5>
+                        <h6 class="card-subtitle text-muted">4.3/5 ⭐</h6>
                     </div>
                 </div>
                 <div class="card restaurant-card">
-                    <img src="assets/med.jpg" class="card-img-top">
+                    <img src="assets/sushi-4.jpg" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Michael's Mediterranean</h5>
-                        <h6 class="card-subtitle text-muted">4.2/5 ⭐</h6>
+                        <h5 class="card-title">Sushi Ichiban</h5>
+                        <h6 class="card-subtitle text-muted">4.5/5 ⭐</h6>
+                    </div>
+                </div>
+                <div class="card restaurant-card">
+                    <img src="assets/sushi-5.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Jin's Japanese</h5>
+                        <h6 class="card-subtitle text-muted">3.5/5 ⭐</h6>
                     </div>
                 </div>
             </div>

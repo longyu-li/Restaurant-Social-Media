@@ -27,3 +27,13 @@ nav {
 .profile {
     width: 10rem;
 }
+
+input, button, select {
+    box-shadow: none !important;
+}
+
+
+.restaurant-card {
+    width: 18rem;
+    border-color: black;
+}

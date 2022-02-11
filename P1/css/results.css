@@ -1,0 +1,50 @@
+#search {
+    margin-top: 0px;
+    width: max(40%, 40ch);
+}
+
+#search select {
+    flex: 0 0 16ch;
+
+    border-width: 1px 0 1px 1px;
+}
+
+#search input {
+    flex: 1 0 25ch;
+
+    border-width: 1px 1px 1px 0;
+}
+
+#search > * {
+    border-color: black;
+}
+
+#search-container {
+    flex-basis: 150px;
+}
+
+/* 
+Doesn't work ... ?
+#search-container {
+    background-image: url("assets/bg2.jpg");
+    background-size: cover;
+}
+*/
+
+#search-btn:hover {
+    background-color: rgb(241, 146, 146);
+}
+
+#search-btn > img {
+    width: 32px;
+    transform: rotate(-90deg);
+}
+
+#restaurants {
+    margin: 0 10%;
+}
+
+#results h2 {
+    margin-left: 30px;
+    color: rgb(216 50 50);
+}
