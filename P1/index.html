@@ -49,14 +49,19 @@
         </div>
       </nav>
 
-    <main class="d-flex flex-column align-items-center flex-grow-1 justify-content-around">
-        <div class="input-group" id="search">
-            <select class="form-select">
-                <option selected value="restaurant">Restaurant</option>
-                <option value="food">Food</option>
-                <option value="address">Address</option>
-            </select>
-            <input type="text" class="form-control" placeholder="Search Restaurants...">
+    <main class="d-flex flex-column align-items-stretch flex-grow-1 justify-content-around">
+        <div class="d-flex align-items-stretch justify-content-center" id="search-container">
+            <div class="input-group" id="search">
+                <select class="form-select">
+                    <option selected value="restaurants">Restaurants</option>
+                    <option value="food">Food</option>
+                    <option value="address">Address</option>
+                </select>
+                <input type="text" class="form-control" placeholder="Search Restaurants...">
+                <button class="btn" type="button" id="search-btn">
+                    <img src="assets/arrow.svg">
+                </button>
+            </div>
         </div>
 
         <div class="d-flex flex-column align-items-center">
