@@ -1,5 +1,5 @@
 #search {
-    margin-top: 100px;
+    margin-top: 0px;
     width: max(40%, 40ch);
 }
 
@@ -19,13 +19,8 @@
     border-color: black;
 }
 
-#restaurants {
-    display: flex;
-    gap: 25px;
-}
-
-#featured {
-    color: rgb(216 50 50);
+#search-container {
+    flex-basis: 150px;
 }
 
 /* 
@@ -43,4 +38,13 @@ Doesn't work ... ?
 #search-btn > img {
     width: 32px;
     transform: rotate(-90deg);
+}
+
+#restaurants {
+    margin: 0 10%;
+}
+
+#results h2 {
+    margin-left: 30px;
+    color: rgb(216 50 50);
 }
