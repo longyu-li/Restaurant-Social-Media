@@ -133,7 +133,7 @@
                                   <label for="inputAddress2" class="form-label">Address 2</label>
                                   <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" name="address2">
                                 </div>
-                                <div id="city-state-zip">
+                                <div class="align-3-form">
                                   <div class="col-md-4">
                                     <label for="inputCity" class="form-label">City</label>
                                     <input type="text" class="form-control" id="inputCity" placeholder="Mississauga" name="city">
@@ -168,7 +168,7 @@
             </div>
           </div>
 
-          <p class="card-text">Love Burgers? We got some for Valentine's Day. We're giving away free Love Burgers to the first 300 customers on February 14th. <br> Better come now or you'll have have to wait until next year.</p>
+          <p class="card-text">Love Burgers? We're giving away free POST Burgers to the first 300 customers on February 14th. <br> Better come now or you'll have have to wait until next year.</p>
 
         </div>
       </div>
@@ -187,13 +187,120 @@
       <div class="tab-content" id="pills-tabContent">
         <!-- MENU PAGE -->
         <div class="tab-pane fade show active" id="pills-menu" role="tabpanel" aria-labelledby="pills-menu-tab">
-          <ul class="list-group">
-          <li class="list-group-item">An item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-        </ul>
+          <br>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#menuModal">
+            Edit Menu
+          </button>
+          <!-- Modal -->
+          <form enctype="multipart/form-data" method="post">
+            <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="menuModalLabel">Edit Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- menu item 1 -->
+                    <div class="align-3-form">
+                      <div class="col-md-6">
+                        <label for="formFileImage1" class="form-label">Item 1 Image</label>
+                        <input class="form-control form-control-sm" id="formFileImage1" type="file">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="inputItem1" class="form-label">Item 1 Name</label>
+                        <input type="text" class="form-control" id="inputItem1" placeholder="Bog Burger">
+                      </div>
+                      <div class="col-md-2">
+                        <label for="inputPrice1" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="inputPrice1" placeholder="$9.99">
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="descFormArea1" class="form-label">Edit Description</label>
+                      <textarea class="form-control" id="descFormArea1" rows="3" name="menudesc1" placeholder="Our famous 100% Canadian beef double cheeseburger with 3 layers of melted cheese, lettuce, pickles, roasted onions, and our signature Bogdan sauce."></textarea>
+                    </div>
+                    <hr>
+                    <!-- menu item 1 -->
+                    <div class="align-3-form">
+                      <div class="col-md-6">
+                        <label for="formFileImage2" class="form-label">Item 2 Image</label>
+                        <input class="form-control form-control-sm" id="formFileImage2" type="file">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="inputItem2" class="form-label">Item 2 Name</label>
+                        <input type="text" class="form-control" id="inputItem2" placeholder="POST Burger">
+                      </div>
+                      <div class="col-md-2">
+                        <label for="inputPrice2" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="inputPrice2" placeholder="$8.99">
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="descFormArea2" class="form-label">Edit Description</label>
+                      <textarea class="form-control" id="descFormArea2" rows="3" name="menudesc2" placeholder="Our LIMITED TIME 100% Canadian beef cheeseburger with melted cheese, lettuce, pickles, onions, tomatoes, and thousand island sauce."></textarea>
+                    </div>
+                    <hr>
+                    <!-- menu item 3 -->
+                    <div class="align-3-form">
+                      <div class="col-md-6">
+                        <label for="formFileImage3" class="form-label">Item 3 Image</label>
+                        <input class="form-control form-control-sm" id="formFileImage3" type="file">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="inputItem3" class="form-label">Item 3 Name</label>
+                        <input type="text" class="form-control" id="inputItem3" placeholder="Simion Special">
+                      </div>
+                      <div class="col-md-2">
+                        <label for="inputPrice3" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="inputPrice3" placeholder="$18.99">
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="descFormArea3" class="form-label">Edit Description</label>
+                      <textarea class="form-control" id="descFormArea3" rows="3" name="menudesc3" placeholder="No one is left hungry after finishing this extra value 3 pound, 5 layer, bacon cheese burger."></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <ol class="list-group list-group-numbered">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="d-flex position-relative">
+                <img src="assets/menu1.jpg" class="flex-shrink-0 me-3" style="max-width:15%" alt="...">
+                <div>
+                  <h5 class="mt-0">Bog Burger</h5>
+                  <p>Our famous 100% Canadian beef double cheeseburger with 3 layers of melted cheese, lettuce, pickles, roasted onions, and our signature Bogdan sauce.</p>
+                </div>
+              </div>
+              <span class="badge bg-success rounded-pill">$9.99</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="d-flex position-relative">
+                <img src="assets/menu2.png" class="flex-shrink-0 me-3" style="max-width:15%" alt="...">
+                <div>
+                  <h5 class="mt-0">POST Burger</h5>
+                  <p>Our LIMITED TIME 100% Canadian beef cheeseburger with melted cheese, lettuce, pickles, onions, tomatoes, and thousand island sauce.</p>
+                </div>
+              </div>
+              <span class="badge bg-success rounded-pill">$8.99</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="d-flex position-relative">
+                <img src="assets/menu3.png" class="flex-shrink-0 me-3" style="max-width:15%" alt="...">
+                <div>
+                  <h5 class="mt-0">Simion Special</h5>
+                  <p>No one is left hungry after finishing this extra value 3 pound, 5 layer, bacon cheese burger.</p>
+                </div>
+              </div>
+              <span class="badge bg-success rounded-pill">$18.99</span>
+            </li>
+          </ol>
         </div>
         <!-- BLOG POST PAGE -->
         <div class="tab-pane fade" id="pills-blog" role="tabpanel" aria-labelledby="pills-blog-tab">
@@ -295,7 +402,7 @@
                 <small class="text-muted">1 day ago</small>
               </div>
               <p class="mb-1">🚀🚀🌑</p>
-              <small class="vote">❤1337</small> <span class="badge rounded-pill bg-danger">Delete</span>
+              <small class="vote">❤1337</small>
 
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -304,7 +411,7 @@
                 <small class="text-muted">4 days ago</small>
               </div>
               <p class="mb-1">Good morning Canada! Now I have Bogdan's Burgers. I like Bogdan's Burgers very much.</p>
-              <small class="vote">❤21</small> <span class="badge rounded-pill bg-danger">Delete</span>
+              <small class="vote">❤21</small> 
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
@@ -312,7 +419,23 @@
                 <small class="text-muted">7 days ago</small>
               </div>
               <p class="mb-1">Believe me, this place has the biggest and the very very best burgers. This is made for winners like me.</p>
-              <small class="vote">❤420</small> <span class="badge rounded-pill bg-danger">Delete</span>
+              <small class="vote">❤420</small>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Barren Wuffet</h5>
+                <small class="text-muted">8 days ago</small>
+              </div>
+              <p class="mb-1">The burgers here are what I call high value low price investments. Coming here and having a great time is truely the best way to invest into yourself.</p>
+              <small class="vote">❤102</small>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Zark Muckerberg</h5>
+                <small class="text-muted">12 days ago</small>
+              </div>
+              <p class="mb-1">We did not steal your data. We stole your burgers.</p>
+              <small class="vote">❤367</small>
             </a>
           </div>
         </div>
