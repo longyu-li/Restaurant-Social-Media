@@ -1,5 +1,8 @@
+#search-container {
+    flex-basis: 300px;
+}
+
 #search {
-    margin-top: 100px;
     width: max(40%, 40ch);
 }
 
