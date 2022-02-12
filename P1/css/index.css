@@ -31,7 +31,7 @@
     color: rgb(216 50 50);
 }
 
-/* 
+/*
 Doesn't work ... ?
 #search-container {
     background-image: url("assets/bg2.jpg");
@@ -41,9 +41,4 @@ Doesn't work ... ?
 
 #search-btn:hover {
     background-color: rgb(241, 146, 146);
-}
-
-#search-btn > img {
-    width: 32px;
-    transform: rotate(-90deg);
 }
