@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- bootstrap needs this -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Restify</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/individual_restaurant.css" rel="stylesheet">
+</head>
+<body class="min-vw-100 min-vh-100 d-flex flex-column">
+  <nav class="navbar navbar-expand">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+            <img src="assets/logo-cropped.png" id="logo" alt="...">
+            <span>estify™</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav me-auto">
+                  <a class="nav-link active" href="feed.html">Feed</a>
+              </div>
+              <div class="navbar-nav me-auto">
+                <a class="nav-link active" href="individual_restaurant.html">My Restaurant</a>
+              </div>
+              <div class="dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                      John Doe
+                  </a>
+                  <!-- need dropdown-menu-end here bc navbar edge case -->
+                  <div class="dropdown-menu dropdown-menu-end text-center profile">
+                      <i class="bi bi-person-circle display-3"></i>
+                      <!-- wrap + break to handle space -->
+                      <h6 class="text-muted text-wrap text-break px-2 my-3">John Doe</h6>
+                      <a href="mailto:john@doe.com" class="mb-2 w-100 text-break px-2 d-block">john@doe.com</a>
+                      <a href="tel:000-000-0000" class="text-break px-2 d-block mb-3">000-000-0000</a>
+                      <hr class="dropdown-divider">
+                      <a class="dropdown-item text-body" href="#">Edit Profile</a>
+                      <a class="dropdown-item text-body" href="signin.html">Logout</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </nav>
+    <div class="mx-auto" style="width: 1000px;">
+      <div class="card">
+        <img src="assets/burgerbanner.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-1" id="pfpgrid">
+                <img src="assets/bogdanburgericon.jpg" class="img-thumbnail" style="max-width:100%" alt="...">
+              </div>
+              <div class="col-8">
+                <div class="container">
+                  <div class="row" id="name-row">
+                    <div class="col-6">
+                      <h4 id="restaurant-name"> Bogdan's Burgers </h4> <a href="individual_restaurant.html" id="tag">@Boggers</a>
+                    </div>
+                    <div class="col">
+                      <p id="follower-count">369 Followers</p>
+                    </div>
+                    <div class="col">
+                      <p id="like-count">148 Likes</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      (905) 828-5329
+                    </div>
+                    <div class="col-8">
+                      3359 Mississauga Rd, Mississauga, ON L5L 1C6
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col" id="buttongrid">
+                <div class="container">
+                  <div class="row">
+                    <div class="col" id="heart-col"><img src="assets/heart.png" class="img" id="icon" style="max-width:50%" alt="..."></div>
+                    <div class="col"><a href="#" class="btn btn-primary" data-bs-toggle="button"> Follow</a></div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileModal">
+                        Edit Profile
+                      </button>
+                      <!-- Modal -->
+                      <form class="row g-3" enctype="multipart/form-data" method="post">
+                        <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="profileModalLabel">Edit profile</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3">
+                                  <label for="banner-file" class="form-label">Change Restaurant Banner</label>
+                                  <input class="form-control" type="file" id="banner-file" name="banner-file">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="logo-file" class="form-label">Change Restaurant Logo</label>
+                                  <input class="form-control" type="file" id="logo-file" name="logo-file">
+                                </div>
+                                <div id="username-tag">
+                                  <div class="col-md-6">
+                                    <label for="inputUsername" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="inputUsername" placeholder="Bogdan's Burgers" name="username">
+                                  </div>
+                                  <div class="col-md-5">
+                                    <label for="inputTag" class="form-label">Tag</label>
+                                    <input type="text" class="form-control" id="inputTag" placeholder="@Boggers" name="tag">
+                                  </div>
+                               </div>
+                                <div class="col-12">
+                                  <label for="inputPhone" class="form-label">Phone Number</label>
+                                  <input type="text" class="form-control" id="inputPhone" placeholder="(905) 828-5329" name="phone">
+                                </div>
+                                <div class="col-12">
+                                  <label for="inputAddress" class="form-label">Address</label>
+                                  <input type="text" class="form-control" id="inputAddress" placeholder="3359 Mississauga Rd" name="address">
+                                </div>
+                                <div class="col-12">
+                                  <label for="inputAddress2" class="form-label">Address 2</label>
+                                  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" name="address2">
+                                </div>
+                                <div id="city-state-zip">
+                                  <div class="col-md-4">
+                                    <label for="inputCity" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="inputCity" placeholder="Mississauga" name="city">
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="inputState" class="form-label ">Province/State</label>
+                                    <select id="inputState" class="form-select" name="province">
+                                      <option>Ontario</option>
+                                      <option>Alberta</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <label for="inputZip" class="form-label">Zip</label>
+                                    <input type="text" class="form-control" id="inputZip" placeholder="L5L 1C6">
+                                  </div>
+                                </div>
+
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="card-text">Love Burgers? We got some for Valentine's Day. We're giving away free Love Burgers to the first 300 customers on February 14th. <br> Better come now or you'll have have to wait until next year.</p>
+
+        </div>
+      </div>
+      <br>
+      <ul class="nav nav-pills  nav-justified" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="pills-menu-tab" data-bs-toggle="pill" data-bs-target="#pills-menu" type="button" role="tab" aria-controls="pills-menu" aria-selected="true">Menu</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-blog-tab" data-bs-toggle="pill" data-bs-target="#pills-blog" type="button" role="tab" aria-controls="pills-blog" aria-selected="false">Blog Posts</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-comment-tab" data-bs-toggle="pill" data-bs-target="#pills-comment" type="button" role="tab" aria-controls="pills-comment" aria-selected="false">Comments</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <!-- MENU PAGE -->
+        <div class="tab-pane fade show active" id="pills-menu" role="tabpanel" aria-labelledby="pills-menu-tab">
+          <ul class="list-group">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">A fourth item</li>
+          <li class="list-group-item">And a fifth one</li>
+        </ul>
+        </div>
+        <!-- BLOG POST PAGE -->
+        <div class="tab-pane fade" id="pills-blog" role="tabpanel" aria-labelledby="pills-blog-tab">
+          <br>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blogModal">
+            Add Blog Post
+          </button>
+          <!-- Modal -->
+          <form enctype="multipart/form-data" method="post">
+            <div class="modal fade" id="blogModal" tabindex="-1" aria-labelledby="blogModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="blogModalLabel">Blog Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="formTitle" class="form-label">Blog Title</label>
+                      <input type="text" class="form-control" id="formTitle" placeholder="Instert title here" name="blog-title" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="blogFormControlTextarea1" class="form-label">Write a Blog Post</label>
+                      <textarea class="form-control" id="blogFormControlTextarea1" rows="3" name="blogpost" placeholder="Insert body here" required></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Post</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Burger Hands</h5>
+                <small class="text-muted">Now</small>
+              </div>
+              <p class="mb-1">🍔👐 🚀🚀🚀</p>
+              <small class="vote">❤2</small> <span class="badge rounded-pill bg-danger">Delete</span>
+
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Introducing the POST Burger!</h5>
+                <small class="text-muted">3 days ago</small>
+              </div>
+              <p class="mb-1">We hope you are EXCITED! We just released our new Signature POST Burger. This burger will be able to fill you with everything you need.
+              </p>
+              <small class="vote">❤23</small> <span class="badge rounded-pill bg-danger">Delete</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">LIMITED TIME DEAL </h5>
+                <small class="text-muted">5 days ago</small>
+              </div>
+              <p class="mb-1">Did you know that we have a buy 1 get 1 free promotion right now? Buy the Bog Burger and get another free. You'll never go hungry again!</p>
+              <small class="vote">❤45</small> <span class="badge rounded-pill bg-danger">Delete</span>
+            </a>
+          </div>
+        </div>
+        <!-- COMMENTS PAGE -->
+        <div class="tab-pane fade" id="pills-comment" role="tabpanel" aria-labelledby="pills-comment-tab">
+          <br>
+
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
+            Add Comment
+          </button>
+          <!-- Modal -->
+          <form enctype="multipart/form-data" method="post">
+            <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="commentModalLabel">Comment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="commentFormControlTextarea1" class="form-label">Write a comment</label>
+                      <textarea class="form-control" id="commentFormControlTextarea1" rows="3" name="comment" placeholder="Type here" required></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Mlon Eusk</h5>
+                <small class="text-muted">1 day ago</small>
+              </div>
+              <p class="mb-1">🚀🚀🌑</p>
+              <small class="vote">❤1337</small> <span class="badge rounded-pill bg-danger">Delete</span>
+
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Cohn Jena</h5>
+                <small class="text-muted">4 days ago</small>
+              </div>
+              <p class="mb-1">Good morning Canada! Now I have Bogdan's Burgers. I like Bogdan's Burgers very much.</p>
+              <small class="vote">❤21</small> <span class="badge rounded-pill bg-danger">Delete</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Tonald Drump</h5>
+                <small class="text-muted">7 days ago</small>
+              </div>
+              <p class="mb-1">Believe me, this place has the biggest and the very very best burgers. This is made for winners like me.</p>
+              <small class="vote">❤420</small> <span class="badge rounded-pill bg-danger">Delete</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- keep this at the end of body -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>
