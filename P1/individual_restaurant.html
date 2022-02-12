@@ -18,7 +18,7 @@
   <nav class="navbar navbar-expand">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">
-            <img src="assets/logo-cropped.png" id="logo">
+            <img src="assets/logo-cropped.png" id="logo" alt="...">
             <span>estify™</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup">
@@ -57,12 +57,12 @@
           <div class="container">
             <div class="row">
               <div class="col-lg-1" id="pfpgrid">
-                <img src="assets/bogdanburgericon.jpg" class="img-thumbnail" style="max-width:100%"; alt="...">
+                <img src="assets/bogdanburgericon.jpg" class="img-thumbnail" style="max-width:100%" alt="...">
               </div>
               <div class="col-8">
                 <div class="container">
                   <div class="row" id="name-row">
-                    <div class="col-6" id="name-box">
+                    <div class="col-6">
                       <h4 id="restaurant-name"> Bogdan's Burgers </h4> <a href="individual_restaurant.html" id="tag">@Boggers</a>
                     </div>
                     <div class="col">
@@ -85,7 +85,7 @@
               <div class="col" id="buttongrid">
                 <div class="container">
                   <div class="row">
-                    <div class="col" id="heart-col"><img src="assets/heart.png" class="img" id="icon" style="max-width:50%"; alt="..."></div>
+                    <div class="col" id="heart-col"><img src="assets/heart.png" class="img" id="icon" style="max-width:50%" alt="..."></div>
                     <div class="col"><a href="#" class="btn btn-primary" data-bs-toggle="button"> Follow</a></div>
                     <div class="w-100"></div>
                     <div class="col">
@@ -104,26 +104,26 @@
                               </div>
                               <div class="modal-body">
                                 <div class="mb-3">
-                                  <label for="formFile" class="form-label">Change Restaurant Banner</label>
-                                  <input class="form-control" type="file" id="banner-file"name="banner-file">
+                                  <label for="banner-file" class="form-label">Change Restaurant Banner</label>
+                                  <input class="form-control" type="file" id="banner-file" name="banner-file">
                                 </div>
                                 <div class="mb-3">
-                                  <label for="formFile" class="form-label">Change Restaurant Logo</label>
+                                  <label for="logo-file" class="form-label">Change Restaurant Logo</label>
                                   <input class="form-control" type="file" id="logo-file" name="logo-file">
                                 </div>
                                 <div id="username-tag">
                                   <div class="col-md-6">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" placeholder="Bogdan's Burgers" name="username">
+                                    <label for="inputUsername" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="inputUsername" placeholder="Bogdan's Burgers" name="username">
                                   </div>
                                   <div class="col-md-5">
-                                    <label for="tag" class="form-label">Tag</label>
-                                    <input type="text" class="form-control" id="tag" placeholder="@Boggers" name="tag">
+                                    <label for="inputTag" class="form-label">Tag</label>
+                                    <input type="text" class="form-control" id="inputTag" placeholder="@Boggers" name="tag">
                                   </div>
                                </div>
                                 <div class="col-12">
-                                  <label for="phone" class="form-label">Phone Number</label>
-                                  <input type="text" class="form-control" id="phone" placeholder="(905) 828-5329" name="phone">
+                                  <label for="inputPhone" class="form-label">Phone Number</label>
+                                  <input type="text" class="form-control" id="inputPhone" placeholder="(905) 828-5329" name="phone">
                                 </div>
                                 <div class="col-12">
                                   <label for="inputAddress" class="form-label">Address</label>
@@ -213,12 +213,12 @@
                   </div>
                   <div class="modal-body">
                     <div class="mb-3">
-                      <label for="formGroupExampleInput" class="form-label">Blog Title</label>
-                      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Instert title here" name="blog-title" required>
+                      <label for="formTitle" class="form-label">Blog Title</label>
+                      <input type="text" class="form-control" id="formTitle" placeholder="Instert title here" name="blog-title" required>
                     </div>
                     <div class="mb-3">
-                      <label for="exampleFormControlTextarea1" class="form-label">Write a Blog Post</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="blogpost" placeholder="Insert body here" required></textarea>
+                      <label for="blogFormControlTextarea1" class="form-label">Write a Blog Post</label>
+                      <textarea class="form-control" id="blogFormControlTextarea1" rows="3" name="blogpost" placeholder="Insert body here" required></textarea>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -236,7 +236,7 @@
                 <small class="text-muted">Now</small>
               </div>
               <p class="mb-1">🍔👐 🚀🚀🚀</p>
-              <small id="vote">❤2</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
+              <small class="vote">❤2</small> <span class="badge rounded-pill bg-danger">Delete</span>
 
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -246,7 +246,7 @@
               </div>
               <p class="mb-1">We hope you are EXCITED! We just released our new Signature POST Burger. This burger will be able to fill you with everything you need.
               </p>
-              <small id="vote">❤23</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
+              <small class="vote">❤23</small> <span class="badge rounded-pill bg-danger">Delete</span>
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
@@ -254,7 +254,7 @@
                 <small class="text-muted">5 days ago</small>
               </div>
               <p class="mb-1">Did you know that we have a buy 1 get 1 free promotion right now? Buy the Bog Burger and get another free. You'll never go hungry again!</p>
-              <small id="vote">❤45</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
+              <small class="vote">❤45</small> <span class="badge rounded-pill bg-danger">Delete</span>
             </a>
           </div>
         </div>
@@ -295,7 +295,7 @@
                 <small class="text-muted">1 day ago</small>
               </div>
               <p class="mb-1">🚀🚀🌑</p>
-              <small id="vote">❤1337</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
+              <small class="vote">❤1337</small> <span class="badge rounded-pill bg-danger">Delete</span>
 
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -304,7 +304,7 @@
                 <small class="text-muted">4 days ago</small>
               </div>
               <p class="mb-1">Good morning Canada! Now I have Bogdan's Burgers. I like Bogdan's Burgers very much.</p>
-              <small id="vote">❤21</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
+              <small class="vote">❤21</small> <span class="badge rounded-pill bg-danger">Delete</span>
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
@@ -312,7 +312,7 @@
                 <small class="text-muted">7 days ago</small>
               </div>
               <p class="mb-1">Believe me, this place has the biggest and the very very best burgers. This is made for winners like me.</p>
-              <small id="vote">❤420</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
+              <small class="vote">❤420</small> <span class="badge rounded-pill bg-danger">Delete</span>
             </a>
           </div>
         </div>
