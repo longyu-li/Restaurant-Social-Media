@@ -37,6 +37,12 @@ input, button, select {
     border-color: black;
 }
 
+.restaurant-card img {
+    object-fit: cover;
+    height: 200px;
+    border-bottom: 1px solid black;
+}
+
 .restaurant-card .card-title {
     text-decoration: none;
     color: black;
