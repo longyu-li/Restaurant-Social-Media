@@ -37,6 +37,13 @@ input, button, select {
     border-color: black;
 }
 
+.restaurant-card .card-title {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 1.2em;
+}
+
 #bell-icon {
     filter: invert();
     height: 24px
