@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
 .nav-item {
     background-color: rgb(255, 195, 0) ;
     color: #000;
@@ -62,7 +66,7 @@ a{
     text-decoration: inherit;
  }
 
-#username-tag, #city-state-zip{
+#username-tag, .align-3-form{
     display: flex;
     justify-content: space-between;
   }
@@ -77,8 +81,18 @@ a{
 
 .vote {
     color:rgba(255, 0, 128, 0.815);
+    font-weight: bold;
 }
 
 .list-group-item{
     background-color: rgb(247, 230, 220);
+}
+
+.d-flex {
+    margin-left: 10px;
+}
+
+.mb-1{
+    padding-left: 0px;
+    margin-left: 0px;
 }
