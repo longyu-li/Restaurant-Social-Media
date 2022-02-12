@@ -32,8 +32,73 @@ input, button, select {
     box-shadow: none !important;
 }
 
-
 .restaurant-card {
     width: 18rem;
     border-color: black;
+}
+
+#bell-icon {
+    filter: invert();
+    height: 24px
+}
+
+#bell span {
+    position: relative;
+    top: -8px;
+    right: 10px;
+    font-weight: bold;
+    color: red;
+    background-color: white;
+    padding: 0 3px;
+    border-radius: 5px;
+    font-size: 10pt;
+}
+
+#notif-bar img {
+    height: 24px;
+    padding: 0 15px;
+}
+
+#notif-bar > *:nth-child(2) {
+    border: 1px solid black;
+    border-width: 0 1px 0 1px;
+}
+
+.notif, #bell {
+    position: relative;
+}
+
+.notif span {
+    position: absolute;
+    right: 7px;
+    top: -4px;
+
+    font-weight: bold;
+    color: white;
+    background-color: red;
+    padding: 0 3px;
+    border-radius: 5px;
+    font-size: 10pt;
+}
+
+#notif-dropdown {
+    width: 500px;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border: 1px solid black;
+}
+
+.notif-desc {
+    text-align: left;
+}
+
+.dropdown .list-group-item {
+    border-width: 1px 0 0 0;
+}
+
+.dropdown .list-group-item > div {
+    gap: 20px;
 }

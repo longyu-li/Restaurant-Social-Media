@@ -18,13 +18,14 @@
 <body class="min-vw-100 min-vh-100 d-flex flex-column">
     <nav class="navbar navbar-expand-sm">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-              <img src="assets/logo-cropped.png" id="logo">
-              <span>estify™</span>
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+            <a class="navbar-brand" href="#">
+                <img src="assets/logo-cropped.png" id="logo">
+                <span>estify™</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav me-auto">
                     <a class="nav-link active" href="feed.html">Feed</a>
@@ -45,9 +46,70 @@
                         <a class="dropdown-item text-body" href="signin.html">Logout</a>
                     </div>
                 </div>
+                <div class="dropdown">
+                    <a class="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                        <div id="bell">
+                            <img src="assets/bell.svg" id="bell-icon">
+                            <span>9</span>
+                        </div>
+                    </a>
+                    <!-- need dropdown-menu-end here bc navbar edge case -->
+                    <div class="dropdown-menu dropdown-menu-end text-center" id="notif-dropdown">
+                        <div id="notif-bar" class="d-flex justify-content-center mb-3">
+                            <div class="notif">
+                                <img src="assets/like.svg">
+                                <span>2</span>
+                            </div>
+                            <div class="notif">
+                                <img src="assets/comment.svg">
+                                <span>4</span>
+                            </div>
+                            <div class="notif">
+                                <img src="assets/person.svg">
+                                <span>3</span>
+                            </div>
+                        </div>
+                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex align-items-center">
+                                <img src="assets/jeremy.jpg" class="avatar rounded-circle">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex w-100 justify-content-between mb-1">
+                                        <h6 class="mb-1">Jeremy liked your restaurant</h5>
+                                            <small>5 hours ago</small>
+                                    </div>
+                                    <span class="flex-grow-1 align-self-stretch notif-desc">Your restaurant has 57 likes</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex align-items-center">
+                                <img src="assets/wenzhou.jpg" class="avatar rounded-circle">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex w-100 justify-content-between mb-1">
+                                        <h6 class="mb-1">Wenzhou commented on your restaurant</h5>
+                                            <small>2 days ago</small>
+                                    </div>
+                                    <span class="flex-grow-1 align-self-stretch notif-desc">Click to see all comments</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex align-items-center">
+                                <img src="assets/kabob.jpg" class="avatar rounded-circle">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex w-100 justify-content-between mb-1">
+                                        <h6 class="mb-1">Kianoosh Kabob made a post</h5>
+                                            <small>last week</small>
+                                    </div>
+                                    <span class="flex-grow-1 align-self-stretch notif-desc">How do we make the best kabob? Click to find out!</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-      </nav>
+    </nav>
 
     <main class="d-flex flex-column align-items-stretch flex-grow-1 justify-content-around">
         <div class="d-flex flex-column align-items-center justify-content-center" id="search-container">
