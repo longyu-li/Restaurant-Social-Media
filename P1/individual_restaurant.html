@@ -92,7 +92,7 @@
                         Edit Profile
                       </button>
                       <!-- Modal -->
-                      <form>
+                      <form class="row g-3">
                         <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -109,19 +109,47 @@
                                   <label for="formFile" class="form-label">Change Restaurant Logo</label>
                                   <input class="form-control" type="file" id="logo-file" name="logo-file">
                                 </div>
-                                <div class="input-group mb-3">
-                                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="username">
-                                  <span class="input-group-text">@</span>
-                                  <input type="text" class="form-control" placeholder="Tag" aria-label="Tag" name="tag">
+                                <div id="username-tag">
+                                  <div class="col-md-6">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" placeholder="Bogdan's Burgers" name="username">
+                                  </div> 
+                                  <div class="col-md-5">
+                                    <label for="tag" class="form-label">Tag</label>
+                                    <input type="text" class="form-control" id="tag" placeholder="@Boggers" name="tag">
+                                  </div>
+                               </div>
+                                <div class="col-12">
+                                  <label for="phone" class="form-label">Phone Number</label>
+                                  <input type="text" class="form-control" id="phone" placeholder="(905) 828-5329" name="phone">
                                 </div>
-                                <div class="input-group mb-3">
-                                  <span class="input-group-text" id="change-phone">📞</span>
-                                  <input type="text" class="form-control" placeholder="Phone Number" aria-label="Phone" aria-describedby="basic-addon1" name="phone">
+                                <div class="col-12">
+                                  <label for="inputAddress" class="form-label">Address</label>
+                                  <input type="text" class="form-control" id="inputAddress" placeholder="3359 Mississauga Rd" name="address">
                                 </div>
-                                <div class="input-group mb-3">
-                                  <span class="input-group-text" id="basic-addon1">🗺</span>
-                                  <input type="text" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="basic-addon1" name="address">
+                                <div class="col-12">
+                                  <label for="inputAddress2" class="form-label">Address 2</label>
+                                  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" name="address2">
                                 </div>
+                                <div id="city-state-zip">
+                                  <div class="col-md-4">
+                                    <label for="inputCity" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="inputCity" placeholder="Mississauga" name="city">
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="inputState" class="form-label ">Province/State</label>
+                                    <select id="inputState" class="form-select" name="province">
+                                      <option>Ontario</option>
+                                      <option>Alberta</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <label for="inputZip" class="form-label">Zip</label>
+                                    <input type="text" class="form-control" id="inputZip" placeholder="L5L 1C6">
+                                  </div>
+                                </div>
+                                
+                                
                               </div>
                               <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Confirm</button>
@@ -155,6 +183,7 @@
         </li>
       </ul>
       <div class="tab-content" id="pills-tabContent">
+        <!-- MENU PAGE -->
         <div class="tab-pane fade show active" id="pills-menu" role="tabpanel" aria-labelledby="pills-menu-tab">
           <ul class="list-group">
           <li class="list-group-item">An item</li>
@@ -164,6 +193,7 @@
           <li class="list-group-item">And a fifth one</li>
         </ul>
         </div>
+        <!-- BLOG POST PAGE -->
         <div class="tab-pane fade" id="pills-blog" role="tabpanel" aria-labelledby="pills-blog-tab">
           <br>
           <!-- Button trigger modal -->
@@ -181,8 +211,12 @@
                   </div>
                   <div class="modal-body">
                     <div class="mb-3">
+                      <label for="formGroupExampleInput" class="form-label">Blog Title</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Instert title here" name="blog-title">
+                    </div>
+                    <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Write a Blog Post</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="blogpost" required></textarea>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="blogpost" placeholder="Insert body here" required></textarea>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -194,32 +228,35 @@
           </form>
           
           <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small>3 days ago</small>
+                <h5 class="mb-1">Burger Hands</h5> 
+                <small class="text-muted">Now</small>
               </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small>Donec id elit non mi porta.</small>
+              <p class="mb-1">🍔👐 🚀🚀🚀</p> 
+              <small id="vote">❤2</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
+              
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
+                <h5 class="mb-1">Introducing the POST Burger!</h5>
                 <small class="text-muted">3 days ago</small>
               </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small class="text-muted">Donec id elit non mi porta.</small>
+              <p class="mb-1">We hope you are EXCITED! We just released our new Signature POST Burger. This burger will be able to fill you with everything you need. 
+              </p>
+              <small id="vote">❤23</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
+                <h5 class="mb-1">LIMITED TIME DEAL </h5>
                 <small class="text-muted">3 days ago</small>
               </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small class="text-muted">Donec id elit non mi porta.</small>
+              <p class="mb-1">Did you know that we have a buy 1 get 1 free promotion right now? Buy the Bog Burger and get another free. You'll never go hungry again!</p>
+              <small id="vote">❤45</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
             </a>
           </div>
         </div>
+        <!-- COMMENTS PAGE -->
         <div class="tab-pane fade" id="pills-comment" role="tabpanel" aria-labelledby="pills-comment-tab">
           <br>
           
@@ -239,7 +276,7 @@
                   <div class="modal-body">
                     <div class="mb-3">
                       <label for="commentFormControlTextarea1" class="form-label">Write a comment</label>
-                      <textarea class="form-control" id="commentFormControlTextarea1" rows="3" name="comment" required></textarea>
+                      <textarea class="form-control" id="commentFormControlTextarea1" rows="3" name="comment" placeholder="Type here" required></textarea>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -250,29 +287,30 @@
             </div>
           </form>
           <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small>3 days ago</small>
+                <h5 class="mb-1">Mlon Eusk</h5> 
+                <small class="text-muted">1 day ago</small>
               </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small>Donec id elit non mi porta.</small>
+              <p class="mb-1">🚀🚀🌑</p> 
+              <small id="vote">❤1337</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
+              
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
+                <h5 class="mb-1">Cohn Jena</h5>
                 <small class="text-muted">3 days ago</small>
               </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small class="text-muted">Donec id elit non mi porta.</small>
+              <p class="mb-1">Good morning Canada! Now I have Bogdan's Burgers. I like Bogdan's Burgers very much.</p>
+              <small id="vote">❤21</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
             </a>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
+                <h5 class="mb-1">Tonald Drump</h5>
                 <small class="text-muted">3 days ago</small>
               </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small class="text-muted">Donec id elit non mi porta.</small>
+              <p class="mb-1">Believe me, this place has the biggest and the very very best burgers. This is made for winners like me.</p>
+              <small id="vote">❤420</small> <span class="badge rounded-pill bg-danger" id="delete-btn">Delete</span>
             </a>
           </div>
         </div>

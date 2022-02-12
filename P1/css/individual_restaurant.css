@@ -61,3 +61,24 @@
 a{
     text-decoration: inherit;
  }
+
+#username-tag, #city-state-zip{
+    display: flex;
+    justify-content: space-between;
+  }
+
+.col-12, .col-md-6 {
+    margin-bottom: 15px;
+}
+
+#delete-btn{
+    float: right;
+}
+
+#vote {
+    color:rgba(255, 0, 128, 0.815);
+}
+
+.list-group-item{
+    background-color: rgb(247, 230, 220);
+}
