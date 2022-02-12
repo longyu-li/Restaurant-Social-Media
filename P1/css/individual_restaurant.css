@@ -7,16 +7,57 @@
   }
 
 #icon{
+    margin: 5px 0px 10px 10px;
+    padding: 0px;
     float: left;
 }
 
-#heart{
-    float: right;
-    margin: 5px 10px 10px 10px;
+#pfpgrid{
+    width: 10%;
+    padding: 0px;
+}
+
+#buttongrid {
+    padding: 0px;
+}
+
+#restaurant-name {
+    font-weight: bold;
+}
+
+#heart-col {
+    width: 100px;
+}
+
+#follower-count {
+    color: rgb(0, 162, 255);
+    font-size: large;
+    font-weight: bolder;
+    padding-top: 3px;
+
+}
+
+#like-count {
+    color: rgb(243, 52, 132);
+    font-size: large;
+    font-weight: bolder;
+    padding-top: 3px;
+}
+
+#tag {
+    color: rgb(70, 145, 206) ;
 }
 
 .btn-primary{
     float: right;
     background-color: rgb(0, 140, 255) ;
-    margin: 0px 10px 10px 10px;
+    margin: 0px 0px 10px 10px;
 }
+
+.card-body {
+    background-color: rgba(247, 245, 154, 0.623);
+}
+
+a{
+    text-decoration: inherit;
+ }
