@@ -142,14 +142,16 @@
         </div>
         <div class="col-12">
             <label class="form-label" for="phoneNumber">Phone Number</label>
-            <input class="form-control" type="tel" id="phoneNumber" name="phoneNumber" required value="905-555-3456">
+            <input class="form-control" type="tel" id="phoneNumber" name="phoneNumber" required value="905-555-3456"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
             <div class="invalid-feedback">
-                A phone number is required.
+                A valid phone number (###-###-####) is required.
             </div>
         </div>
         <div class="col-12">
             <label class="form-label" for="email">Email</label>
-            <input class="form-control" type="email" id="email" name="email" required value="bogdan@bogburg.com">
+            <input class="form-control" type="email" id="email" name="email" required value="bogdan@bogburg.com"
+                   disabled readonly>
             <div class="invalid-feedback">
                 A valid email is required.
             </div>

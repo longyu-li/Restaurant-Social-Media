@@ -7,18 +7,19 @@
   }
 
 #icon{
-    margin: 5px 0px 10px 10px;
-    padding: 0px;
+    margin: 5px 0 10px 10px;
+    padding: 0;
     float: left;
+    max-width: 2em;
 }
 
 #pfpgrid{
     width: 10%;
-    padding: 0px;
+    padding: 0;
 }
 
 #buttongrid {
-    padding: 0px;
+    padding: 0;
 }
 
 #restaurant-name {
@@ -51,7 +52,7 @@
 .btn-primary{
     float: right;
     background-color: rgb(0, 140, 255) ;
-    margin: 0px 0px 10px 10px;
+    margin: 0 0 10px 10px;
 }
 
 .card-body {
@@ -85,11 +86,6 @@ a{
 }
 
 .mb-1{
-    padding-left: 0px;
-    margin-left: 0px;
-}
-
-#btn-grid {
-    padding-left: 0px;
-    margin-left: 0px;
+    padding-left: 0;
+    margin-left: 0;
 }
