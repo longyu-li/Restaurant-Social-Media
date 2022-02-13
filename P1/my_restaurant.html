@@ -140,7 +140,7 @@
                   </div>
                   <div class="row">
                     <div class="col">
-                      (905) 828-5329
+                      905-828-5329
                     </div>
                     <div class="col-8">
                       3359 Mississauga Rd, Mississauga, ON L5L 1C6
@@ -179,23 +179,27 @@
                                   <label for="logo-file" class="form-label">Change Restaurant Logo</label>
                                   <input class="form-control" type="file" id="logo-file" name="logo-file">
                                 </div>
-                                <div id="username-tag">
+                                <div id="restname-tag">
                                   <div class="col-md-6">
-                                    <label for="inputUsername" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="inputUsername" placeholder="Bogdan's Burgers" name="username">
+                                    <label for="inputRestname" class="form-label">Restaurant Name</label>
+                                    <input type="text" class="form-control" id="inputRestname" placeholder="Bogdan's Burgers" name="restname" value="Bogdan's Burgers">
                                   </div>
                                   <div class="col-md-5">
                                     <label for="inputTag" class="form-label">Tag</label>
-                                    <input type="text" class="form-control" id="inputTag" placeholder="@Boggers" name="tag">
+                                    <input type="text" class="form-control" id="inputTag" placeholder="@Boggers" value="Boggers" name="tag">
                                   </div>
                                </div>
                                 <div class="col-12">
                                   <label for="inputPhone" class="form-label">Phone Number</label>
-                                  <input type="text" class="form-control" id="inputPhone" placeholder="(905) 828-5329" name="phone">
+                                  <input class="form-control" type="tel" id="inputPhone" name="phone" value="905-828-5329"
+                                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="905-828-5329">
+                                  <div class="invalid-feedback">
+                                      A valid phone number (###-###-####) is required.
+                                  </div>
                                 </div>
                                 <div class="col-12">
                                   <label for="inputAddress" class="form-label">Address</label>
-                                  <input type="text" class="form-control" id="inputAddress" placeholder="3359 Mississauga Rd" name="address">
+                                  <input type="text" class="form-control" id="inputAddress" placeholder="3359 Mississauga Rd" value="3359 Mississauga Rd" name="address">
                                 </div>
                                 <div class="col-12">
                                   <label for="inputAddress2" class="form-label">Address 2</label>
@@ -204,18 +208,18 @@
                                 <div class="align-3-form">
                                   <div class="col-md-4">
                                     <label for="inputCity" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="inputCity" placeholder="Mississauga" name="city">
+                                    <input type="text" class="form-control" id="inputCity" placeholder="Mississauga" value="Mississauga" name="city">
                                   </div>
                                   <div class="col-md-4">
                                     <label for="inputState" class="form-label ">Province/State</label>
-                                    <select id="inputState" class="form-select" name="province">
+                                    <select id="inputState" class="form-select" name="province" value="Ontario">
                                       <option>Ontario</option>
                                       <option>Alberta</option>
                                     </select>
                                   </div>
                                   <div class="col-md-3">
                                     <label for="inputZip" class="form-label">Zip</label>
-                                    <input type="text" class="form-control" id="inputZip" placeholder="L5L 1C6">
+                                    <input type="text" class="form-control" id="inputZip" placeholder="L5L 1C6" value="L5L 1C6">
                                   </div>
                                 </div>
 
@@ -234,7 +238,7 @@
                 </div>
               </div>
             </div>
-            <p class="card-text mt-2">Love Burgers? We're giving away free POST Burgers to the first 300 customers on February 14th. <br> Better come now or you'll have to wait until next year.</p>
+            <p class="card-text mt-2">Love Burgers? We're giving away free POST Burgers to the first 300 customers on February 14th. Better come now or you'll have to wait until next year.</p>
           </div>
         </div>
       </div>
