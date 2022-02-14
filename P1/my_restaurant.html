@@ -26,7 +26,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
+                <div class="navbar-nav me-3">
                     <a class="nav-link active" href="feed.html">Feed</a>
                 </div>
                 <div class="navbar-nav me-auto">
@@ -162,7 +162,7 @@
                         Edit Profile
                       </button>
                       <!-- Modal -->
-                      <form class="row g-3" enctype="multipart/form-data" method="post">
+                      <form class="row g-3 needs-validation" enctype="multipart/form-data" method="post" novalidate>
                         <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -173,16 +173,26 @@
                               <div class="modal-body">
                                 <div class="mb-3">
                                   <label for="banner-file" class="form-label">Change Restaurant Banner</label>
-                                  <input class="form-control" type="file" id="banner-file" name="banner-file">
+                                  <input class="form-control" type="file" id="banner-file" name="banner-file"
+                                         accept=".png, .jpg, .jpeg">
                                 </div>
                                 <div class="mb-3">
                                   <label for="logo-file" class="form-label">Change Restaurant Logo</label>
-                                  <input class="form-control" type="file" id="logo-file" name="logo-file">
+                                  <input class="form-control" type="file" id="logo-file" name="logo-file" required
+                                         accept=".png, .jpg, .jpeg">
+                                    <div class="invalid-feedback">
+                                        A logo is required.
+                                    </div>
                                 </div>
                                 <div id="restname-tag">
                                   <div class="col-md-6">
                                     <label for="inputRestname" class="form-label">Restaurant Name</label>
-                                    <input type="text" class="form-control" id="inputRestname" placeholder="Bogdan's Burgers" name="restname" value="Bogdan's Burgers">
+                                    <input type="text" class="form-control" id="inputRestname"
+                                           placeholder="Bogdan's Burgers" name="restname" value="Bogdan's Burgers"
+                                            required>
+                                      <div class="invalid-feedback">
+                                          A name is required.
+                                      </div>
                                   </div>
                                   <div class="col-md-5">
                                     <label for="inputTag" class="form-label">Tag</label>
@@ -192,34 +202,51 @@
                                 <div class="col-12">
                                   <label for="inputPhone" class="form-label">Phone Number</label>
                                   <input class="form-control" type="tel" id="inputPhone" name="phone" value="905-828-5329"
-                                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="905-828-5329">
+                                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="905-828-5329" required>
                                   <div class="invalid-feedback">
                                       A valid phone number (###-###-####) is required.
                                   </div>
                                 </div>
                                 <div class="col-12">
                                   <label for="inputAddress" class="form-label">Address</label>
-                                  <input type="text" class="form-control" id="inputAddress" placeholder="3359 Mississauga Rd" value="3359 Mississauga Rd" name="address">
+                                  <input type="text" class="form-control" id="inputAddress"
+                                         placeholder="3359 Mississauga Rd" value="3359 Mississauga Rd" name="address"
+                                         required>
+                                    <div class="invalid-feedback">
+                                        An address is required.
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                   <label for="inputAddress2" class="form-label">Address 2</label>
-                                  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" name="address2">
+                                  <input type="text" class="form-control" id="inputAddress2"
+                                         placeholder="Apartment, studio, or floor" name="address2">
                                 </div>
                                 <div class="align-3-form">
                                   <div class="col-md-4">
                                     <label for="inputCity" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="inputCity" placeholder="Mississauga" value="Mississauga" name="city">
+                                    <input type="text" class="form-control" id="inputCity" placeholder="Mississauga"
+                                           value="Mississauga" name="city" required>
+                                      <div class="invalid-feedback">
+                                          A city is required.
+                                      </div>
                                   </div>
                                   <div class="col-md-4">
                                     <label for="inputState" class="form-label ">Province/State</label>
-                                    <select id="inputState" class="form-select" name="province" value="Ontario">
-                                      <option>Ontario</option>
+                                    <select id="inputState" class="form-select" name="province">
+                                      <option selected>Ontario</option>
                                       <option>Alberta</option>
                                     </select>
+                                      <div class="invalid-feedback">
+                                          A province is required.
+                                      </div>
                                   </div>
                                   <div class="col-md-3">
                                     <label for="inputZip" class="form-label">Zip</label>
-                                    <input type="text" class="form-control" id="inputZip" placeholder="L5L 1C6" value="L5L 1C6">
+                                    <input type="text" class="form-control" id="inputZip" placeholder="L5L 1C6"
+                                           value="L5L 1C6" required>
+                                      <div class="invalid-feedback">
+                                          A zip is required.
+                                      </div>
                                   </div>
                                 </div>
 
@@ -266,7 +293,7 @@
             Edit Menu
           </button>
           <!-- Modal -->
-          <form enctype="multipart/form-data" method="post">
+          <form enctype="multipart/form-data" method="post" class="needs-validation" novalidate>
             <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -282,20 +309,34 @@
                     <div class="align-3-form">
                       <div class="col-md-6">
                         <label for="formFileImage1" class="form-label">Item Image</label>
-                        <input class="form-control form-control-sm" id="formFileImage1" type="file">
+                        <input class="form-control form-control-sm" id="formFileImage1"
+                               type="file" accept=".png, .jpg, .jpeg">
                       </div>
                       <div class="col-md-3">
                         <label for="inputItem1" class="form-label">Item Name</label>
-                        <input type="text" class="form-control" id="inputItem1" placeholder="Bog Burger" value="Bog Burger">
+                        <input type="text" class="form-control" id="inputItem1" placeholder="Bog Burger"
+                               value="Bog Burger" required>
+                          <div class="invalid-feedback">
+                              A name is required.
+                          </div>
                       </div>
                       <div class="col-md-2">
                         <label for="inputPrice1" class="form-label">Price</label>
-                        <input type="text" class="form-control" id="inputPrice1" placeholder="$9.99" value="9.99">
+                        <input type="number" class="form-control" id="inputPrice1" placeholder="9.99" value="9.99"
+                               min="0.01" step="0.01" required>
+                          <div class="invalid-feedback">
+                              A price is required.
+                          </div>
                       </div>
                     </div>
                     <div class="mb-3">
                       <label for="descFormArea1" class="form-label">Edit Description</label>
-                      <textarea class="form-control" id="descFormArea1" rows="3" name="menudesc1" placeholder="Our famous 100% Canadian beef double cheeseburger with 3 layers of melted cheese, lettuce, pickles, roasted onions, and our signature Bogdan sauce.">Our famous 100% Canadian beef double cheeseburger with 3 layers of melted cheese, lettuce, pickles, roasted onions, and our signature Bogdan sauce.</textarea>
+                      <textarea class="form-control" id="descFormArea1" rows="3" name="menudesc1" placeholder="Our famous 100% Canadian beef double cheeseburger with 3 layers of melted cheese, lettuce, pickles, roasted onions, and our signature Bogdan sauce."
+                                required>Our famous 100% Canadian beef double cheeseburger with 3 layers of melted cheese, lettuce, pickles, roasted onions, and our signature Bogdan sauce.
+                      </textarea>
+                        <div class="invalid-feedback">
+                            A description is required.
+                        </div>
                     </div>
                     <hr>
                     <!-- menu item 2 -->
@@ -305,20 +346,33 @@
                     <div class="align-3-form">
                       <div class="col-md-6">
                         <label for="formFileImage2" class="form-label">Item Image</label>
-                        <input class="form-control form-control-sm" id="formFileImage2" type="file">
+                        <input class="form-control form-control-sm" id="formFileImage2" type="file"
+                               accept=".png, .jpg, .jpeg">
                       </div>
                       <div class="col-md-3">
                         <label for="inputItem2" class="form-label">Item Name</label>
-                        <input type="text" class="form-control" id="inputItem2" placeholder="POST Burger" value="POST Burger">
+                        <input type="text" class="form-control" id="inputItem2" placeholder="POST Burger"
+                               value="POST Burger" required>
+                          <div class="invalid-feedback">
+                              A name is required.
+                          </div>
                       </div>
                       <div class="col-md-2">
                         <label for="inputPrice2" class="form-label">Price</label>
-                        <input type="text" class="form-control" id="inputPrice2" placeholder="$8.99" value="8.99">
+                        <input type="text" class="form-control" id="inputPrice2" placeholder="8.99" value="8.99"
+                               min="0.01" step="0.01" required>
+                          <div class="invalid-feedback">
+                              A price is required.
+                          </div>
                       </div>
                     </div>
                     <div class="mb-3">
                       <label for="descFormArea2" class="form-label">Edit Description</label>
-                      <textarea class="form-control" id="descFormArea2" rows="3" name="menudesc2" placeholder="Our LIMITED TIME 100% Canadian beef cheeseburger with melted cheese, lettuce, pickles, onions, tomatoes, and thousand island sauce.">Our LIMITED TIME 100% Canadian beef cheeseburger with melted cheese, lettuce, pickles, onions, tomatoes, and thousand island sauce.</textarea>
+                      <textarea class="form-control" id="descFormArea2" rows="3" name="menudesc2" placeholder="Our LIMITED TIME 100% Canadian beef cheeseburger with melted cheese, lettuce, pickles, onions, tomatoes, and thousand island sauce."
+                       required>Our LIMITED TIME 100% Canadian beef cheeseburger with melted cheese, lettuce, pickles, onions, tomatoes, and thousand island sauce.</textarea>
+                        <div class="invalid-feedback">
+                            A description is required.
+                        </div>
                     </div>
                     <hr>
                     <!-- menu item 3 -->
@@ -328,20 +382,33 @@
                     <div class="align-3-form">
                       <div class="col-md-6">
                         <label for="formFileImage3" class="form-label">Item Image</label>
-                        <input class="form-control form-control-sm" id="formFileImage3" type="file">
+                        <input class="form-control form-control-sm" id="formFileImage3" type="file"
+                               accept=".png, .jpg, .jpeg">
                       </div>
                       <div class="col-md-3">
                         <label for="inputItem3" class="form-label">Item Name</label>
-                        <input type="text" class="form-control" id="inputItem3" placeholder="Simion Special" value="Simion Special">
+                        <input type="text" class="form-control" id="inputItem3" placeholder="Simion Special"
+                               value="Simion Special" required>
+                          <div class="invalid-feedback">
+                              A name is required.
+                          </div>
                       </div>
                       <div class="col-md-2">
                         <label for="inputPrice3" class="form-label">Price</label>
-                        <input type="text" class="form-control" id="inputPrice3" placeholder="$18.99" value="18.99">
+                        <input type="text" class="form-control" id="inputPrice3" placeholder="18.99" value="18.99"
+                               min="0.01" step="0.01" required>
+                          <div class="invalid-feedback">
+                              A price is required.
+                          </div>
                       </div>
                     </div>
                     <div class="mb-3">
                       <label for="descFormArea3" class="form-label">Edit Description</label>
-                      <textarea class="form-control" id="descFormArea3" rows="3" name="menudesc3" placeholder="No one is left hungry after finishing this extra value 3 pound, 5 layer, bacon cheese burger.">No one is left hungry after finishing this extra value 3 pound, 5 layer, bacon cheese burger.</textarea>
+                      <textarea class="form-control" id="descFormArea3" rows="3" name="menudesc3" placeholder="No one is left hungry after finishing this extra value 3 pound, 5 layer, bacon cheese burger."
+                      required>No one is left hungry after finishing this extra value 3 pound, 5 layer, bacon cheese burger.</textarea>
+                        <div class="invalid-feedback">
+                            A description is required.
+                        </div>
                     </div>
                     <hr>
                     <!-- add menu item -->
@@ -359,7 +426,7 @@
               <div class="d-flex position-relative ms-3">
                 <img src="assets/menu1.jpg" class="flex-shrink-0 me-3" style="max-width:15%" alt="...">
                 <div>
-                  <h5 class="mt-0">Bog Burger </h5> 
+                  <h5 class="mt-0">Bog Burger </h5>
                   <p>Our famous 100% Canadian beef double cheeseburger with 3 layers of melted cheese, lettuce, pickles, roasted onions, and our signature Bogdan sauce.</p>
                 </div>
               </div>
@@ -369,9 +436,9 @@
               <div class="d-flex position-relative ms-3">
                 <img src="assets/menu2.png" class="flex-shrink-0 me-3" style="max-width:15%" alt="...">
                 <div>
-                  <h5 class="mt-0">POST Burger</h5> 
+                  <h5 class="mt-0">POST Burger</h5>
                   <p>Our LIMITED TIME 100% Canadian beef cheeseburger with melted cheese, lettuce, pickles, onions, tomatoes, and thousand island sauce.</p>
-                  
+
                 </div>
               </div>
               <span class="badge bg-success rounded-pill">$8.99</span>
@@ -396,7 +463,7 @@
             Add Blog Post
           </button>
           <!-- Modal -->
-          <form enctype="multipart/form-data" method="post">
+          <form enctype="multipart/form-data" method="post" class="needs-validation" novalidate>
             <div class="modal fade" id="blogModal" tabindex="-1" aria-labelledby="blogModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -408,10 +475,16 @@
                     <div class="mb-3">
                       <label for="formTitle" class="form-label">Blog Title</label>
                       <input type="text" class="form-control" id="formTitle" placeholder="Instert title here" name="blog-title" required>
+                        <div class="invalid-feedback">
+                            A title is required.
+                        </div>
                     </div>
                     <div class="mb-3">
                       <label for="blogFormControlTextarea1" class="form-label">Write a Blog Post</label>
                       <textarea class="form-control" id="blogFormControlTextarea1" rows="3" name="blogpost" placeholder="Insert body here" required></textarea>
+                        <div class="invalid-feedback">
+                            Content is required.
+                        </div>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -460,7 +533,7 @@
             Add Comment
           </button>
           <!-- Modal -->
-          <form enctype="multipart/form-data" method="post">
+          <form enctype="multipart/form-data" method="post" class="needs-validation" novalidate>
             <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -472,6 +545,9 @@
                     <div class="mb-3">
                       <label for="commentFormControlTextarea1" class="form-label">Write a comment</label>
                       <textarea class="form-control" id="commentFormControlTextarea1" rows="3" name="comment" placeholder="Type here" required></textarea>
+                        <div class="invalid-feedback">
+                            Content is required.
+                        </div>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -570,7 +646,7 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal">
               Edit Images
             </button>
-          </div>  
+          </div>
           <!-- Modal -->
           <form enctype="multipart/form-data" method="post">
             <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
@@ -587,7 +663,7 @@
                         <input class="form-control form-control-sm" id="formFileImage1" type="file">
                         <img src="assets/trash.png" class="img" style="max-width:12%" alt="..." role="button">
                       </div>
-                      
+
                     </div>
                     <div class="col-md-6">
                       <label for="formFileImage2" class="form-label">Image 2</label>
@@ -602,7 +678,7 @@
                         <input class="form-control form-control-sm" id="formFileImage3" type="file">
                         <img src="assets/trash.png" class="img" style="max-width:12%" alt="..." role="button">
                     </div>
-                    <br> 
+                    <br>
                     <button type="button" class="btn btn-success">Add Image</button>
                   </div>
                   <div class="modal-footer">
@@ -611,8 +687,8 @@
                 </div>
               </div>
             </div>
+            </div>
           </form>
-          
         </div>
         </div>
       </div>
@@ -620,6 +696,6 @@
 
     <!-- keep this at the end of body -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+    <script src="js/bs-validate.js"></script>
 </body>
 </html>

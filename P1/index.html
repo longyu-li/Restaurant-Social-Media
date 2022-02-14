@@ -30,7 +30,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
+                <div class="navbar-nav me-3">
                     <a class="nav-link active" href="feed.html">Feed</a>
                 </div>
                 <div class="navbar-nav me-auto">
@@ -122,19 +122,20 @@
     </nav>
 
     <main class="d-flex flex-column align-items-stretch flex-grow-1 justify-content-around">
-        <div class="d-flex flex-column align-items-center justify-content-center" id="search-container">
-            <div class="input-group" id="search">
-                <select class="form-select">
-                    <option selected value="restaurants">Restaurants</option>
-                    <option value="food">Food</option>
-                    <option value="address">Address</option>
-                </select>
-                <input type="text" class="form-control" placeholder="Search Restaurants...">
-                <a class="btn" type="button" id="search-btn" href="results.html">
-                    <i class="bi bi-search"></i>
-                </a>
-            </div>
-        </div>
+        <form class="d-flex flex-column align-items-center justify-content-center" id="search-container" action="results.html">
+                <div class="input-group" id="search">
+                    <select class="form-select" name="searchType">
+                        <option selected value="restaurants">Restaurants</option>
+                        <option value="food">Food</option>
+                        <option value="address">Address</option>
+                    </select>
+                    <input type="text" class="form-control" placeholder="Search Restaurants..." name="searchParam"
+                           required>
+                    <button class="btn" type="submit" id="search-btn">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+        </form>
 
         <div class="d-flex flex-column align-items-center">
             <h2 class="mb-3" id="featured">Featured</h2>
