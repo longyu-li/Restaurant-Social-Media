@@ -4,8 +4,6 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Comment, Like, Post
 
-from rest_framework.response import Response
-
 
 @login_required
 def notifications(req: HttpRequest) -> HttpResponse:
