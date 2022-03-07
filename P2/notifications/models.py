@@ -4,8 +4,6 @@ from django.db import models
 # Todo: Replace with our subclass
 from django.contrib.auth.models import User
 
-from rest_framework.serializers import ModelSerializer, CharField, ReadOnlyField
-
 
 class Notification(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
