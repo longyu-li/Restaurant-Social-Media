@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
-# from django.contrib.auth import authenticate
 from .models import Comment, Like, Post
 
 from rest_framework.response import Response
@@ -16,17 +15,22 @@ def notifications(req: HttpRequest) -> HttpResponse:
     # Todo, replace this with token auth somehow
     user = req.user
 
-    # Todo: testing only
-    # user = authenticate(req, username="george", password="x")
-
     comments = iter(Comment.objects.filter(owner=user))
     likes = iter(Like.objects.filter(owner=user))
     posts = iter(Post.objects.filter(owner=user))
 
-    all_ = sorted([*comments, *likes, *posts], key=lambda x: x.timestamp, reverse=True)
+    # Sort by datetime descending
+    all_ = sorted((*comments, *likes, *posts), key=lambda x: x.timestamp, reverse=True)
+
+    # Check for limit
+    if "limit" in req.GET:
+        limit = int(req.GET["limit"])
+        if limit >= 0:
+            all_ = all_[:limit]
 
     response = []
 
+    # Serialize
     for obj in all_:
         if isinstance(obj, Comment):
             data = {"type": "comment", "user": obj.user, "content": obj.content}
@@ -44,4 +48,4 @@ def notifications(req: HttpRequest) -> HttpResponse:
     return JsonResponse(response, safe=False)
 
     # Pretty print, for testing
-    return JsonResponse(response, safe=False, json_dumps_params={"indent": 2})
+    # return JsonResponse(response, safe=False, json_dumps_params={"indent": 2})
