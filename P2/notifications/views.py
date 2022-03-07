@@ -10,6 +10,9 @@ from rest_framework.response import Response
 
 @login_required
 def notifications(req: HttpRequest) -> HttpResponse:
+    if req.method != "GET":
+        return HttpResponse(status=404)
+
     # Todo, replace this with token auth somehow
     user = req.user
 
