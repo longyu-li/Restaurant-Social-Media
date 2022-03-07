@@ -17,14 +17,16 @@ def notifications(req: HttpRequest) -> HttpResponse:
     likes = iter(Like.objects.filter(owner=user))
     posts = iter(Post.objects.filter(owner=user))
 
-    # Sort by datetime descending
-    all_ = sorted((*comments, *likes, *posts), key=lambda x: x.timestamp, reverse=True)
+    all_ = [*comments, *likes, *posts]
 
     # Check for limit
     if "limit" in req.GET:
         limit = int(req.GET["limit"])
         if limit >= 0:
             all_ = all_[:limit]
+
+    # Sort by datetime descending
+    all_.sort(key=lambda obj: obj.timestamp, reverse=True)
 
     response = []
 
