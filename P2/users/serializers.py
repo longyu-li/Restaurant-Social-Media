@@ -6,7 +6,7 @@ from rest_framework.exceptions import ValidationError
 from users.models import RestifyUser
 
 
-class RegisterSerializer(serializers.ModelSerializer):
+class SignupSerializer(serializers.ModelSerializer):
 
     password1 = serializers.CharField(trim_whitespace=False)
     password2 = serializers.CharField(trim_whitespace=False)
