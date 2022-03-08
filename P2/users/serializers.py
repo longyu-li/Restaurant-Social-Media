@@ -15,14 +15,6 @@ class SignupSerializer(serializers.ModelSerializer):
 
         model = RestifyUser
         fields = ["first_name", "last_name", "email", "avatar", "phone_num"]
-        extra_kwargs = {
-            # these are inherited from AbstractUser but they are not required
-            # by default and a "hack" is required to change the model so we
-            # change it here instead
-            "first_name": {"required": True},
-            "last_name": {"required": True},
-            "email": {"required": True},
-        }
 
     # adapted from django.contrib.auth.forms.UserCreationForm
     def validate(self, attrs):
