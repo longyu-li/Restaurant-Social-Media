@@ -10,7 +10,7 @@ class RestifyUser(AbstractBaseUser):
 
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
 
     avatar = models.ImageField()
     phone_num = models.TextField(max_length=12, validators=[phone_num_validator])
