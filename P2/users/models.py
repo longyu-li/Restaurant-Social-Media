@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, UserManager
+from django.contrib.auth.models import AbstractBaseUser, UserManager, User
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -27,4 +27,4 @@ class RestifyUser(AbstractBaseUser):
     # from AbstractUser
     def clean(self):
         super().clean()
-        self.__class__.objects.normalize_email(self.email)
+        self.email = self.__class__.objects.normalize_email(self.email)
