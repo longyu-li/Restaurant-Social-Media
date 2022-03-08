@@ -8,13 +8,14 @@ from users.models import RestifyUser
 
 class SignupSerializer(serializers.ModelSerializer):
 
-    password1 = serializers.CharField(trim_whitespace=False)
-    password2 = serializers.CharField(trim_whitespace=False)
+    password1 = serializers.CharField(trim_whitespace=False, write_only=True)
+    password2 = serializers.CharField(trim_whitespace=False, write_only=True)
 
     class Meta:
 
         model = RestifyUser
-        fields = ["first_name", "last_name", "email", "avatar", "phone_num"]
+        fields = ["first_name", "last_name", "email", "avatar", "phone_num",
+                  "password1", "password2"]
 
     # adapted from django.contrib.auth.forms.UserCreationForm
     def validate(self, attrs):
@@ -28,6 +29,8 @@ class SignupSerializer(serializers.ModelSerializer):
             password_validation.validate_password(password2, self.instance)
         except DjangoValidationError as error:
             raise ValidationError({"password2", error})
+
+        return attrs
 
     def create(self, validated_data):
 
