@@ -1,12 +1,10 @@
-from email.policy import default
 from django.db import models
 
-# Todo: Replace with our subclass
-from django.contrib.auth.models import User
+from users.models import RestifyUser
 
 
 class Notification(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(RestifyUser, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
 
     class Meta:
