@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "rest_framework_simplejwt",
     "users",
     "notifications",
 ]
@@ -126,6 +128,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # for making custom user model work with auth
 AUTH_USER_MODEL = "users.RestifyUser"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ]
+}
 
 # for file uploads (e.g. avatars)
 MEDIA_ROOT = BASE_DIR / "media"
