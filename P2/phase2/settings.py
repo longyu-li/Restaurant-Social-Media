@@ -124,4 +124,9 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# for making custom user model work with auth
 AUTH_USER_MODEL = "users.RestifyUser"
+
+# for file uploads (e.g. avatars)
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"
