@@ -10,5 +10,5 @@ signup_req = {
     "phone_num": "000-000-0000",
     "password1": "12345^ABCDE",
     "password2": "12345^ABCDE",
-    "avatar": avatar
+    "avatar": avatar,
 }

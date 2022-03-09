@@ -10,7 +10,6 @@ from users.tests.constants import signup_req
 
 
 class SignupTests(APITestCase):
-
     def test_empty(self):
 
         res = self.client.post(reverse_lazy("users_signup"))

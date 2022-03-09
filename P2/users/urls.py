@@ -6,5 +6,5 @@ from users.views.signup_view import SignupView
 urlpatterns = [
     path("signup", SignupView.as_view(), name="users_signup"),
     path("signin", TokenObtainPairView.as_view(), name="users_signin"),
-    path("token", TokenRefreshView.as_view(), name="users_token")
+    path("token", TokenRefreshView.as_view(), name="users_token"),
 ]
