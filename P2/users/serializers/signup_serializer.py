@@ -28,7 +28,7 @@ class SignupSerializer(serializers.ModelSerializer):
         try:
             password_validation.validate_password(password2, self.instance)
         except DjangoValidationError as error:
-            raise ValidationError({"password2", error})
+            raise ValidationError({'password2': error.messages})
 
         return attrs
 
