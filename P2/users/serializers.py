@@ -2,11 +2,12 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from django.contrib.auth import password_validation
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from rest_framework.request import Request
 
 from users.models import RestifyUser
 
 
-class SignupSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
     password1 = serializers.CharField(trim_whitespace=False, write_only=True)
     password2 = serializers.CharField(trim_whitespace=False, write_only=True)
@@ -24,26 +25,38 @@ class SignupSerializer(serializers.ModelSerializer):
             "password2",
         ]
 
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+
+        request: Request = self.context["request"]
+
+        if request.method != "POST":
+            self.fields["email"].read_only = True
+
     # adapted from django.contrib.auth.forms.UserCreationForm
     def validate(self, attrs):
-        password1 = attrs["password1"]
-        password2 = attrs["password2"]
+        password1 = attrs.get("password1")
+        password2 = attrs.get("password2")
 
-        if password1 and password2 and password1 != password2:
-            raise ValidationError(
-                {"password2": "The two password fields didn't match."}
-            )
+        if password1 and password2:
 
-        try:
-            instance = RestifyUser(
-                first_name=attrs["first_name"],
-                last_name=attrs["last_name"],
-                email=attrs["email"],
-                phone_num=attrs["phone_num"]
-            )
-            password_validation.validate_password(password2, instance)
-        except DjangoValidationError as error:
-            raise ValidationError({"password2": error.messages})
+            if password1 != password2:
+
+                raise ValidationError(
+                    {"password2": "The two password fields didn't match."}
+                )
+
+            try:
+                instance = RestifyUser(
+                    first_name=attrs["first_name"],
+                    last_name=attrs["last_name"],
+                    email=attrs["email"],
+                    phone_num=attrs["phone_num"]
+                )
+                password_validation.validate_password(password2, instance)
+            except DjangoValidationError as error:
+                raise ValidationError({"password2": error.messages})
 
         return attrs
 

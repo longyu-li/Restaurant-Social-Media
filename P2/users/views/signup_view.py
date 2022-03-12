@@ -1,8 +1,8 @@
 from rest_framework.generics import CreateAPIView
 
-from users.serializers.signup_serializer import SignupSerializer
+from users.serializers import UserSerializer
 
 
 class SignupView(CreateAPIView):
 
-    serializer_class = SignupSerializer
+    serializer_class = UserSerializer
