@@ -9,7 +9,7 @@ phone_num_validator = RegexValidator("[0-9]{3}-[0-9]{3}-[0-9]{4}")
 class Restaurant(models.Model):
 
     # todo: incomplete stub, add other fields + reasonable attributes (e.g. length)
-    user = models.ForeignKey(to=RestifyUser, on_delete=models.CASCADE) # maybe one to one?
+    user = models.OneToOneField(to=RestifyUser, related_name='restaurant', on_delete=models.CASCADE) # maybe one to one?
 
 
     name = models.CharField(max_length=150)

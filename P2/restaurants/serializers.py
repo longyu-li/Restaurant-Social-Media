@@ -1,11 +1,8 @@
-from django.core.exceptions import ValidationError as DjangoValidationError
-from django.contrib.auth import password_validation
+
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
-from rest_framework.request import Request
+
 from restaurants.models import Restaurant
 
-from users.models import RestifyUser
 
 class RestaurantSerializer(serializers.ModelSerializer):
     follows = serializers.CharField(read_only=True)

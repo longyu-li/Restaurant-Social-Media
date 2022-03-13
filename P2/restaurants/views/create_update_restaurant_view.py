@@ -1,15 +1,16 @@
-from urllib import request
-from django.shortcuts import render
-from rest_framework.generics import CreateAPIView
+
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from restaurants.serializers import RestaurantSerializer
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth import get_user_model
 # Create your views here.
 
-class CreateRestaurantView(CreateAPIView):
+class CreateUpdateRestaurantView(CreateAPIView, RetrieveUpdateAPIView):
 
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_object(self):
+        return self.request.user.restaurant
