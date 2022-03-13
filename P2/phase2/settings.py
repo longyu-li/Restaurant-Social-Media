@@ -151,3 +151,6 @@ SIMPLE_JWT = {
 # for file uploads (e.g. avatars)
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "media/"
+
+# custom test runner that deletes uploaded files from tests
+TEST_RUNNER = "phase2.test_runner.CustomTestRunner"
