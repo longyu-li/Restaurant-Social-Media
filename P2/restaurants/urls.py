@@ -1,5 +1,5 @@
 from django.urls import path
-from restaurants.views import CreateRestaurantView
+from restaurants.views.create_restaurant_view import CreateRestaurantView
 
 from restaurants.views.action_views import like_restaurant, follow_restaurant, like_blog
 
