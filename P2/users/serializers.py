@@ -2,7 +2,6 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from django.contrib.auth import password_validation
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from rest_framework.request import Request
 
 from users.models import RestifyUser
 
@@ -29,7 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         super().__init__(*args, **kwargs)
 
-        request: Request = self.context["request"]
+        request = self.context["request"]
 
         if request.method != "POST":
             self.fields["email"].read_only = True
@@ -48,13 +47,19 @@ class UserSerializer(serializers.ModelSerializer):
                 )
 
             try:
-                instance = RestifyUser(
-                    first_name=attrs["first_name"],
-                    last_name=attrs["last_name"],
-                    email=attrs["email"],
-                    phone_num=attrs["phone_num"]
-                )
-                password_validation.validate_password(password2, instance)
+
+                request = self.context["request"]
+
+                if request.method != "POST":
+                    password_validation.validate_password(password2, request.user)
+                else:
+                    password_validation.validate_password(password2, RestifyUser(
+                        first_name=attrs["first_name"],
+                        last_name=attrs["last_name"],
+                        email=attrs["email"],
+                        phone_num=attrs["phone_num"]
+                    ))
+
             except DjangoValidationError as error:
                 raise ValidationError({"password2": error.messages})
 
@@ -76,3 +81,11 @@ class UserSerializer(serializers.ModelSerializer):
         new_user.save()
 
         return new_user
+
+    def update(self, instance, validated_data):
+
+        password = validated_data.get("password1")
+        if password:
+            instance.set_password(password)
+
+        return super().update(instance, validated_data)
