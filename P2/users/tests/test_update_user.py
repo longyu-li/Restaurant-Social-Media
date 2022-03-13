@@ -46,9 +46,12 @@ class UpdateUserTests(APITestCase):
         req = {
             "password1": "pswd^119",
             "password2": "pswd^119",
+            "password": signin_req["password"]
         }
 
-        self.client.patch(reverse_lazy("users_get_update"), req)
+        res = self.client.patch(reverse_lazy("users_get_update"), req)
+
+        self.assertEqual(res.status_code, HTTPStatus.OK)
 
         self.client.credentials()
 
