@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
 
-from restaurants.models import Restaurant
+from restaurants.models import Image, MenuItem, Restaurant
 
 
 class RestaurantSerializer(serializers.ModelSerializer):
@@ -19,4 +19,13 @@ class RestaurantSerializer(serializers.ModelSerializer):
         return obj.likes.count()
     
 
+class MenuItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MenuItem
+        fields = ['name', 'description', 'price', 'image']
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['image', 'title', 'description']
     

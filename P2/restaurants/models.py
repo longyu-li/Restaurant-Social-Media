@@ -46,7 +46,7 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField(max_length=280)
     price = models.DecimalField(max_digits=6, decimal_places=2) #nothing overly expensive to prevent money laundering 
-    logo = models.ImageField(upload_to="images/")
+    image = models.ImageField(upload_to="menu/")
 
 class Image(models.Model):
     restaurant = models.ForeignKey(to=Restaurant, on_delete=models.CASCADE)
