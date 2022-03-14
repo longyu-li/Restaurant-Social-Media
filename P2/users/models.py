@@ -1,8 +1,7 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
 from django.db import models
 
-phone_num_validator = RegexValidator("[0-9]{3}-[0-9]{3}-[0-9]{4}")
+from shared.validators import phone_num_validator
 
 
 class RestifyUser(AbstractUser):
