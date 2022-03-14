@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, authentication_classes
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from restaurants.models import Restaurant, Blog
 
 
-# todo: restrict https://piazza.com/class/kwh095qkvqb2a8?cid=528 if necessary
+# https://piazza.com/class/kwh095qkvqb2a8?cid=528 - design dec: restrict
 
 @api_view(["GET", "POST"])
 @authentication_classes([IsAuthenticated])
@@ -22,6 +23,9 @@ def like_restaurant(request):
             return Response(liked)
 
         case "POST":
+
+            if restaurant.user == request.user:
+                raise ValidationError("You cannot like your own restaurant.")
 
             if liked:
                 restaurant.likes.remove(request.user)
@@ -46,6 +50,9 @@ def follow_restaurant(request):
 
         case "POST":
 
+            if restaurant.user == request.user:
+                raise ValidationError("You cannot follow your own restaurant.")
+
             if followed:
                 restaurant.follows.remove(request.user)
             else:
@@ -68,6 +75,9 @@ def like_blog(request):
             return Response(liked)
 
         case "POST":
+
+            if blog.restaurant.user == request.user:
+                raise ValidationError("You cannot like your own restaurant's post.")
 
             if liked:
                 blog.likes.remove(request.user)
