@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from restaurants.models import Restaurant, Blog
 
+from notifications.models import Comment, Like, Follow
 
 # https://piazza.com/class/kwh095qkvqb2a8?cid=528 - design dec: restrict
 
@@ -31,6 +32,8 @@ def like_restaurant(request):
                 restaurant.likes.remove(request.user)
             else:
                 restaurant.likes.add(request.user)
+
+                Like(owner=restaurant.user, user=request.user, kind=Like.Kind.Restaurant).save()
 
             return Response(not liked)
 
@@ -58,6 +61,8 @@ def follow_restaurant(request):
             else:
                 restaurant.follows.add(request.user)
 
+                Follow(owner=restaurant.user, user=request.user).save()
+
             return Response(not followed)
 
 
@@ -83,5 +88,7 @@ def like_blog(request):
                 blog.likes.remove(request.user)
             else:
                 blog.likes.add(request.user)
+
+                Like(owner=blog.restaurant.user, user=request.user, kind=Like.Kind.Post).save()
 
             return Response(not liked)

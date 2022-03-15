@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
-from .models import Comment, Like, Post
+from .models import Comment, Like, Follow
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -15,11 +15,11 @@ def notifications(req: HttpRequest) -> HttpResponse:
 
     comments = iter(Comment.objects.filter(owner=user))
     likes = iter(Like.objects.filter(owner=user))
-    posts = iter(Post.objects.filter(owner=user))
+    follows = iter(Follow.objects.filter(owner=user))
 
     # Sort by datetime descending
     all_ = sorted(
-        (*comments, *likes, *posts), key=lambda obj: obj.timestamp, reverse=True
+        (*comments, *likes, *follows), key=lambda obj: obj.timestamp, reverse=True
     )
 
     # Check for limit
@@ -35,17 +35,16 @@ def notifications(req: HttpRequest) -> HttpResponse:
         if isinstance(obj, Comment):
             data = {"type": "comment", "user": obj.user, "content": obj.content}
         elif isinstance(obj, Like):
-            data = {"type": "like", "user": obj.user, "likes": obj.likes}
-        elif isinstance(obj, Post):
+            data = {"type": "like", "user": obj.user, "likes": obj.likes, "kind": obj.kind}
+        elif isinstance(obj, Follow):
             data = {
-                "type": "post",
-                "restaurant": obj.restaurant,
-                "content": obj.content,
+                "type": "follow",
+                "user": obj.user,
             }
         data["timestamp"] = obj.timestamp
         response.append(data)
 
-    return JsonResponse(response, safe=False)
+    # return JsonResponse(response, safe=False)
 
     # Pretty print, for testing
-    # return JsonResponse(response, safe=False, json_dumps_params={"indent": 2})
+    return JsonResponse(response, safe=False, json_dumps_params={"indent": 2})
