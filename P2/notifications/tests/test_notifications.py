@@ -37,7 +37,6 @@ class NotificationTests(AuthedAPITestCase):
         # Login as user 1
         self.login(self.acc2_login)
 
-        print(self.restaurant_res.json())
         r_id = self.restaurant_res.json()["id"]
 
         kwargs = {"restaurant_id": r_id}
@@ -51,6 +50,46 @@ class NotificationTests(AuthedAPITestCase):
         
         self.assertEqual(len(res.data), 1)
         data = res.data[0]
+
+        self.assertEqual(data["type"], "like")
+        self.assertEqual(data["user"], {
+            "id": self.acc2["id"],
+            "first_name": self.acc2["first_name"],
+            "last_name": self.acc2["last_name"]
+        })
+
+    def test_many(self):
+        # Login as user 1
+        self.login(self.acc2_login)
+
+        r_id = self.restaurant_res.json()["id"]
+
+        kwargs = {"restaurant_id": r_id}
+
+        res = self.client.post(reverse_lazy("restaurants_like", kwargs=kwargs))
+        self.assertEqual(res.status_code, HTTPStatus.OK)
+
+        res = self.client.post(reverse_lazy("restaurants_follow", kwargs=kwargs))
+        self.assertEqual(res.status_code, HTTPStatus.OK)
+
+        # TODO: liking a post, adding a comment
+
+        self.login(self.acc1_login)
+        res = self.client.get(reverse_lazy("notifications"))
+        self.assertEqual(res.status_code, HTTPStatus.OK)
+        
+        self.assertEqual(len(res.data), 2)
+
+        data = res.data[0]
+
+        self.assertEqual(data["type"], "follow")
+        self.assertEqual(data["user"], {
+            "id": self.acc2["id"],
+            "first_name": self.acc2["first_name"],
+            "last_name": self.acc2["last_name"]
+        })
+
+        data = res.data[1]
 
         self.assertEqual(data["type"], "like")
         self.assertEqual(data["user"], {
