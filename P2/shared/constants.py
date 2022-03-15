@@ -44,7 +44,7 @@ def get_restaurant_req():
     req = copy.deepcopy(restaurant_req)
 
     with open("shared/assets/cake.png", "rb") as banner_img, \
-            open("shared/assets/htt_logo.png") as logo_img:
+            open("shared/assets/htt_logo.png", "rb") as logo_img:
 
         req["logo"] = SimpleUploadedFile("logo.png", logo_img.read())
         req["banner"] = SimpleUploadedFile("banner.png", banner_img.read())
