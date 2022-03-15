@@ -4,12 +4,12 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Comment, Like, Post
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
-@login_required
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def notifications(req: HttpRequest) -> HttpResponse:
-    if req.method != "GET":
-        return HttpResponse(status=404)
-
     # Todo, replace this with token auth somehow
     user = req.user
 
