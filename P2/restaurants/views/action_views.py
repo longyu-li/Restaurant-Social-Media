@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.decorators import api_view, authentication_classes
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -11,10 +11,10 @@ from notifications.models import Comment, Like, Follow
 # https://piazza.com/class/kwh095qkvqb2a8?cid=528 - design dec: restrict
 
 @api_view(["GET", "POST"])
-@authentication_classes([IsAuthenticated])
-def like_restaurant(request):
+@permission_classes([IsAuthenticated])
+def like_restaurant(request, restaurant_id):
 
-    restaurant = get_object_or_404(Restaurant, pk=request.kwargs["restaurant_id"])
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     liked = restaurant.likes.contains(request.user)
 
     match request.method:
@@ -39,10 +39,10 @@ def like_restaurant(request):
 
 
 @api_view(["GET", "POST"])
-@authentication_classes([IsAuthenticated])
-def follow_restaurant(request):
+@permission_classes([IsAuthenticated])
+def follow_restaurant(request, restaurant_id):
 
-    restaurant = get_object_or_404(Restaurant, pk=request.kwargs["restaurant_id"])
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     followed = restaurant.follows.contains(request.user)
 
     match request.method:
@@ -67,10 +67,10 @@ def follow_restaurant(request):
 
 
 @api_view(["GET", "POST"])
-@authentication_classes([IsAuthenticated])
-def like_blog(request):
+@permission_classes([IsAuthenticated])
+def like_blog(request, blog_id):
 
-    blog = get_object_or_404(Blog, pk=request.kwargs["blog_id"])
+    blog = get_object_or_404(Blog, pk=blog_id)
     liked = blog.likes.contains(request.user)
 
     match request.method:
