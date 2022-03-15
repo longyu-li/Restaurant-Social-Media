@@ -93,13 +93,8 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
         "OPTIONS": {
-            "user_attributes": [
-                "first_name",
-                "last_name",
-                "email",
-                "phone_num"
-            ]
-        }
+            "user_attributes": ["first_name", "last_name", "email", "phone_num"]
+        },
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
@@ -143,9 +138,8 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
-    'PAGE_SIZE': 10,
-
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.CursorPagination",
+    "PAGE_SIZE": 10,
 }
 
 SIMPLE_JWT = {

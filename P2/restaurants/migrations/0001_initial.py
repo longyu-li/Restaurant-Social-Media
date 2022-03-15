@@ -16,53 +16,135 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Restaurant',
+            name="Restaurant",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=150)),
-                ('street', models.CharField(max_length=150)),
-                ('city', models.CharField(max_length=150)),
-                ('province', models.CharField(max_length=150)),
-                ('postal_code', models.CharField(max_length=150)),
-                ('logo', models.ImageField(upload_to='logos/')),
-                ('phone_num', models.CharField(max_length=12, validators=[django.core.validators.RegexValidator('[0-9]{3}-[0-9]{3}-[0-9]{4}')])),
-                ('banner', models.ImageField(upload_to='banners/')),
-                ('description', models.TextField(max_length=280)),
-                ('follows', models.ManyToManyField(related_name='followed_restaurants', to=settings.AUTH_USER_MODEL)),
-                ('likes', models.ManyToManyField(related_name='liked_restaurants', to=settings.AUTH_USER_MODEL)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='restaurant', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=150)),
+                ("street", models.CharField(max_length=150)),
+                ("city", models.CharField(max_length=150)),
+                ("province", models.CharField(max_length=150)),
+                ("postal_code", models.CharField(max_length=150)),
+                ("logo", models.ImageField(upload_to="logos/")),
+                (
+                    "phone_num",
+                    models.CharField(
+                        max_length=12,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                "[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                            )
+                        ],
+                    ),
+                ),
+                ("banner", models.ImageField(upload_to="banners/")),
+                ("description", models.TextField(max_length=280)),
+                (
+                    "follows",
+                    models.ManyToManyField(
+                        related_name="followed_restaurants", to=settings.AUTH_USER_MODEL
+                    ),
+                ),
+                (
+                    "likes",
+                    models.ManyToManyField(
+                        related_name="liked_restaurants", to=settings.AUTH_USER_MODEL
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="restaurant",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='MenuItem',
+            name="MenuItem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=150)),
-                ('description', models.TextField(max_length=280)),
-                ('price', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('image', models.ImageField(upload_to='menu/')),
-                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='restaurants.restaurant')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=150)),
+                ("description", models.TextField(max_length=280)),
+                ("price", models.DecimalField(decimal_places=2, max_digits=6)),
+                ("image", models.ImageField(upload_to="menu/")),
+                (
+                    "restaurant",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="restaurants.restaurant",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Image',
+            name="Image",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to='images/')),
-                ('title', models.CharField(max_length=150)),
-                ('description', models.TextField(max_length=280)),
-                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='restaurants.restaurant')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("image", models.ImageField(upload_to="images/")),
+                ("title", models.CharField(max_length=150)),
+                ("description", models.TextField(max_length=280)),
+                (
+                    "restaurant",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="restaurants.restaurant",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Blog',
+            name="Blog",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=150)),
-                ('content', models.TextField(max_length=280)),
-                ('date', models.DateTimeField(blank=True, null=True)),
-                ('likes', models.ManyToManyField(related_name='liked_blogs', to=settings.AUTH_USER_MODEL)),
-                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='restaurants.restaurant')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=150)),
+                ("content", models.TextField(max_length=280)),
+                ("date", models.DateTimeField(blank=True, null=True)),
+                (
+                    "likes",
+                    models.ManyToManyField(
+                        related_name="liked_blogs", to=settings.AUTH_USER_MODEL
+                    ),
+                ),
+                (
+                    "restaurant",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="restaurants.restaurant",
+                    ),
+                ),
             ],
         ),
     ]

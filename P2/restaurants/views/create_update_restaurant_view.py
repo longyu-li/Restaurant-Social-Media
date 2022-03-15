@@ -1,8 +1,9 @@
-
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from restaurants.serializers import RestaurantSerializer
 from rest_framework.permissions import IsAuthenticated
+
 # Create your views here.
+
 
 class CreateUpdateRestaurantView(CreateAPIView, RetrieveUpdateAPIView):
 

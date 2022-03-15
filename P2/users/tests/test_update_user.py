@@ -8,7 +8,6 @@ from shared.constants import get_signup_req, signin_req, signup_req
 
 
 class UpdateUserTests(AuthedAPITestCase):
-
     def setUp(self) -> None:
 
         self.client.post(reverse_lazy("users_signup"), get_signup_req())
@@ -37,7 +36,7 @@ class UpdateUserTests(AuthedAPITestCase):
         req = {
             "password1": "pswd^119",
             "password2": "pswd^119",
-            "password": signin_req["password"]
+            "password": signin_req["password"],
         }
 
         res = self.client.patch(reverse_lazy("users_get_update"), req)
@@ -46,7 +45,9 @@ class UpdateUserTests(AuthedAPITestCase):
 
         self.client.credentials()
 
-        self.login({
-            "email": signup_req["email"],
-            "password": req["password2"],
-        })
+        self.login(
+            {
+                "email": signup_req["email"],
+                "password": req["password2"],
+            }
+        )

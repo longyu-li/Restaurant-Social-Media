@@ -9,7 +9,8 @@ from .models import Comment, Like, Follow
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
-@api_view(['GET'])
+
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def notifications(req: HttpRequest) -> HttpResponse:
     # Todo, replace this with token auth somehow
@@ -42,13 +43,12 @@ def notifications(req: HttpRequest) -> HttpResponse:
             data = {
                 "type": "follow",
             }
-        data["timestamp"] = obj.timestamp\
-        
+        data["timestamp"] = obj.timestamp
         user = obj.user
         data["user"] = {
             "id": user.id,
             "first_name": user.first_name,
-            "last_name": user.last_name
+            "last_name": user.last_name,
         }
         response.append(data)
 

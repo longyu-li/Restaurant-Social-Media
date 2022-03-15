@@ -7,7 +7,6 @@ from shared.constants import get_signup_req, signin_req, get_restaurant_req
 
 
 class RestaurantActionTests(AuthedAPITestCase):
-
     def setUp(self) -> None:
 
         acc1_res = self.client.post(reverse_lazy("users_signup"), get_signup_req())
@@ -23,7 +22,9 @@ class RestaurantActionTests(AuthedAPITestCase):
 
         self.login(signin_req)
 
-        restaurant_res = self.client.post(reverse_lazy("edit_restaurant"), get_restaurant_req())
+        restaurant_res = self.client.post(
+            reverse_lazy("edit_restaurant"), get_restaurant_req()
+        )
         self.assertEqual(restaurant_res.status_code, HTTPStatus.CREATED)
 
         # blog_res = self.client.post(reverse_lazy(""))

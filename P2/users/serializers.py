@@ -54,12 +54,15 @@ class UserSerializer(serializers.ModelSerializer):
                 if request.method != "POST":
                     password_validation.validate_password(password2, request.user)
                 else:
-                    password_validation.validate_password(password2, RestifyUser(
-                        first_name=attrs["first_name"],
-                        last_name=attrs["last_name"],
-                        email=attrs["email"],
-                        phone_num=attrs["phone_num"]
-                    ))
+                    password_validation.validate_password(
+                        password2,
+                        RestifyUser(
+                            first_name=attrs["first_name"],
+                            last_name=attrs["last_name"],
+                            email=attrs["email"],
+                            phone_num=attrs["phone_num"],
+                        ),
+                    )
 
             except DjangoValidationError as error:
                 raise ValidationError({"password2": error.messages})

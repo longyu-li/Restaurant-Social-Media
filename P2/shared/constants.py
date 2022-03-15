@@ -35,7 +35,7 @@ restaurant_req = {
     "province": "Kyoto",
     "postal_code": "aaa_aaa",
     "phone_num": "000-000-0000",
-    "description": "A bakery."
+    "description": "A bakery.",
 }
 
 
@@ -43,8 +43,9 @@ def get_restaurant_req():
 
     req = copy.deepcopy(restaurant_req)
 
-    with open("shared/assets/cake.png", "rb") as banner_img, \
-            open("shared/assets/htt_logo.png", "rb") as logo_img:
+    with open("shared/assets/cake.png", "rb") as banner_img, open(
+        "shared/assets/htt_logo.png", "rb"
+    ) as logo_img:
 
         req["logo"] = SimpleUploadedFile("logo.png", logo_img.read())
         req["banner"] = SimpleUploadedFile("banner.png", banner_img.read())
@@ -52,7 +53,4 @@ def get_restaurant_req():
     return req
 
 
-blog_req = {
-    "title": "Closing early",
-    "content": "Closing early on Friday"
-}
+blog_req = {"title": "Closing early", "content": "Closing early on Friday"}

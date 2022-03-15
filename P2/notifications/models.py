@@ -2,9 +2,14 @@ from django.db import models
 
 from users.models import RestifyUser
 
+
 class Notification(models.Model):
-    owner = models.ForeignKey(RestifyUser, on_delete=models.CASCADE, related_name="%(class)s_owner")
-    user = models.ForeignKey(RestifyUser, on_delete=models.CASCADE, related_name="%(class)s_user")
+    owner = models.ForeignKey(
+        RestifyUser, on_delete=models.CASCADE, related_name="%(class)s_owner"
+    )
+    user = models.ForeignKey(
+        RestifyUser, on_delete=models.CASCADE, related_name="%(class)s_user"
+    )
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

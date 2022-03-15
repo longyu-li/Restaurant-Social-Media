@@ -4,10 +4,12 @@ from restaurants.models import Image, Restaurant
 from restaurants.serializers import ImageSerializer
 from rest_framework.pagination import CursorPagination
 
+
 class CursorSetPagination(CursorPagination):
     page_size = 10
-    page_size_query_param = 'page_size'
-    ordering = 'id'
+    page_size_query_param = "page_size"
+    ordering = "id"
+
 
 class GetImageListView(ListAPIView):
     queryset = Image.objects.all()
@@ -15,5 +17,5 @@ class GetImageListView(ListAPIView):
     pagination_class = CursorSetPagination
 
     def get_queryset(self):
-        restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        restaurant = get_object_or_404(Restaurant, id=self.kwargs["restaurant_id"])
         return restaurant.image_set.all()
