@@ -2,26 +2,17 @@ import json
 from http import HTTPStatus
 
 from django.urls import reverse_lazy
-from rest_framework.test import APITestCase
 
-from users.tests.constants import get_signup_req, signin_req, signup_req
+from shared.authed_test import AuthedAPITestCase
+from shared.constants import get_signup_req, signin_req, signup_req
 
 
-class UpdateUserTests(APITestCase):
-
-    def _login(self, req):
-
-        res = self.client.post(reverse_lazy("users_signin"), req)
-
-        self.assertEqual(res.status_code, HTTPStatus.OK)
-
-        tokens = json.loads(res.content)
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {tokens['access']}")
+class UpdateUserTests(AuthedAPITestCase):
 
     def setUp(self) -> None:
 
         self.client.post(reverse_lazy("users_signup"), get_signup_req())
-        self._login(signin_req)
+        self.login(signin_req)
 
     def test_missing_passwords(self):
 
@@ -55,7 +46,7 @@ class UpdateUserTests(APITestCase):
 
         self.client.credentials()
 
-        self._login({
+        self.login({
             "email": signup_req["email"],
             "password": req["password2"],
         })
