@@ -4,7 +4,7 @@ from http import HTTPStatus
 from django.urls import reverse_lazy
 from rest_framework.test import APITestCase
 
-from users.tests.constants import get_signup_req
+from shared.constants import get_signup_req
 
 
 class SignupTests(APITestCase):
