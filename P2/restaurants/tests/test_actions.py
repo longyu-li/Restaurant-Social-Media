@@ -65,11 +65,11 @@ class RestaurantActionTests(AuthedAPITestCase):
 
         get_like = self.client.get(reverse_lazy("restaurants_like", kwargs=kwargs))
         self.assertEqual(get_like.status_code, HTTPStatus.OK)
-        self.assertEqual(get_like.content, "true")
+        self.assertEqual(get_like.content.decode("utf-8"), "true")
 
         follow_res = self.client.post(reverse_lazy("restaurants_follow", kwargs=kwargs))
         self.assertEqual(follow_res.status_code, HTTPStatus.OK)
 
         get_follow = self.client.get(reverse_lazy("restaurants_follow", kwargs=kwargs))
         self.assertEqual(get_follow.status_code, HTTPStatus.OK)
-        self.assertEqual(get_follow.content, "true")
+        self.assertEqual(get_follow.content.decode("utf-8"), "true")
