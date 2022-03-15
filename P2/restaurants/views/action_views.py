@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from restaurants.models import Restaurant, Blog
 
-from notifications.models import Comment, Like, Follow
+from notifications.models import Like, Follow
 
 # https://piazza.com/class/kwh095qkvqb2a8?cid=528 - design dec: restrict
 

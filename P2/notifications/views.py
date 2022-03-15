@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
+from rest_framework.response import Response
+
 from .models import Comment, Like, Follow
 
 from rest_framework.decorators import api_view, permission_classes
@@ -33,18 +35,26 @@ def notifications(req: HttpRequest) -> HttpResponse:
     # Serialize
     for obj in all_:
         if isinstance(obj, Comment):
-            data = {"type": "comment", "user": obj.user, "content": obj.content}
+            data = {"type": "comment", "content": obj.content}
         elif isinstance(obj, Like):
-            data = {"type": "like", "user": obj.user, "likes": obj.likes, "kind": obj.kind}
+            data = {"type": "like", "kind": obj.kind}
         elif isinstance(obj, Follow):
             data = {
                 "type": "follow",
-                "user": obj.user,
             }
-        data["timestamp"] = obj.timestamp
+        data["timestamp"] = obj.timestamp\
+        
+        user = obj.user
+        data["user"] = {
+            "id": user.id,
+            "first_name": user.first_name,
+            "last_name": user.last_name
+        }
         response.append(data)
 
     # return JsonResponse(response, safe=False)
 
     # Pretty print, for testing
-    return JsonResponse(response, safe=False, json_dumps_params={"indent": 2})
+    # return JsonResponse(response, safe=False, json_dumps_params={"indent": 2})
+
+    return Response(response)

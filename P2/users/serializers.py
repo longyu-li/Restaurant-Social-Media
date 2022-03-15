@@ -15,6 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         model = RestifyUser
         fields = [
+            "id",
             "first_name",
             "last_name",
             "email",

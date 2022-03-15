@@ -17,10 +17,10 @@ class Comment(Notification):
 
 class Like(Notification):
     class Kind(models.TextChoices):
-        Restaurant = "R", "Restaurant"
-        Post = "P", "Post"
+        Restaurant = "restaurant"
+        Post = "post"
 
-    kind = models.CharField(choices=Kind.choices, max_length=1)
+    kind = models.CharField(choices=Kind.choices, max_length=10)
 
 
 class Follow(Notification):
