@@ -8,6 +8,9 @@ django = "~=4.0.3"
 djangorestframework = "~=3.13.1"
 pillow = "~=9.0.1"
 djangorestframework-simplejwt = "*"
+django-extensions = "*"
+pyparsing = "*"
+pydot = "*"
 
 [dev-packages]
 autoflake = "*"
