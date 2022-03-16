@@ -19,7 +19,9 @@ urlpatterns = [
     path("blog/<int:blog_id>/like/", like_blog, name="blog_like"),
     path("<int:restaurant_id>/blog/", CreateBlogPostView.as_view(), "create_blog_post"),
     path("blog/<int:blog_id>/", DeleteBlogPostView.as_view(), "delete_blog_post"),
-    path("<int:restaurant_id>/blog/", GetBlogPostListView.as_view(), "get_blog_post_list"),
+    path(
+        "<int:restaurant_id>/blog/", GetBlogPostListView.as_view(), "get_blog_post_list"
+    ),
     path("", CreateUpdateRestaurantView.as_view(), name="edit_restaurant"),
     path("<int:restaurant_id>/", GetRestaurantView.as_view(), name="get_restaurant"),
     path("menu/", CreateMenuItemView.as_view(), name="add_menu_item"),

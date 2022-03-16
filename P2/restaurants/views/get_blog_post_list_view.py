@@ -16,4 +16,8 @@ class GetBlogPostListView(ListAPIView):
     pagination_class = CursorSetPagination
 
     def get_queryset(self):
-        return Blog.objects.filter(restaurant=self.kwargs["restaurant_id"]).order_by("-date").all()
+        return (
+            Blog.objects.filter(restaurant=self.kwargs["restaurant_id"])
+            .order_by("-date")
+            .all()
+        )
