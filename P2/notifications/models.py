@@ -4,6 +4,7 @@ from users.models import RestifyUser
 
 from restaurants.models import Comment as ModelComment
 
+
 class Notification(models.Model):
     owner = models.ForeignKey(
         RestifyUser, on_delete=models.CASCADE, related_name="%(class)s_owner"

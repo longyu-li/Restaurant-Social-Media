@@ -34,11 +34,14 @@ def notifications(req: HttpRequest) -> HttpResponse:
     # Serialize
     for obj in all_:
         if isinstance(obj, Comment):
-            data = {"type": "comment", "comment": {
-                "id": obj.comment.id,
-                "content": obj.comment.content,
-                "date": obj.comment.date
-            }}
+            data = {
+                "type": "comment",
+                "comment": {
+                    "id": obj.comment.id,
+                    "content": obj.comment.content,
+                    "date": obj.comment.date,
+                },
+            }
         elif isinstance(obj, Like):
             data = {"type": "like", "kind": obj.kind}
         elif isinstance(obj, Follow):

@@ -10,5 +10,5 @@ urlpatterns = [
     path("signin/", TokenObtainPairView.as_view(), name="users_signin"),
     path("token/", TokenRefreshView.as_view(), name="users_token"),
     path("", GetUpdateUserView.as_view(), name="users_get_update"),
-    path("feed/", FeedView.as_view(), name="feed")
+    path("feed/", FeedView.as_view(), name="feed"),
 ]

@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView
 from restaurants.models import Restaurant, Tag
 from restaurants.serializers import RestaurantSerializer
@@ -7,6 +6,7 @@ from rest_framework.exceptions import APIException
 from http import HTTPStatus
 from django.db.models import Value
 from django.db.models.functions import Concat
+
 
 class CursorSetPagination(CursorPagination):
     page_size = 10
@@ -42,7 +42,7 @@ class SearchRestaurantsView(ListAPIView):
                         Value(" "),
                         "province",
                         Value(" "),
-                        "postal_code"
+                        "postal_code",
                     )
                 ).filter(location__icontains=search)
             case "name":

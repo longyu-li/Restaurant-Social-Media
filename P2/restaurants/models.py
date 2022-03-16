@@ -4,6 +4,7 @@ from django.db import models
 from users.models import RestifyUser
 from shared.validators import phone_num_validator
 
+
 class Restaurant(models.Model):
 
     # todo: incomplete stub, add other fields + reasonable attributes (e.g. length)
@@ -32,6 +33,7 @@ class Restaurant(models.Model):
 class Tag(models.Model):
     restaurant = models.ForeignKey(to=Restaurant, on_delete=models.CASCADE)
     tag = models.CharField(max_length=50)
+
 
 class Blog(models.Model):
 
@@ -65,6 +67,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to="images/")
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=280)
+
 
 class Comment(models.Model):
     owner = models.ForeignKey(to=RestifyUser, on_delete=models.CASCADE)

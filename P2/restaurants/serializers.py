@@ -54,10 +54,12 @@ class BlogSerializer(serializers.ModelSerializer):
     def get_likes(self, obj):
         return obj.likes.count()
 
+
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ["id", "tag"]
+
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:

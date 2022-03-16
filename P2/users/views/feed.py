@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView
-from restaurants.models import Blog, Restaurant
+from restaurants.models import Blog
 from restaurants.serializers import BlogSerializer
 from rest_framework.pagination import CursorPagination
 

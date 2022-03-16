@@ -23,4 +23,3 @@ class CreateUpdateDeleteRestaurantView(CreateAPIView, RetrieveUpdateDestroyAPIVi
             return self.request.user.restaurant
         except:
             raise Http404()
-
