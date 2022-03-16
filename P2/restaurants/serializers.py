@@ -42,6 +42,7 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Image
         fields = ["image", "title", "description"]
 
+
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
