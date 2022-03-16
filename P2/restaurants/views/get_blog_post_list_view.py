@@ -11,7 +11,7 @@ class CursorSetPagination(CursorPagination):
     ordering = "date"
 
 
-class GetImageListView(ListAPIView):
+class GetBlogPostView(ListAPIView):
     queryset = Blog.objects.order_by("-date").all()
     serializer_class = BlogSerializer
     pagination_class = CursorSetPagination
