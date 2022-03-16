@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 
-class CreateUpdateRestaurantView(CreateAPIView, RetrieveUpdateDestroyAPIView):
+class CreateUpdateDeleteRestaurantView(CreateAPIView, RetrieveUpdateDestroyAPIView):
 
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated]

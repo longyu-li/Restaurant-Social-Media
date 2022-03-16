@@ -1,6 +1,6 @@
 from django.urls import path
 from restaurants.views.create_image_view import CreateImageView
-from restaurants.views.create_update_restaurant_view import CreateUpdateRestaurantView
+from restaurants.views.create_update_delete_restaurant_view import CreateUpdateDeleteRestaurantView
 from restaurants.views.get_image_list_view import GetImageListView
 from restaurants.views.get_menu_list_view import GetMenuListView
 from restaurants.views.get_restaurant_view import GetRestaurantView
@@ -22,7 +22,7 @@ urlpatterns = [
     path(
         "<int:restaurant_id>/blog/", GetBlogPostListView.as_view(), "get_blog_post_list"
     ),
-    path("", CreateUpdateRestaurantView.as_view(), name="edit_restaurant"),
+    path("", CreateUpdateDeleteRestaurantView.as_view(), name="edit_restaurant"),
     path("<int:restaurant_id>/", GetRestaurantView.as_view(), name="get_restaurant"),
     path("menu/", CreateMenuItemView.as_view(), name="add_menu_item"),
     path(
