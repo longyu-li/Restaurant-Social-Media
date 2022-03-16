@@ -2,6 +2,7 @@ from django.db import models
 
 from users.models import RestifyUser
 
+from restaurants.models import Comment as ModelComment
 
 class Notification(models.Model):
     owner = models.ForeignKey(
@@ -17,7 +18,7 @@ class Notification(models.Model):
 
 
 class Comment(Notification):
-    content = models.CharField(max_length=1000)
+    comment = models.ForeignKey(to=ModelComment, on_delete=models.CASCADE)
 
 
 class Like(Notification):
