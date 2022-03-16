@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView
 from restaurants.models import Blog
 from restaurants.serializers import BlogSerializer

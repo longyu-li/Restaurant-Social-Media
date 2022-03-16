@@ -1,6 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest, HttpResponse
 
 from rest_framework.response import Response
 

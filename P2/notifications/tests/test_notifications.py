@@ -4,7 +4,6 @@ from django.urls import reverse_lazy
 
 from shared.authed_test import AuthedAPITestCase
 from shared.constants import get_signup_req, signin_req, get_restaurant_req
-from shared.util import check_subset
 
 
 class NotificationTests(AuthedAPITestCase):
