@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from restaurants.models import Blog
 
 
-class GetRestaurantView(RetrieveAPIView):
+class GetBlogPostView(RetrieveAPIView):
 
     serializer_class = BlogSerializer
     permission_classes = [IsAuthenticated]

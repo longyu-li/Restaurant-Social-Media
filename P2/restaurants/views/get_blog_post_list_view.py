@@ -11,7 +11,9 @@ class CursorSetPagination(CursorPagination):
     ordering = "date"
 
 
-class GetBlogPostView(ListAPIView):
-    queryset = Blog.objects.order_by("-date").all()
+class GetBlogPostListView(ListAPIView):
     serializer_class = BlogSerializer
     pagination_class = CursorSetPagination
+
+    def get_queryset(self):
+        return Blog.objects.filter(restaurant=self.kwargs["restaurant_id"]).order_by("-date").all()
