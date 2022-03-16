@@ -17,9 +17,15 @@ urlpatterns = [
     path("", CreateUpdateRestaurantView.as_view(), name="edit_restaurant"),
     path("<int:restaurant_id>/", GetRestaurantView.as_view(), name="get_restaurant"),
     path("menu/", CreateMenuItemView.as_view(), name="add_menu_item"),
-    path("menu/<int:menu_item_id>/", UpdateDeleteMenuItemView.as_view(), name="edit_menu_item"),
+    path(
+        "menu/<int:menu_item_id>/",
+        UpdateDeleteMenuItemView.as_view(),
+        name="edit_menu_item",
+    ),
     path("<int:restaurant_id>/menu/", GetMenuListView.as_view(), name="get_menu_list"),
     path("images/", CreateImageView.as_view(), name="add_image"),
-    path("<int:restaurant_id>/images/", GetImageListView.as_view(), name="get_image_list"),
+    path(
+        "<int:restaurant_id>/images/", GetImageListView.as_view(), name="get_image_list"
+    ),
     path("images/<int:image_id>/", UpdateDeleteImageView.as_view(), name="edit_image"),
 ]

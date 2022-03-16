@@ -6,9 +6,10 @@ from rest_framework.response import Response
 
 from restaurants.models import Restaurant, Blog
 
-from notifications.models import Comment, Like, Follow
+from notifications.models import Like, Follow
 
 # https://piazza.com/class/kwh095qkvqb2a8?cid=528 - design dec: restrict
+
 
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
@@ -33,7 +34,9 @@ def like_restaurant(request, restaurant_id):
             else:
                 restaurant.likes.add(request.user)
 
-                Like(owner=restaurant.user, user=request.user, kind=Like.Kind.Restaurant).save()
+                Like(
+                    owner=restaurant.user, user=request.user, kind=Like.Kind.Restaurant
+                ).save()
 
             return Response(not liked)
 
@@ -89,6 +92,8 @@ def like_blog(request, blog_id):
             else:
                 blog.likes.add(request.user)
 
-                Like(owner=blog.restaurant.user, user=request.user, kind=Like.Kind.Post).save()
+                Like(
+                    owner=blog.restaurant.user, user=request.user, kind=Like.Kind.Post
+                ).save()
 
             return Response(not liked)

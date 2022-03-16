@@ -1,7 +1,6 @@
-
 from rest_framework import serializers
 
-from restaurants.models import Image, MenuItem, Restaurant
+from restaurants.models import Blog, Image, MenuItem, Restaurant
 
 
 class RestaurantSerializer(serializers.ModelSerializer):
@@ -10,22 +9,41 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Restaurant
-        fields = ['name', 'street', 'city', 'province', 'postal_code', 'logo', 'phone_num', 'banner', 'description', 'follows', 'likes']
+        fields = [
+            "id",
+            "name",
+            "street",
+            "city",
+            "province",
+            "postal_code",
+            "logo",
+            "phone_num",
+            "banner",
+            "description",
+            "follows",
+            "likes",
+        ]
 
     def get_follows(self, obj):
         return obj.follows.count()
 
     def get_likes(self, obj):
         return obj.likes.count()
-    
+
 
 class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
-        fields = ['name', 'description', 'price', 'image']
+        fields = ["name", "description", "price", "image"]
+
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ['image', 'title', 'description']
-    
+        fields = ["image", "title", "description"]
+
+
+class BlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = ["title", "content", "likes", "date"]

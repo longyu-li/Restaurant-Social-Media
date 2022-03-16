@@ -6,7 +6,6 @@ from rest_framework.test import APITestCase
 
 
 class AuthedAPITestCase(APITestCase):
-
     def login(self, req):
 
         res = self.client.post(reverse_lazy("users_signin"), req)
