@@ -23,11 +23,17 @@ def notifications(req: HttpRequest) -> HttpResponse:
         (*comments, *likes, *follows), key=lambda obj: obj.timestamp, reverse=True
     )
 
-    # Check for limit
-    if "limit" in req.GET:
-        limit = int(req.GET["limit"])
-        if limit >= 0:
-            all_ = all_[:limit]
+    if "page_size" in req.GET:
+        page_size = int(req.GET["page_size"])
+    else:
+        page_size = 10
+
+    if "cursor" in req.GET:
+        cursor = int(req.GET["cursor"])
+    else:
+        cursor = 0
+
+    all_ = all_[cursor : cursor + page_size]
 
     response = []
 
@@ -56,10 +62,5 @@ def notifications(req: HttpRequest) -> HttpResponse:
             "last_name": user.last_name,
         }
         response.append(data)
-
-    # return JsonResponse(response, safe=False)
-
-    # Pretty print, for testing
-    # return JsonResponse(response, safe=False, json_dumps_params={"indent": 2})
 
     return Response(response)
