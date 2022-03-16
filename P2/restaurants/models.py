@@ -45,7 +45,7 @@ class Blog(models.Model):
     content = models.TextField(max_length=280)
 
     likes = models.ManyToManyField(RestifyUser, related_name="liked_blogs")
-    date = models.DateTimeField(null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
 
 
 class MenuItem(models.Model):
@@ -65,3 +65,9 @@ class Image(models.Model):
     image = models.ImageField(upload_to="images/")
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=280)
+
+class Comment(models.Model):
+    owner = models.ForeignKey(to=RestifyUser, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(to=Restaurant, on_delete=models.CASCADE)
+    content = models.CharField(max_length=500)
+    date = models.DateTimeField(auto_now_add=True)

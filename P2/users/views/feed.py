@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView
-from restaurants.models import Blog
+from restaurants.models import Blog, Restaurant
 from restaurants.serializers import BlogSerializer
 from rest_framework.pagination import CursorPagination
 
@@ -10,9 +10,11 @@ class CursorSetPagination(CursorPagination):
     ordering = "-date"
 
 
-class GetBlogPostListView(ListAPIView):
+class FeedView(ListAPIView):
     serializer_class = BlogSerializer
     pagination_class = CursorSetPagination
 
     def get_queryset(self):
-        return Blog.objects.filter(restaurant=self.kwargs["restaurant_id"])
+        restaurants = self.request.user.followed_restaurants.all()
+        ids = [r.id for r in restaurants]
+        return Blog.objects.filter(restaurant__in=ids).all()

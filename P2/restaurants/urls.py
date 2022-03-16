@@ -13,6 +13,7 @@ from restaurants.views.get_blog_post_list_view import GetBlogPostListView
 from restaurants.views.create_tag import CreateTagView
 from restaurants.views.delete_tag import DeleteTagView
 from restaurants.views.search_restaurants import SearchRestaurantsView
+from restaurants.views.get_create_comment import GetCreateCommentsView
 
 from restaurants.views.action_views import like_restaurant, follow_restaurant, like_blog
 
@@ -25,8 +26,9 @@ urlpatterns = [
     path("<int:restaurant_id>/tag", CreateTagView.as_view(), name="create_tag"),
     path("tags/<int:tag_id>", DeleteTagView.as_view(), name="delete_tag"),
     path("search/", SearchRestaurantsView.as_view(), name="search_restaurants"),
+    path("<int:restaurant_id>/comments/", GetCreateCommentsView.as_view(), name="get_create_comment"),
     path(
-        "<int:restaurant_id>/blog/", GetBlogPostListView.as_view(), name="get_blog_post_list"
+        "<int:restaurant_id>/blogs/", GetBlogPostListView.as_view(), name="get_blog_post_list"
     ),
     path("", CreateUpdateDeleteRestaurantView.as_view(), name="edit_restaurant"),
     path("<int:restaurant_id>/", GetRestaurantView.as_view(), name="get_restaurant"),

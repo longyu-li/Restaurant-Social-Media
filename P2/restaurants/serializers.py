@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from restaurants.models import Blog, Image, MenuItem, Restaurant, Tag
+from restaurants.models import Blog, Comment, Image, MenuItem, Restaurant, Tag
 
 
 class RestaurantSerializer(serializers.ModelSerializer):
@@ -44,11 +44,23 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class BlogSerializer(serializers.ModelSerializer):
+    likes = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Blog
         fields = ["title", "content", "likes", "date"]
+        read_only_fields = ["likes", "date"]
+
+    def get_likes(self, obj):
+        return obj.likes.count()
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ["id", "tag"]
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ["owner", "content", "date"]
+        read_only_fields = ["owner", "date"]
