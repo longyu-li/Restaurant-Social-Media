@@ -10,6 +10,9 @@ from restaurants.views.update_delete_menu_item_view import UpdateDeleteMenuItemV
 from restaurants.views.create_blog_post import CreateBlogPostView
 from restaurants.views.delete_blog_post import DeleteBlogPostView
 from restaurants.views.get_blog_post_list_view import GetBlogPostListView
+from restaurants.views.create_tag import CreateTagView
+from restaurants.views.delete_tag import DeleteTagView
+from restaurants.views.search_restaurants import SearchRestaurantsView
 
 from restaurants.views.action_views import like_restaurant, follow_restaurant, like_blog
 
@@ -17,10 +20,13 @@ urlpatterns = [
     path("<int:restaurant_id>/like/", like_restaurant, name="restaurants_like"),
     path("<int:restaurant_id>/follow/", follow_restaurant, name="restaurants_follow"),
     path("blog/<int:blog_id>/like/", like_blog, name="blog_like"),
-    path("<int:restaurant_id>/blog/", CreateBlogPostView.as_view(), "create_blog_post"),
-    path("blog/<int:blog_id>/", DeleteBlogPostView.as_view(), "delete_blog_post"),
+    path("<int:restaurant_id>/blog/", CreateBlogPostView.as_view(), name="create_blog_post"),
+    path("blog/<int:blog_id>/", DeleteBlogPostView.as_view(), name="delete_blog_post"),
+    path("<int:restaurant_id>/tag", CreateTagView.as_view(), name="create_tag"),
+    path("tags/<int:tag_id>", DeleteTagView.as_view(), name="delete_tag"),
+    path("search/", SearchRestaurantsView.as_view(), name="search_restaurants"),
     path(
-        "<int:restaurant_id>/blog/", GetBlogPostListView.as_view(), "get_blog_post_list"
+        "<int:restaurant_id>/blog/", GetBlogPostListView.as_view(), name="get_blog_post_list"
     ),
     path("", CreateUpdateRestaurantView.as_view(), name="edit_restaurant"),
     path("<int:restaurant_id>/", GetRestaurantView.as_view(), name="get_restaurant"),

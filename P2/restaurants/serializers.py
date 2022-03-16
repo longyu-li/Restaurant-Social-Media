@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from restaurants.models import Blog, Image, MenuItem, Restaurant
+from restaurants.models import Blog, Image, MenuItem, Restaurant, Tag
 
 
 class RestaurantSerializer(serializers.ModelSerializer):
@@ -47,3 +47,8 @@ class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
         fields = ["title", "content", "likes", "date"]
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ["id", "tag"]
