@@ -11,7 +11,6 @@ from rest_framework.permissions import IsAuthenticated
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def notifications(req: HttpRequest) -> HttpResponse:
-    # Todo, replace this with token auth somehow
     user = req.user
 
     comments = iter(Comment.objects.filter(owner=user))
