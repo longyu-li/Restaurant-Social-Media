@@ -1,3 +1,4 @@
+from django.http import Http404
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from restaurants.serializers import RestaurantSerializer
@@ -18,5 +19,8 @@ class CreateUpdateDeleteRestaurantView(CreateAPIView, RetrieveUpdateDestroyAPIVi
             raise PermissionDenied
 
     def get_object(self):
-        return self.request.user.restaurant
+        try:
+            return self.request.user.restaurant
+        except:
+            raise Http404()
 
