@@ -34,13 +34,13 @@ class RestaurantSerializer(serializers.ModelSerializer):
 class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
-        fields = ["name", "description", "price", "image"]
+        fields = ["id", "name", "description", "price", "image"]
 
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ["image", "title", "description"]
+        fields = ["id", "image", "title", "description"]
 
 
 class BlogSerializer(serializers.ModelSerializer):
@@ -48,7 +48,7 @@ class BlogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Blog
-        fields = ["title", "content", "likes", "date"]
+        fields = ["id", "title", "content", "likes", "date"]
         read_only_fields = ["likes", "date"]
 
     def get_likes(self, obj):
