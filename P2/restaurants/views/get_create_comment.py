@@ -5,6 +5,7 @@ from restaurants.permissions import IsAuthenticatedOrReadOnly
 from restaurants.serializers import CommentSerializer
 from restaurants.models import Comment, Restaurant
 from rest_framework.pagination import CursorPagination
+from notifications.models import Comment as NotifComment
 
 class CursorSetPagination(CursorPagination):
     page_size = 10
@@ -18,7 +19,8 @@ class GetCreateCommentsView(CreateAPIView, ListAPIView):
 
     def perform_create(self, serializer):
         restaurant = get_object_or_404(Restaurant, pk=self.kwargs["restaurant_id"])
-        serializer.save(restaurant=restaurant, owner=self.request.user)
+        comment = serializer.save(restaurant=restaurant, owner=self.request.user)
+        NotifComment(owner=restaurant.user, user=self.request.user, comment=comment).save()
 
     def get_queryset(self):
         return Comment.objects.filter(restaurant=self.kwargs["restaurant_id"])
