@@ -24,7 +24,7 @@ urlpatterns = [
     path("<int:restaurant_id>/follow/", follow_restaurant, name="restaurants_follow"),
     path("blog/<int:blog_id>/like/", like_blog, name="blog_like"),
     path(
-        "<int:restaurant_id>/blog/",
+        "blog/",
         CreateBlogPostView.as_view(),
         name="create_blog_post",
     ),
