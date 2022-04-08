@@ -5,6 +5,7 @@ import {
   Route
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./global.css";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 
