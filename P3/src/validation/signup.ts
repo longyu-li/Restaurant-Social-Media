@@ -1,5 +1,5 @@
 import { object, string, mixed, ref, InferType } from "yup";
-import { REQUIRED } from "./constants";
+import { REQUIRED } from "./utils";
 
 export const signUpSchema = object({
   first_name: string().required(REQUIRED),
@@ -14,4 +14,6 @@ export const signUpSchema = object({
   password2: string().required(REQUIRED).oneOf([ref("password1")], "The two password fields didn't match.")
 }).required();
 
-export type SignUpRequest = InferType<typeof signUpSchema>;
+export interface SignUpRequest extends InferType<typeof signUpSchema> {
+  [key: string]: any
+}

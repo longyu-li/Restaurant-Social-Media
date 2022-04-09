@@ -2,25 +2,54 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {SubmitHandler, useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpRequest, signUpSchema } from "../../../validation/signup";
 import Button from "react-bootstrap/Button";
 import AvatarField from "../AvatarField";
+import { mergeErrors } from "../../../validation/utils";
 
-interface Props {
-  onSubmit: SubmitHandler<SignUpRequest>
-}
-
-const SignUpForm: React.VFC<Props> = ({
-  onSubmit,
-}) => {
+const SignUpForm: React.VFC = () => {
 
   const formMethods = useForm<SignUpRequest>({
     resolver: yupResolver(signUpSchema)
   });
 
-  const { register, handleSubmit, formState: { errors } } = formMethods;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError
+  } = formMethods;
+
+  const onSubmit = async (data: SignUpRequest) => {
+    const reqBody = new FormData();
+    for (const field in data) {
+      if (field !== "avatar") reqBody.append(field, data[field]);
+    }
+    reqBody.append("avatar", data.avatar[0]);
+
+    const res = await fetch("/users/signup/", {
+      method: "POST",
+      body: reqBody
+    });
+
+    if (res.ok) {
+
+      // todo: login etc
+      console.log(await res.json());
+
+    } else if (res.status === 400) {
+
+      const errors = await res.json();
+      for (const field in errors) {
+        setError(field, { message: mergeErrors(errors[field]) });
+      }
+
+    } else {
+      console.log(await res.json());
+    }
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -98,7 +127,7 @@ const SignUpForm: React.VFC<Props> = ({
           </Form.Control.Feedback>
         </Form.Group>
         <Col xs={12} className="text-center">
-          <Button type="submit">Sign Up</Button>
+          <Button type="submit" disabled={isSubmitting}>Sign Up</Button>
         </Col>
       </Row>
     </Form>
