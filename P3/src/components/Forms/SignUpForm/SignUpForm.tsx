@@ -2,20 +2,25 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useForm } from "react-hook-form";
+import {SubmitHandler, useForm} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpRequest, signUpSchema } from "../../../validation/signup";
 import Button from "react-bootstrap/Button";
+import AvatarField from "../AvatarField";
 
-const SignUpForm: React.VFC = () => {
+interface Props {
+  onSubmit: SubmitHandler<SignUpRequest>
+}
 
-  const { register, handleSubmit, formState: { errors } } = useForm<SignUpRequest>({
+const SignUpForm: React.VFC<Props> = ({
+  onSubmit,
+}) => {
+
+  const formMethods = useForm<SignUpRequest>({
     resolver: yupResolver(signUpSchema)
   });
 
-  const onSubmit = (data: SignUpRequest) => {
-    console.log(data);
-  }
+  const { register, handleSubmit, formState: { errors } } = formMethods;
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -23,11 +28,8 @@ const SignUpForm: React.VFC = () => {
         <Col xs={12} className="text-center">
           <h1>Sign Up For Restify</h1>
         </Col>
-        <Form.Group as={Col} xs={12}>
-          <Form.Control
-            type="file"
-            {...register("avatar")}
-          />
+        <Form.Group as={Col} xs={12} className="text-center">
+          <AvatarField formMethods={formMethods} />
         </Form.Group>
         <Form.Group as={Col} xs={6}>
           <Form.Control
