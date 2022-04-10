@@ -30,10 +30,8 @@ def get_signup_req():
 
 restaurant_req = {
     "name": "Mugi's Bakery",
-    "street": "a",
-    "city": "Toyosato",
-    "province": "Kyoto",
-    "postal_code": "aaa_aaa",
+    "address": "555 tomato, toyosato, kyoto",
+    # "postal_code": "aaa_aaa",
     "phone_num": "000-000-0000",
     "description": "A bakery.",
 }

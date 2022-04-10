@@ -12,10 +12,11 @@ class RestaurantSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
-            "street",
-            "city",
-            "province",
-            "postal_code",
+            "address",
+            # "street",
+            # "city",
+            # "province",
+            # "postal_code",
             "logo",
             "phone_num",
             "banner",
@@ -45,6 +46,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 class BlogSerializer(serializers.ModelSerializer):
     likes = serializers.SerializerMethodField(read_only=True)
+    restaurant = serializers.RelatedField(read_only=True)
 
     class Meta:
         model = Blog

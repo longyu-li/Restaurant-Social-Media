@@ -34,17 +34,7 @@ class SearchRestaurantsView(ListAPIView):
                 restaurants = [tag.restaurant.id for tag in tags]
                 return Restaurant.objects.filter(pk__in=restaurants).all()
             case "address":
-                return Restaurant.objects.annotate(
-                    location=Concat(
-                        "street",
-                        Value(" "),
-                        "city",
-                        Value(" "),
-                        "province",
-                        Value(" "),
-                        "postal_code",
-                    )
-                ).filter(location__icontains=search)
+                return Restaurant.objects.filter(address__icontains=search)
             case "name":
                 return Restaurant.objects.filter(name__icontains=search)
             case _:

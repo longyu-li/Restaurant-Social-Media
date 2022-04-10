@@ -17,12 +17,13 @@ class Restaurant(models.Model):
     likes = models.ManyToManyField(RestifyUser, related_name="liked_restaurants")
     follows = models.ManyToManyField(RestifyUser, related_name="followed_restaurants")
 
-    street = models.CharField(max_length=150)
-    city = models.CharField(max_length=150)
-    province = models.CharField(
-        max_length=150
-    )  # longest province name (Newfoundland and Labrador)
-    postal_code = models.CharField(max_length=150)
+    address = models.CharField(max_length=500)
+    # street = models.CharField(max_length=150)
+    # city = models.CharField(max_length=150)
+    # province = models.CharField(
+    #     max_length=150
+    # )  # longest province name (Newfoundland and Labrador)
+    # postal_code = models.CharField(max_length=150)
     logo = models.ImageField(upload_to="logos/")
     phone_num = models.CharField(max_length=12, validators=[phone_num_validator])
     banner = models.ImageField(upload_to="banners/")
