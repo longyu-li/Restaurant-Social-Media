@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SignUpRequest, signUpSchema } from "../../../validation/signup";
+import { SignUpRequest, signUpSchema } from "../../../validation/signUp";
 import Button from "react-bootstrap/Button";
 import AvatarField from "../AvatarField";
 import { mergeErrors } from "../../../validation/utils";

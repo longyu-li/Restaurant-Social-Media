@@ -9,16 +9,21 @@ import "./global.css";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
+import { AuthProvider } from "./contexts/AuthContext";
+import SignIn from "./pages/SignIn";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />}/>
-          <Route path="signup" element={<SignUp />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />}/>
+            <Route path="signup" element={<SignUp />} />
+            <Route path="signin" element={<SignIn />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

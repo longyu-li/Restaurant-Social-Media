@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { UseFormReturn } from "react-hook-form";
-import { SignUpRequest } from "../../../validation/signup";
+import { SignUpRequest } from "../../../validation/signUp";
 import styles from "./AvatarField.module.css";
 import { ReactComponent as AvatarSvg } from "bootstrap-icons/icons/person-circle.svg"; // import SVG itself for color flexibility
 
