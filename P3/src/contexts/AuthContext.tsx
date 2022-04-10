@@ -56,7 +56,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     if (res.ok) {
       const newTokens = await res.json();
-      setTokens({ ...tokens, access: newTokens.access });
+      setTokens(newTokens);
     } else {
       console.log(await res.json());
       setTokens(null);
