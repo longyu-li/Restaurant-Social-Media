@@ -1,18 +1,20 @@
-import React from "react";
+import React, {useContext} from "react";
 // have to use Dropdown instead of NavDropdown to style the Toggle text color
 import {Dropdown, NavItem, NavLink} from "react-bootstrap";
 import {User} from "../../../responses/user";
 import styles from "./UserDropdown.module.css";
+import {AuthContext} from "../../../contexts/AuthContext";
 
 interface Props {
   user: User;
-  signOut: () => void;
 }
 
 const UserDropdown: React.VFC<Props> = ({
-  user,
-  signOut
+  user
 }) => {
+
+  const { signOut } = useContext(AuthContext);
+
   return (
     <Dropdown as={NavItem} align="end">
       <Dropdown.Toggle as={NavLink} className="text-white">

@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { SignInRequest } from "../validation/signIn";
 import { User } from "../responses/user";
+import {useLocation, useNavigate} from "react-router-dom";
 
 interface Tokens {
   access: string;
@@ -16,7 +17,7 @@ interface AuthContextType {
 
 const REFRESH_TIME = 15 * 60000; // 15 mins in ms
 
-export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+export const AuthContext = createContext<AuthContextType>(null!);
 
 export const AuthProvider: React.FC = ({ children }) => {
 
@@ -28,6 +29,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
   const [hardRefresh, setHardRefresh] = useState(true);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const loadUser = useCallback(async (tokens: Tokens) => {
     const res = await fetch("/users/", {
@@ -92,10 +96,13 @@ export const AuthProvider: React.FC = ({ children }) => {
       setUser(null);
       localStorage.removeItem("tokens");
 
-    } else if (!localStorage.getItem("tokens")) {
+    } else {
+
+      if (!localStorage.getItem("tokens")) {
+        loadUser(tokens)
+      }
 
       localStorage.setItem("tokens", JSON.stringify(tokens));
-      loadUser(tokens);
 
     }
   }, [tokens, loadUser]);
@@ -113,13 +120,18 @@ export const AuthProvider: React.FC = ({ children }) => {
     if (res.ok) {
       const newTokens = await res.json();
       setTokens(newTokens);
+
+      const locationState = location.state as { from: { pathname: string } | null } | null;
+      navigate(locationState?.from?.pathname || "/", { replace: true });
     }
 
     return res;
-
   }
 
-  const signOut = () => setTokens(null);
+  const signOut = () => {
+    setTokens(null);
+    navigate("/");
+  };
 
   return (
     <AuthContext.Provider

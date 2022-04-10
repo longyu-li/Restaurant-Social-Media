@@ -1,25 +1,41 @@
-import React from "react";
+import React, {useContext} from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import {SubmitHandler, useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { SignInRequest, signInSchema } from "../../../validation/signIn";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {AuthContext} from "../../../contexts/AuthContext";
 
-interface Props {
-  onSubmit: SubmitHandler<SignInRequest>;
-}
+const SignInForm: React.VFC = () => {
 
-const SignInForm: React.VFC<Props> = ({ onSubmit }) => {
+  const { signIn } = useContext(AuthContext);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
+    setError
   } = useForm<SignInRequest>({
     resolver: yupResolver(signInSchema)
   });
+
+  const onSubmit = async (data: SignInRequest) => {
+    const res = await signIn(data);
+    if (!res.ok) {
+      if (res.status === 401) {
+
+        setError("email", {message: "Invalid email or password."});
+        setError("password", {message: "Invalid email or password."});
+
+      } else {
+
+        console.log(await res.json());
+
+      }
+    }
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>

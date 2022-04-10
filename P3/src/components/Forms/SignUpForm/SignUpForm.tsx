@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,6 +8,7 @@ import { SignUpRequest, signUpSchema } from "../../../validation/signUp";
 import Button from "react-bootstrap/Button";
 import AvatarField from "../AvatarField";
 import { mergeErrors } from "../../../validation/utils";
+import {AuthContext} from "../../../contexts/AuthContext";
 
 const SignUpForm: React.VFC = () => {
 
@@ -21,6 +22,8 @@ const SignUpForm: React.VFC = () => {
     formState: { errors, isSubmitting },
     setError
   } = formMethods;
+
+  const { signIn } = useContext(AuthContext);
 
   const onSubmit = async (data: SignUpRequest) => {
     const reqBody = new FormData();
@@ -36,8 +39,14 @@ const SignUpForm: React.VFC = () => {
 
     if (res.ok) {
 
-      // todo: login etc
-      console.log(await res.json());
+      const signInRes = await signIn({
+        email: data.email,
+        password: data.password1
+      });
+
+      if (!signInRes.ok) {
+        console.log(await signInRes.json());
+      }
 
     } else if (res.status === 400) {
 
