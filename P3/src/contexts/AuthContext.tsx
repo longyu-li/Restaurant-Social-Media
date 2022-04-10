@@ -46,8 +46,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const refreshTokens = useCallback(async (tokens: Tokens) => {
 
-    // todo: (optimization) check for token validity (api call) before renewing
-
     const res = await fetch("/users/token/", {
       method: "POST",
       headers: {
@@ -71,6 +69,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     if (tokens) {
 
       if (hardRefresh) {
+        // todo: (optimization) check for token validity (api call) before renewing
         refreshTokens(tokens).then(() => {
           loadUser(tokens);
         });
