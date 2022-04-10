@@ -11,6 +11,8 @@ import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import { AuthProvider } from "./contexts/AuthContext";
 import SignIn from "./pages/SignIn";
+import Settings from "./pages/Settings";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -21,6 +23,11 @@ function App() {
             <Route index element={<Home />}/>
             <Route path="signup" element={<SignUp />} />
             <Route path="signin" element={<SignIn />} />
+            <Route path="settings" element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            } />
           </Route>
         </Routes>
       </AuthProvider>

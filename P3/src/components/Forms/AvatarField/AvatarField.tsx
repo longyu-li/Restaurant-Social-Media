@@ -32,6 +32,7 @@ const AvatarField: React.VFC<Props> = ({
           <AvatarSvg className={`${styles.avatar} m-2`} />}
         <span className="d-block">Select Avatar</span>
       </Form.Label>
+      {/* todo: limit this to images */}
       <Form.Control
         type="file"
         {...register("avatar")}
