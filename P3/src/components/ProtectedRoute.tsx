@@ -8,11 +8,17 @@ const ProtectedRoute: React.FC = ({
   const { tokens } = useContext(AuthContext);
   const location = useLocation();
 
-  if (!tokens) {
-    return <Navigate to="/signin" state={{ from: location }} replace />
+  if (tokens !== undefined) {
+    if (!tokens) {
+      return <Navigate to="/signin" state={{ from: location }} replace />
+    } else {
+      return children as JSX.Element;
+    }
   }
 
-  return children as JSX.Element;
+
+  return <></>;
+
 }
 
 export default ProtectedRoute;
