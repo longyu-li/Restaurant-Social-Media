@@ -10,10 +10,10 @@ interface Tokens {
 }
 
 interface AuthContextType {
-  tokens: Tokens | null;
+  tokens: Tokens | null | undefined;
   signIn: (data: SignInRequest) => Promise<Response>;
   signOut: () => void;
-  user: User | null;
+  user: User | null | undefined;
 }
 
 const REFRESH_TIME = 15 * 60000; // 15 mins in ms
@@ -22,11 +22,9 @@ export const AuthContext = createContext<AuthContextType>(null!);
 
 export const AuthProvider: React.FC = ({ children }) => {
 
-  const [tokens, setTokens] = useState<Tokens | null>(null);
+  const [tokens, setTokens] = useState<Tokens | null>();
 
-  const [user, setUser] = useState<User | null>(null);
-
-  const [hardRefresh, setHardRefresh] = useState(true);
+  const [user, setUser] = useState<User | null>();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -85,13 +83,12 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       }
     }
-    setHardRefresh(false);
 
   }, [refreshTokens, loadUser]);
 
   useEffect(() => {
 
-    if (!hardRefresh) {
+    if (tokens !== undefined) {
 
       if (tokens) {
 
@@ -112,15 +109,17 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     }
 
-  }, [hardRefresh, tokens, refreshTokens]);
+  }, [tokens, refreshTokens]);
 
   useEffect(() => {
 
-    if (!hardRefresh && tokens && !user) {
-      loadUser(tokens);
+    if (tokens !== undefined) {
+
+      if (tokens && !user) loadUser(tokens);
+
     }
 
-  }, [hardRefresh, tokens, user, loadUser])
+  }, [tokens, user, loadUser])
 
   const signIn = async (data: SignInRequest) => {
 
