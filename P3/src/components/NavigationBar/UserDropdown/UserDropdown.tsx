@@ -3,6 +3,7 @@ import React from "react";
 import {Dropdown, NavItem, NavLink} from "react-bootstrap";
 import {User} from "../../../responses/user";
 import styles from "./UserDropdown.module.css";
+import {Link} from "react-router-dom";
 
 interface Props {
   user: User;
@@ -24,7 +25,7 @@ const UserDropdown: React.VFC<Props> = ({
         <a className="d-block mx-2 mb-2 text-break" href={`mailto:${user.email}`}>{user.email}</a>
         <a className="d-block mx-2 mb-3" href={`tel:${user.phone_num}`}>{user.phone_num}</a>
         <Dropdown.Divider />
-        <Dropdown.Item>
+        <Dropdown.Item as={Link} to="/settings">
           Edit Profile
         </Dropdown.Item>
         <Dropdown.Item as="button" onClick={signOut}>

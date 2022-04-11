@@ -2,7 +2,7 @@ import React from "react";
 
 const Settings: React.VFC = () => {
   return (
-    <div></div>
+    <div>SETTINGS PLACEHOLDER</div>
   );
 }
 
