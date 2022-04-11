@@ -10,7 +10,7 @@ interface Tokens {
 }
 
 interface AuthContextType {
-  tokens: Tokens | null | undefined;
+  tokens: Tokens | null;
   signIn: (data: SignInRequest) => Promise<Response>;
   signOut: () => void;
   user: User | null | undefined;
@@ -22,9 +22,14 @@ export const AuthContext = createContext<AuthContextType>(null!);
 
 export const AuthProvider: React.FC = ({ children }) => {
 
-  const [tokens, setTokens] = useState<Tokens | null>();
+  const [tokens, setTokens] = useState<Tokens | null>(() => {
+    const savedTokens = localStorage.getItem("tokens");
+    return savedTokens ? JSON.parse(savedTokens) : null;
+  });
 
   const [user, setUser] = useState<User | null>();
+
+  const [hardRefresh, setHardRefresh] = useState(true);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,30 +70,22 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
 
-    const savedTokenStr = localStorage.getItem("tokens");
-    localStorage.removeItem("tokens"); // in case token is invalid etc
-
-    if (savedTokenStr) {
-
-      const savedTokens = JSON.parse(savedTokenStr) as Tokens;
-      const accessPayload = jwtDecode<JwtPayload>(savedTokens.access);
+    if (hardRefresh && tokens) {
+      const accessPayload = jwtDecode<JwtPayload>(tokens.access);
 
       if (accessPayload.exp! * 1000 <= Date.now()) {
 
-        refreshTokens(savedTokens);
-
-      } else {
-
-        setTokens(savedTokens);
+        refreshTokens(tokens);
 
       }
     }
+    setHardRefresh(false);
 
-  }, [refreshTokens, loadUser]);
+  }, [hardRefresh, tokens, refreshTokens]);
 
   useEffect(() => {
 
-    if (tokens !== undefined) {
+    if (!hardRefresh) {
 
       if (tokens) {
 
@@ -109,17 +106,13 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     }
 
-  }, [tokens, refreshTokens]);
+  }, [hardRefresh, tokens, refreshTokens]);
 
   useEffect(() => {
 
-    if (tokens !== undefined) {
+    if (!hardRefresh && tokens && !user) loadUser(tokens);
 
-      if (tokens && !user) loadUser(tokens);
-
-    }
-
-  }, [tokens, user, loadUser])
+  }, [hardRefresh, tokens, user, loadUser]);
 
   const signIn = async (data: SignInRequest) => {
 
