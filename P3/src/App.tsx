@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import { AuthProvider } from "./contexts/AuthContext";
 import SignIn from "./pages/SignIn";
 import Settings from "./pages/Settings";
+import Restaurant from "./pages/Restaurant"
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />}/>
+            <Route path="restaurant" element={<Restaurant />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="signin" element={<SignIn />} />
             <Route path="settings" element={
