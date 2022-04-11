@@ -20,12 +20,12 @@ const NavigationBar: React.VFC = () => {
           <span>estify™</span>
         </Navbar.Brand>
         <Nav>
-          {user !== undefined && (user ? <UserDropdown user={user} signOut={signOut} /> :
+          {user ? <UserDropdown user={user} signOut={signOut} /> :
             <>
               <Nav.Link as={Link} to="/signup" className="fw-bold text-white">Sign Up</Nav.Link>
               <Nav.Link as={Link} to="/signin" className="fw-bold text-white ms-2">Sign In</Nav.Link>
             </>
-          )}
+          }
         </Nav>
       </Container>
     </Navbar>
