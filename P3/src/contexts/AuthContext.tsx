@@ -13,7 +13,7 @@ interface AuthContextType {
   tokens: Tokens | null;
   signIn: (data: SignInRequest) => Promise<Response>;
   signOut: () => void;
-  user: User | null;
+  user: User | null | undefined;
 }
 
 const REFRESH_TIME = 15 * 60000; // 15 mins in ms
@@ -24,7 +24,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const [tokens, setTokens] = useState<Tokens | null>(null);
 
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>();
 
   const [hardRefresh, setHardRefresh] = useState(true);
 
