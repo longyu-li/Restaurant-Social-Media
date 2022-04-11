@@ -10,7 +10,7 @@ import { Nav } from "react-bootstrap";
 
 const NavigationBar: React.VFC = () => {
 
-  const { user } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
 
   return (
     <Navbar bg="red" variant="dark">
@@ -20,7 +20,7 @@ const NavigationBar: React.VFC = () => {
           <span>estify™</span>
         </Navbar.Brand>
         <Nav>
-          {user ? <UserDropdown user={user} /> :
+          {user ? <UserDropdown user={user} signOut={signOut} /> :
             <>
               <Nav.Link as={Link} to="/signup" className="fw-bold text-white">Sign Up</Nav.Link>
               <Nav.Link as={Link} to="/signin" className="fw-bold text-white ms-2">Sign In</Nav.Link>

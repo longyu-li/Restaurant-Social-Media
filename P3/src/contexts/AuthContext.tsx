@@ -1,7 +1,8 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { SignInRequest } from "../validation/signIn";
 import { User } from "../responses/user";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import jwtDecode, { JwtPayload } from "jwt-decode";
 
 interface Tokens {
   access: string;
@@ -21,10 +22,7 @@ export const AuthContext = createContext<AuthContextType>(null!);
 
 export const AuthProvider: React.FC = ({ children }) => {
 
-  const [tokens, setTokens] = useState(() => {
-    const savedTokens = localStorage.getItem("tokens");
-    return savedTokens ? JSON.parse(savedTokens) as Tokens : null;
-  });
+  const [tokens, setTokens] = useState<Tokens | null>(null);
 
   const [user, setUser] = useState<User | null>(null);
 
@@ -49,7 +47,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const refreshTokens = useCallback(async (tokens: Tokens) => {
-
     const res = await fetch("/users/token/", {
       method: "POST",
       headers: {
@@ -70,42 +67,60 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
 
-    if (tokens) {
+    const savedTokenStr = localStorage.getItem("tokens");
+    localStorage.removeItem("tokens"); // in case token is invalid etc
 
-      if (hardRefresh) {
-        // todo: (optimization) check for token validity (api call) before renewing
-        refreshTokens(tokens).then(() => {
-          loadUser(tokens);
-        });
-        setHardRefresh(false);
+    if (savedTokenStr) {
+
+      const savedTokens = JSON.parse(savedTokenStr) as Tokens;
+      const accessPayload = jwtDecode<JwtPayload>(savedTokens.access);
+
+      if (accessPayload.exp! * 1000 <= Date.now()) {
+
+        refreshTokens(savedTokens);
+
+      } else {
+
+        setTokens(savedTokens);
+
       }
-
-      const timer = setInterval(() => {
-        refreshTokens(tokens);
-      }, REFRESH_TIME);
-
-      return () => clearInterval(timer);
-
     }
+    setHardRefresh(false);
 
-  }, [hardRefresh, tokens, refreshTokens, loadUser]);
+  }, [refreshTokens, loadUser]);
 
   useEffect(() => {
-    if (!tokens) {
 
-      setUser(null);
-      localStorage.removeItem("tokens");
+    if (!hardRefresh) {
 
-    } else {
+      if (tokens) {
 
-      if (!localStorage.getItem("tokens")) {
-        loadUser(tokens)
+        localStorage.setItem("tokens", JSON.stringify(tokens));
+
+        const timer = setInterval(() => {
+          refreshTokens(tokens);
+        }, REFRESH_TIME);
+
+        return () => clearInterval(timer);
+
+      } else {
+
+        setUser(null);
+        localStorage.removeItem("tokens");
+
       }
 
-      localStorage.setItem("tokens", JSON.stringify(tokens));
-
     }
-  }, [tokens, loadUser]);
+
+  }, [hardRefresh, tokens, refreshTokens]);
+
+  useEffect(() => {
+
+    if (!hardRefresh && tokens && !user) {
+      loadUser(tokens);
+    }
+
+  }, [hardRefresh, tokens, user, loadUser])
 
   const signIn = async (data: SignInRequest) => {
 
