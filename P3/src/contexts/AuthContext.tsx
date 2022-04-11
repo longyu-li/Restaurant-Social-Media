@@ -13,7 +13,7 @@ interface AuthContextType {
   tokens: Tokens | null;
   signIn: (data: SignInRequest) => Promise<Response>;
   signOut: () => void;
-  user: User | null | undefined;
+  user: User | null;
 }
 
 const REFRESH_TIME = 15 * 60000; // 15 mins in ms
@@ -22,14 +22,9 @@ export const AuthContext = createContext<AuthContextType>(null!);
 
 export const AuthProvider: React.FC = ({ children }) => {
 
-  const [tokens, setTokens] = useState<Tokens | null>(() => {
-    const savedTokens = localStorage.getItem("tokens");
-    return savedTokens ? JSON.parse(savedTokens) : null;
-  });
+  const [tokens, setTokens] = useState<Tokens | null>();
 
   const [user, setUser] = useState<User | null>();
-
-  const [hardRefresh, setHardRefresh] = useState(true);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -70,22 +65,35 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
 
-    if (hardRefresh && tokens) {
-      const accessPayload = jwtDecode<JwtPayload>(tokens.access);
+    const savedTokenStr = localStorage.getItem("tokens");
+    localStorage.removeItem("tokens"); // in case token is invalid etc
+
+    if (savedTokenStr) {
+
+      const savedTokens = JSON.parse(savedTokenStr) as Tokens;
+      const accessPayload = jwtDecode<JwtPayload>(savedTokens.access);
 
       if (accessPayload.exp! * 1000 <= Date.now()) {
 
-        refreshTokens(tokens);
+        refreshTokens(savedTokens);
+
+      } else {
+
+        setTokens(savedTokens);
 
       }
-    }
-    setHardRefresh(false);
 
-  }, [hardRefresh, tokens, refreshTokens]);
+    } else {
+
+      setTokens(null);
+
+    }
+
+  }, [refreshTokens, loadUser]);
 
   useEffect(() => {
 
-    if (!hardRefresh) {
+    if (tokens !== undefined) {
 
       if (tokens) {
 
@@ -106,13 +114,17 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     }
 
-  }, [hardRefresh, tokens, refreshTokens]);
+  }, [tokens, refreshTokens]);
 
   useEffect(() => {
 
-    if (!hardRefresh && tokens && !user) loadUser(tokens);
+    if (tokens !== undefined) {
 
-  }, [hardRefresh, tokens, user, loadUser]);
+      if (tokens && !user) loadUser(tokens);
+
+    }
+
+  }, [tokens, user, loadUser])
 
   const signIn = async (data: SignInRequest) => {
 
@@ -140,11 +152,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     navigate("/");
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ tokens, signIn, signOut, user }}
-    >
+  return (tokens !== undefined && user !== undefined) ?
+    <AuthContext.Provider value={{ tokens, signIn, signOut, user }}>
       {children}
-    </AuthContext.Provider>
-  );
+    </AuthContext.Provider> : <></>
 }

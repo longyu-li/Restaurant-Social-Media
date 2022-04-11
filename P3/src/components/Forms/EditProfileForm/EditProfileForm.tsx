@@ -1,19 +1,16 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Form, Row, Col, InputGroup, FormControl} from "react-bootstrap";
 import AvatarField from "../AvatarField";
 import {useForm} from "react-hook-form";
 import {EditProfileRequest, editProfileSchema} from "../../../validation/editProfile";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {User} from "../../../responses/user";
 import Button from "react-bootstrap/Button";
+import {AuthContext} from "../../../contexts/AuthContext";
 
-interface Props {
-  user: User;
-}
+const EditProfileForm: React.VFC = () => {
 
-const EditProfileForm: React.VFC<Props> = ({
-  user
-}) => {
+  const authContext = useContext(AuthContext);
+  const user = authContext.user!;
 
   const {
     register,
