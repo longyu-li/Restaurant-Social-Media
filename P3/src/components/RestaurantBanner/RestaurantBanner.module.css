@@ -1,0 +1,29 @@
+#bannerCard {
+    background-color: rgba(247, 245, 154, 0.623);
+}
+
+#banner {
+    height: 250px;
+}
+
+.icon {
+    height: 175px;
+    margin: 10px;
+    border-color: orange;
+    border-width: thick;
+}
+
+#restaurantName {
+    font-weight: bolder;
+}
+
+#edit {
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+}
+
+.stack {
+    margin-top: 20px;
+}
+
