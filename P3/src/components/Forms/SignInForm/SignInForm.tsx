@@ -18,7 +18,8 @@ const SignInForm: React.VFC = () => {
     formState: { errors, isSubmitting },
     setError
   } = useForm<SignInRequest>({
-    resolver: yupResolver(signInSchema)
+    resolver: yupResolver(signInSchema),
+    mode: "onTouched"
   });
 
   const onSubmit = async (data: SignInRequest) => {

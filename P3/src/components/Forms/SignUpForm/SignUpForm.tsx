@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,15 +13,24 @@ import {AuthContext} from "../../../contexts/AuthContext";
 const SignUpForm: React.VFC = () => {
 
   const formMethods = useForm<SignUpRequest>({
-    resolver: yupResolver(signUpSchema)
+    resolver: yupResolver(signUpSchema),
+    mode: "onTouched"
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setError
+    setError,
+    watch,
+    trigger
   } = formMethods;
+
+  const password1 = watch("password1");
+
+  useEffect(() => {
+    trigger("password2");
+  }, [password1, trigger]);
 
   const { signIn } = useContext(AuthContext);
 

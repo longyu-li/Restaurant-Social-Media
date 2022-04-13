@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Form from "react-bootstrap/Form";
 import {UseFormReturn} from "react-hook-form";
 import { SignUpRequest } from "../../../validation/signUp";
@@ -9,6 +9,7 @@ import {EditProfileRequest} from "../../../validation/editProfile"; // import SV
 interface Props {
   formMethods: UseFormReturn<SignUpRequest> | UseFormReturn<EditProfileRequest>;
   currAvatar?: string;
+  avatarRef?: React.MutableRefObject<HTMLInputElement>
 }
 
 const AvatarField: React.VFC<Props> = ({
@@ -17,8 +18,11 @@ const AvatarField: React.VFC<Props> = ({
     formState: { errors },
     watch
   },
-  currAvatar
+  currAvatar,
+  avatarRef
 }) => {
+
+  const { ref, ...rest } = register("avatar");
 
   const { avatar } = watch();
   const [avatarUrl, setAvatarUrl] = useState<string>();
@@ -43,7 +47,11 @@ const AvatarField: React.VFC<Props> = ({
       <Form.Control
         type="file"
         accept="image/png, image/jpeg"
-        {...register("avatar")}
+        {...rest}
+        ref={(e: any) => {
+          ref(e);
+          if (avatarRef) avatarRef.current = e;
+        }}
         className="visually-hidden"
         isInvalid={!!errors.avatar}
         id="avatar"

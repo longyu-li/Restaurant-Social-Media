@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import {Form, Row, Col, InputGroup} from "react-bootstrap";
 import AvatarField from "../AvatarField";
 import {useForm} from "react-hook-form";
@@ -15,7 +15,8 @@ const EditProfileForm: React.VFC = () => {
   const { access } = authContext.tokens!;
 
   const formMethods = useForm<EditProfileRequest>({
-    resolver: yupResolver(editProfileSchema)
+    resolver: yupResolver(editProfileSchema),
+    mode: "onTouched"
   });
 
   const {
@@ -24,15 +25,29 @@ const EditProfileForm: React.VFC = () => {
     formState: { errors, isSubmitting },
     setError,
     reset,
+    watch,
+    trigger,
   } = formMethods;
+
+  const avatarRef = useRef<HTMLInputElement>(null!);
 
   useEffect(() => {
     reset({
       first_name: user.first_name,
       last_name: user.last_name,
-      phone_num: user.phone_num
+      phone_num: user.phone_num,
+      password1: "",
+      password2: "",
+      password: ""
     });
+    avatarRef.current.value = ""; // clear submitted file
   }, [user, reset]);
+
+  const password1 = watch("password1");
+
+  useEffect(() => {
+    trigger("password2");
+  }, [password1, trigger]);
 
   const onSubmit = async (data: EditProfileRequest) => {
 
@@ -79,7 +94,11 @@ const EditProfileForm: React.VFC = () => {
           <h1>Edit Profile</h1>
         </Col>
         <Form.Group as={Col} xs={12} className="text-center">
-          <AvatarField formMethods={formMethods} currAvatar={user.avatar} />
+          <AvatarField
+            formMethods={formMethods}
+            currAvatar={user.avatar}
+            avatarRef={avatarRef}
+          />
         </Form.Group>
         <Form.Group as={Col} xs={6}>
           <Form.Label>First Name</Form.Label>

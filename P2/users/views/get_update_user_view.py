@@ -17,13 +17,13 @@ class GetUpdateUserView(RetrieveUpdateAPIView):
     def put(self, request, *args, **kwargs):
 
         if not request.user.check_password(request.data.get("password")):
-            raise ValidationError({"password": "Current password must be provided."})
+            raise ValidationError({"password": ["Current password must be provided."]})
 
         return super().put(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
 
         if not request.user.check_password(request.data.get("password")):
-            raise ValidationError({"password": "Current password must be provided."})
+            raise ValidationError({"password": ["Current password must be provided."]})
 
         return super().patch(request, *args, **kwargs)
