@@ -17,8 +17,6 @@ interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
 }
 
-const REFRESH_TIME = 15 * 60000; // 15 mins in ms
-
 export const AuthContext = createContext<AuthContextType>(null!);
 
 export const AuthProvider: React.FC = ({ children }) => {
@@ -100,11 +98,12 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         localStorage.setItem("tokens", JSON.stringify(tokens));
 
-        // todo: (bug) calculate expire time vs REFRESH_TIME, use the sooner one
+        const accessPayload = jwtDecode<JwtPayload>(tokens.access);
+        const refreshTime = accessPayload.exp! * 1000 - Date.now();
 
         const timer = setInterval(() => {
           refreshTokens(tokens);
-        }, REFRESH_TIME);
+        }, refreshTime);
 
         return () => clearInterval(timer);
 
