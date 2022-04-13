@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { UseFormReturn } from "react-hook-form";
+import {UseFormReturn} from "react-hook-form";
 import { SignUpRequest } from "../../../validation/signUp";
 import styles from "./AvatarField.module.css";
-import { ReactComponent as AvatarSvg } from "bootstrap-icons/icons/person-circle.svg"; // import SVG itself for color flexibility
+import { ReactComponent as AvatarSvg } from "bootstrap-icons/icons/person-circle.svg";
+import {EditProfileRequest} from "../../../validation/editProfile"; // import SVG itself for color flexibility
 
 interface Props {
-  formMethods: UseFormReturn<SignUpRequest>
+  formMethods: UseFormReturn<SignUpRequest> | UseFormReturn<EditProfileRequest>;
+  currAvatar?: string;
 }
 
 const AvatarField: React.VFC<Props> = ({
-  formMethods: { register, formState: { errors }, watch },
+  formMethods: {
+    register,
+    formState: { errors },
+    watch
+  },
+  currAvatar
 }) => {
 
-  const avatar = watch("avatar") as FileList | null;
-
+  const { avatar } = watch();
   const [avatarUrl, setAvatarUrl] = useState<string>();
 
   useEffect(() => {
@@ -22,8 +28,10 @@ const AvatarField: React.VFC<Props> = ({
       const url = URL.createObjectURL(avatar[0]);
       setAvatarUrl(url);
       return () => URL.revokeObjectURL(url);
+    } else {
+      setAvatarUrl(currAvatar);
     }
-  }, [avatar]);
+  }, [avatar, currAvatar]);
 
   return (
     <>
@@ -32,9 +40,9 @@ const AvatarField: React.VFC<Props> = ({
           <AvatarSvg className={`${styles.avatar} m-2`} />}
         <span className="d-block">Select Avatar</span>
       </Form.Label>
-      {/* todo: limit this to images */}
       <Form.Control
         type="file"
+        accept="image/png, image/jpeg"
         {...register("avatar")}
         className="visually-hidden"
         isInvalid={!!errors.avatar}

@@ -45,6 +45,7 @@ const SignUpForm: React.VFC = () => {
       });
 
       if (!signInRes.ok) {
+        // todo: move this to signIn (within context)
         console.log(await signInRes.json());
       }
 

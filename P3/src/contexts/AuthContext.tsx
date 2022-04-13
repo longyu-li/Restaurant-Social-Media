@@ -14,6 +14,7 @@ interface AuthContextType {
   signIn: (data: SignInRequest) => Promise<Response>;
   signOut: () => void;
   user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
 }
 
 const REFRESH_TIME = 15 * 60000; // 15 mins in ms
@@ -99,6 +100,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         localStorage.setItem("tokens", JSON.stringify(tokens));
 
+        // todo: (bug) calculate expire time vs REFRESH_TIME, use the sooner one
+
         const timer = setInterval(() => {
           refreshTokens(tokens);
         }, REFRESH_TIME);
@@ -153,7 +156,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   return (tokens !== undefined && user !== undefined) ?
-    <AuthContext.Provider value={{ tokens, signIn, signOut, user }}>
+    <AuthContext.Provider value={{ tokens, signIn, signOut, user, setUser }}>
       {children}
     </AuthContext.Provider> : <></>
 }

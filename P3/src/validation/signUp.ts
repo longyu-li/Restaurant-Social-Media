@@ -1,5 +1,5 @@
 import { object, string, mixed, ref, InferType } from "yup";
-import { REQUIRED } from "./utils";
+import { PHONE_REGEX, REQUIRED } from "./utils";
 
 export const signUpSchema = object({
   first_name: string().required(REQUIRED),
@@ -7,7 +7,7 @@ export const signUpSchema = object({
   email: string().required(REQUIRED).email("Enter a valid email address."),
   avatar: mixed().test("file", "An avatar is required.", files => files && files.length > 0),
   phone_num: string().required(REQUIRED)
-    .matches(/^\d{3}-\d{3}-\d{4}$/, "A valid phone number (###-###-####) is required."),
+    .matches(PHONE_REGEX, "A valid phone number (###-###-####) is required."),
   password1: string().required(REQUIRED)
     .min(8, "Password must be at least 8 characters long.")
     .test("num", "Password cannot be entirely numeric.", pwd => !/^\d+$/.test(pwd || '')),
