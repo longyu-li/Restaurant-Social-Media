@@ -9,7 +9,6 @@ import {EditProfileRequest} from "../../../validation/editProfile"; // import SV
 interface Props {
   formMethods: UseFormReturn<SignUpRequest> | UseFormReturn<EditProfileRequest>;
   currAvatar?: string;
-  avatarRef?: React.MutableRefObject<HTMLInputElement>
 }
 
 const AvatarField: React.VFC<Props> = ({
@@ -18,11 +17,8 @@ const AvatarField: React.VFC<Props> = ({
     formState: { errors },
     watch
   },
-  currAvatar,
-  avatarRef
+  currAvatar
 }) => {
-
-  const { ref, ...rest } = register("avatar");
 
   const { avatar } = watch();
   const [avatarUrl, setAvatarUrl] = useState<string>();
@@ -47,11 +43,7 @@ const AvatarField: React.VFC<Props> = ({
       <Form.Control
         type="file"
         accept="image/png, image/jpeg"
-        {...rest}
-        ref={(e: any) => {
-          ref(e);
-          if (avatarRef) avatarRef.current = e;
-        }}
+        {...register("avatar")}
         className="visually-hidden"
         isInvalid={!!errors.avatar}
         id="avatar"

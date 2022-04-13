@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useRef} from "react";
-import {Form, Row, Col, InputGroup} from "react-bootstrap";
+import React, {useContext, useEffect, useState} from "react";
+import {Form, Row, Col, InputGroup, Alert} from "react-bootstrap";
 import AvatarField from "../AvatarField";
 import {useForm} from "react-hook-form";
 import {EditProfileRequest, editProfileSchema} from "../../../validation/editProfile";
@@ -29,7 +29,7 @@ const EditProfileForm: React.VFC = () => {
     trigger,
   } = formMethods;
 
-  const avatarRef = useRef<HTMLInputElement>(null!);
+  const [successAlert, setSuccessAlert] = useState(false);
 
   useEffect(() => {
     reset({
@@ -38,9 +38,10 @@ const EditProfileForm: React.VFC = () => {
       phone_num: user.phone_num,
       password1: "",
       password2: "",
-      password: ""
+      password: "",
+      avatar: "" // clear submitted file
     });
-    avatarRef.current.value = ""; // clear submitted file
+
   }, [user, reset]);
 
   const password1 = watch("password1");
@@ -71,8 +72,9 @@ const EditProfileForm: React.VFC = () => {
     if (res.ok) {
 
       authContext.setUser(await res.json());
-      // todo: display successful alert
 
+      setSuccessAlert(true);
+      setTimeout(() => setSuccessAlert(false), 3500);
 
     } else if (res.status === 400) {
 
@@ -96,11 +98,7 @@ const EditProfileForm: React.VFC = () => {
           <h1>Edit Profile</h1>
         </Col>
         <Form.Group as={Col} xs={12} className="text-center">
-          <AvatarField
-            formMethods={formMethods}
-            currAvatar={user.avatar}
-            avatarRef={avatarRef}
-          />
+          <AvatarField formMethods={formMethods} currAvatar={user.avatar} />
         </Form.Group>
         <Form.Group as={Col} xs={6}>
           <Form.Label>First Name</Form.Label>
@@ -170,6 +168,11 @@ const EditProfileForm: React.VFC = () => {
             {errors.password?.message}
           </Form.Control.Feedback>
         </InputGroup>
+        <Col xs={12}>
+          <Alert variant="success" show={successAlert}>
+            Update successful.
+          </Alert>
+        </Col>
       </Row>
     </Form>
   );
