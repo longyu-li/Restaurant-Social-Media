@@ -20,7 +20,7 @@ const SignUpForm: React.VFC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, touchedFields },
     setError,
     watch,
     trigger
@@ -29,8 +29,10 @@ const SignUpForm: React.VFC = () => {
   const password1 = watch("password1");
 
   useEffect(() => {
-    trigger("password2");
-  }, [password1, trigger]);
+    if (touchedFields.password1) {
+      trigger("password2");
+    }
+  }, [password1, trigger, touchedFields.password1]);
 
   const { signIn } = useContext(AuthContext);
 
