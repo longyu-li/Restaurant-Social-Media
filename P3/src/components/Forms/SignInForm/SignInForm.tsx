@@ -24,17 +24,11 @@ const SignInForm: React.VFC = () => {
 
   const onSubmit = async (data: SignInRequest) => {
     const res = await signIn(data);
-    if (!res.ok) {
-      if (res.status === 401) {
+    if (res.status === 401) {
 
         setError("email", {message: "Invalid email or password."});
         setError("password", {message: "Invalid email or password."});
 
-      } else {
-
-        console.log(await res.json());
-
-      }
     }
   }
 

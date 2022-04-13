@@ -145,6 +145,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       const locationState = location.state as { from: { pathname: string } | null } | null;
       navigate(locationState?.from?.pathname || "/", { replace: true });
+    } else {
+      console.log(await res.json());
     }
 
     return res;

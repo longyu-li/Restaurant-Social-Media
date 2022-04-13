@@ -48,15 +48,10 @@ const SignUpForm: React.VFC = () => {
 
     if (res.ok) {
 
-      const signInRes = await signIn({
+      await signIn({
         email: data.email,
         password: data.password1
       });
-
-      if (!signInRes.ok) {
-        // todo: move this to signIn (within context)
-        console.log(await signInRes.json());
-      }
 
     } else if (res.status === 400) {
 

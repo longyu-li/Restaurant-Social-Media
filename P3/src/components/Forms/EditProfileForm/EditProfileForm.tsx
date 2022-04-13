@@ -71,6 +71,8 @@ const EditProfileForm: React.VFC = () => {
     if (res.ok) {
 
       authContext.setUser(await res.json());
+      // todo: display successful alert
+
 
     } else if (res.status === 400) {
 
