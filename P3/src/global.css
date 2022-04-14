@@ -1,3 +1,14 @@
+/* we can add BS classes to html, body, #root via JS but it will cause FOUC */
+html, body, #root {
+    /* must use height (not min-height) here:
+    https://stackoverflow.com/questions/16871236/why-doesnt-html-and-body-take-all-available-height-of-document-when-min-height */
+    height: 100%
+}
+
+.min-h-100 {
+    min-height: 100%;
+}
+
 .bg-red {
     background-color: rgb(165, 4, 4) !important;
 }
