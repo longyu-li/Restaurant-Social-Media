@@ -3,8 +3,9 @@ import Form from "react-bootstrap/Form";
 import {UseFormReturn} from "react-hook-form";
 import { SignUpRequest } from "../../../validation/signUp";
 import styles from "./AvatarField.module.css";
+// import SVG itself for color flexibility
 import { ReactComponent as AvatarSvg } from "bootstrap-icons/icons/person-circle.svg";
-import {EditProfileRequest} from "../../../validation/editProfile"; // import SVG itself for color flexibility
+import {EditProfileRequest} from "../../../validation/editProfile";
 
 interface Props {
   formMethods: UseFormReturn<SignUpRequest> | UseFormReturn<EditProfileRequest>;
@@ -35,7 +36,7 @@ const AvatarField: React.VFC<Props> = ({
 
   return (
     <>
-      <Form.Label className="btn border rounded" htmlFor="avatar">
+      <Form.Label className={`btn border rounded ${!!errors.avatar ? 'border-danger' : ''}`} htmlFor="avatar">
         {avatarUrl ? <img src={avatarUrl} alt="Avatar" className={`${styles.avatar} m-2`} /> :
           <AvatarSvg className={`${styles.avatar} m-2`} />}
         <span className="d-block">Select Avatar</span>

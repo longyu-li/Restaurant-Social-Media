@@ -61,7 +61,7 @@ const SignInForm: React.VFC = () => {
           </Form.Control.Feedback>
         </Form.Group>
         <Col xs={12} className="text-center">
-          <Button type="submit" disabled={isSubmitting}>Sign In</Button>
+          <Button type="submit" variant="red" disabled={isSubmitting}>Sign In</Button>
         </Col>
       </Row>
     </Form>

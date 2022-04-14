@@ -165,7 +165,9 @@ const EditProfileForm: React.VFC = () => {
             {...register("password")}
             isInvalid={!!errors.password}
           />
-          <Button type="submit" disabled={isSubmitting}>Save Changes</Button>
+          <Button type="submit" variant="red" disabled={isSubmitting}>
+            Save Changes
+          </Button>
           <Form.Control.Feedback type="invalid">
             {errors.password?.message}
           </Form.Control.Feedback>

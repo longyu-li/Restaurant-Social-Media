@@ -12,3 +12,8 @@ html, body, #root {
 .bg-red {
     background-color: rgb(165, 4, 4) !important;
 }
+
+.btn-red {
+    background-color: rgb(165, 4, 4) !important;
+    color: var(--bs-white) !important;
+}
