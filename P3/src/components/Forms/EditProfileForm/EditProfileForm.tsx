@@ -27,7 +27,10 @@ const EditProfileForm: React.VFC = () => {
     reset,
     watch,
     trigger,
+    resetField
   } = formMethods;
+
+  const avatar = watch("avatar");
 
   const [successAlert, setSuccessAlert] = useState(false);
 
@@ -102,6 +105,9 @@ const EditProfileForm: React.VFC = () => {
         <Form.Group as={Col} xs={12} className="text-center">
           <AvatarField formMethods={formMethods} currAvatar={user.avatar} />
         </Form.Group>
+        {avatar && avatar.length > 0 && <Col xs={12} className="text-center">
+          <Button variant="red" onClick={() => resetField("avatar")}>Reset Avatar</Button>
+        </Col>}
         <Form.Group as={Col} xs={6}>
           <Form.Label>First Name</Form.Label>
           <Form.Control
