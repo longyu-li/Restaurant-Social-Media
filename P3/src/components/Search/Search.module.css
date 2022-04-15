@@ -1,0 +1,27 @@
+#search {
+    color: inherit;
+}
+
+#select {
+    /* flex: 0 0 16ch; */
+    width: unset;
+    border-width: 1px 0 1px 1px;
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+
+#text {
+    /* flex: 1 0 25ch; */
+    width: 50ch;
+    border-width: 1px 0 1px 0;
+}
+
+#btn {
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+
+#search * {
+    border-color: black;
+    border-radius: 0;
+}
