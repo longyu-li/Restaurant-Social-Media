@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { SignInRequest } from "../validation/signIn";
 import { User } from "../responses/user";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -13,9 +13,12 @@ interface AuthContextType {
   tokens: Tokens | null;
   signIn: (data: SignInRequest) => Promise<Response>;
   signOut: () => void;
-  user: User | null;
+  user: User | null,
   setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
+  header: {"Authorization": string};
 }
+
+
 
 export const AuthContext = createContext<AuthContextType>(null!);
 
@@ -140,8 +143,14 @@ export const AuthProvider: React.FC = ({ children }) => {
     navigate("/");
   };
 
+  const header = useMemo(() => {
+    return {
+      "Authorization": `Bearer ${tokens?.access}`
+    }
+  }, [tokens]);
+
   return (tokens !== undefined && user !== undefined) ?
-    <AuthContext.Provider value={{ tokens, signIn, signOut, user, setUser }}>
+    <AuthContext.Provider value={{ tokens, signIn, signOut, user, setUser, header }}>
       {children}
     </AuthContext.Provider> : <></>
 }
