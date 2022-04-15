@@ -63,69 +63,53 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-
     const savedTokenStr = localStorage.getItem("tokens");
     localStorage.removeItem("tokens"); // in case token is invalid etc
 
     if (savedTokenStr) {
-
       const savedTokens = JSON.parse(savedTokenStr) as Tokens;
       const accessPayload = jwtDecode<JwtPayload>(savedTokens.access);
 
       if (accessPayload.exp! * 1000 <= Date.now()) {
-
         refreshTokens(savedTokens);
-
       } else {
-
         setTokens(savedTokens);
-
       }
-
     } else {
-
       setTokens(null);
-
     }
 
   }, [refreshTokens, loadUser]);
 
   useEffect(() => {
-
     if (tokens !== undefined) {
-
       if (tokens) {
-
         localStorage.setItem("tokens", JSON.stringify(tokens));
 
         const accessPayload = jwtDecode<JwtPayload>(tokens.access);
-        const refreshTime = accessPayload.exp! * 1000 - Date.now();
 
-        const timer = setInterval(() => {
+        // Refresh 30s before expiry
+        const refreshTime = accessPayload.exp! * 1000 - Date.now() - 30*1000;
+
+        const timer = setTimeout(() => {
           refreshTokens(tokens);
         }, refreshTime);
 
-        return () => clearInterval(timer);
-
+        return () => clearTimeout(timer);
       } else {
-
         setUser(null);
         localStorage.removeItem("tokens");
-
       }
-
     }
 
   }, [tokens, refreshTokens]);
 
   useEffect(() => {
-
     if (tokens !== undefined) {
-
-      if (tokens && !user) loadUser(tokens);
-
+      if (tokens && !user) {
+        loadUser(tokens);
+      }
     }
-
   }, [tokens, user, loadUser])
 
   const signIn = async (data: SignInRequest) => {
