@@ -1,19 +1,25 @@
 import React, {createContext, useCallback, useEffect, useState} from "react";
 import {Restaurant} from "../responses/restaurant";
 import {useLocation} from "react-router-dom";
+import {Menu} from "../responses/menu";
 
 
 interface RestaurantContextType {
     restaurant: Restaurant | null;
     loadRestaurant: (id: String) => void;
     getIDFromURL: () => String;
+    // menu: Menu[] | undefined;
+    // loadMenu: (id: String) => void;
+
 }
 
 export const RestaurantContext = createContext<RestaurantContextType>(null!);
 
 export const RestaurantProvider: React.FC = ({ children }) => {
     const [restaurant, setRestaurant] = useState<Restaurant | null>();
+    // const [menu, setMenu] = useState<Menu[]>();
     const location = useLocation();
+
 
     const loadRestaurant = useCallback(async (id) => {
         const res = await fetch(`/restaurants/${id}/`);
@@ -24,6 +30,16 @@ export const RestaurantProvider: React.FC = ({ children }) => {
             console.log(await res.json());
         }
     }, []);
+
+    // const loadMenu = useCallback(async (id) => {
+    //     const res = await fetch(`/restaurants/${id}/menu?cursor=`);
+    //
+    //     if (res.ok) {
+    //         setMenu(await res.json());
+    //     } else {
+    //         console.log(await res.json());
+    //     }
+    // }, []);
 
     const getIDFromURL = () => {
         let path = location.pathname;
@@ -38,8 +54,12 @@ export const RestaurantProvider: React.FC = ({ children }) => {
         loadRestaurant(getIDFromURL());
     }, [loadRestaurant, getIDFromURL])
 
+    // useEffect(() => {
+    //     loadMenu(getIDFromURL());
+    // }, [loadMenu, getIDFromURL])
+
     return (restaurant !== undefined) ?
-        <RestaurantContext.Provider value={{ restaurant, loadRestaurant, getIDFromURL }}>
+        <RestaurantContext.Provider value={{ restaurant, loadRestaurant, getIDFromURL}}>
             {children}
         </RestaurantContext.Provider> : <></>
 

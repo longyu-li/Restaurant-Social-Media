@@ -1,0 +1,17 @@
+.tab{
+    width: 313px;
+    display: flex;
+    background-color: rgb(255, 195, 0) !important;
+    color: white;
+    font-weight: bold;
+
+}
+.tab:focus, .tab:hover{
+    color: black !important;
+    background-color: rgb(219, 128, 23) !important;
+}
+
+.tabs {
+     justify-content: center;
+}
+

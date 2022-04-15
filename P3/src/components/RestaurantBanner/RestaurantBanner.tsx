@@ -11,6 +11,7 @@ const RestaurantBanner: React.VFC = () => {
     if (restaurant === null){
         return (<h1> This Restaurant Does Not Exist</h1>);
     }
+
     return (
         <Card style={{}} id={styles.bannerCard}>
             <Card.Img variant="top" src={restaurant.banner} id={styles.banner}/>
