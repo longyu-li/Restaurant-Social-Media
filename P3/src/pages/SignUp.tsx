@@ -7,8 +7,8 @@ import SignUpForm from "../components/Forms/SignUpForm";
 const SignUp: React.VFC = () => {
   return (
     <Container fluid className="flex-grow-1 d-flex flex-column justify-content-center">
-      <Row>
-        <Col xs={{ span: 4, offset: 4 }}>
+      <Row className="justify-content-center">
+        <Col sm={10} md={8} lg={6} xl={4}>
           <SignUpForm />
         </Col>
       </Row>
