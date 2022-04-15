@@ -1,10 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SignUpForm from "../components/Forms/SignUpForm";
 
 const SignUp: React.VFC = () => {
+
+  useEffect(() => {
+    document.title = "Restify - Sign Up";
+  }, []);
+
   return (
     <Container fluid className="flex-grow-1 d-flex flex-column justify-content-center">
       <Row className="justify-content-center">

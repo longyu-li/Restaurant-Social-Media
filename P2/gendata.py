@@ -1,5 +1,6 @@
 import subprocess as sp
 import os, sys, re, shutil
+from random import random
 
 shutil.rmtree('media')
 
@@ -47,6 +48,8 @@ for line in data.split('\n'):
 
     phonenum = '-'.join(re.findall('\d+', phonenum))
 
+    addr = addr.replace('#', '')
+
     print(name, site, phonenum, addr, desc, menu)
 
     try:
@@ -58,9 +61,9 @@ for line in data.split('\n'):
     images = []
     menu_images = []
 
-    for fname in os.listdir(f'data\images\{name}'):
+    for fname in os.listdir(f'data/images/{name}'):
         if fname.endswith('.jpg'):
-            with open(f'data\images\{name}\{fname}', 'rb') as imgfile:
+            with open(f'data/images/{name}/{fname}', 'rb') as imgfile:
                 imgdata = imgfile.read()
             uploaded = SimpleUploadedFile(fname, imgdata)
             if re.match("^\d+", fname):
@@ -96,15 +99,12 @@ for line in data.split('\n'):
             image=img,
             description=f"Image #{i}"
         )
-    
+
     for i, item in enumerate(menu):
-        Image.objects.create(
+        MenuItem.objects.create(
+            name=item,
             restaurant=rest,
+            description="...",
+            price=random()*30 + 5,
             image=menu_images[i],
-            title=item,
-            description=f"Menu item #{i}"
         )
-
-
-
-# Dave_&_Buster's,http://www.daveandbusters.com,(905) 760-7600,120 Interchange Way Vaughan# ON L4K 5C3,You know what Toronto needs? It needs more winning. More Arcade first dates with virtual realityzombie kills. More Strawberry Watermelon Margarita cocktails at happy hour with coworkers. Moretouchdown dances on absurdly large TV screens every gameday. More of the kind of wins you'll fin�,
