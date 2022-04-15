@@ -21,14 +21,11 @@ const shuffle = <T,>(array: T[]) => {
 }
 
 const Home: React.VFC = () => {
-  const auth = useContext(AuthContext);
-
-  const [feat, setFeat] = useState([] as Restaurant[]);
+  const [feat, setFeat] = useState(undefined! as Restaurant[]);
 
   useEffect(() => {
-    fetch(`/restaurants/search?type=name&search=`, {
-      headers: auth.header
-    }).then(resp => resp.json())
+    fetch(`/restaurants/search?type=name&search=`)
+      .then(resp => resp.json())
       .then(j => j.results as any[])
       .then(shuffle)
       .then(d => {
@@ -40,10 +37,10 @@ const Home: React.VFC = () => {
     document.title = "Restify"
   }, []);
 
-  const featured = feat.length > 0 ?
-    feat.map(d => <RestaurantCard key={d.id} data={d} />)
-    : <h1>Loading featured restaurants...</h1>;
-
+  const featured = feat === undefined ?
+    <h3 style={{color: "red"}}>Loading featured restaurants...</h3>
+    : feat.length === 0 ? <h3>No restaurants.</h3>
+      : feat.map(d => <RestaurantCard key={d.id} data={d} />);
 
   return <main className="d-flex flex-column align-items-stretch flex-grow-1 justify-content-around">
     <div className="d-flex flex-column align-items-center justify-content-center">
