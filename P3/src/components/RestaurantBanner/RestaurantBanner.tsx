@@ -2,27 +2,32 @@ import React, {useContext} from "react";
 import styles from "./RestaurantBanner.module.css";
 import logo from "../../assets/logo-cropped.png";
 import {Button, Card, Col, Image, Row, Stack} from "react-bootstrap";
-import {RestaurantContext} from "../../contexts/RestaurantContext";
+import {Restaurant} from "../../responses/restaurant";
 
-const RestaurantBanner: React.VFC = () => {
 
-    const restaurant = useContext(RestaurantContext).restaurant;
+interface Props {
+    data: Restaurant
+}
 
-    if (restaurant === null){
-        return (<h1> This Restaurant Does Not Exist</h1>);
-    }
+const RestaurantBanner: React.VFC<Props> = ({ data }) => {
+
+    // const restaurant = useContext(RestaurantContext).restaurant;
+
+    // if (restaurant === null){
+    //     return (<h1> This Restaurant Does Not Exist</h1>);
+    // }
 
     return (
         <Card style={{}} id={styles.bannerCard}>
-            <Card.Img variant="top" src={restaurant.banner} id={styles.banner}/>
+            <Card.Img variant="top" src={data.banner} id={styles.banner}/>
             <Card.Body>
                 <Row>
                     <Col xs={2}>
-                        <Image roundedCircle={true} thumbnail={true} src={restaurant.logo} alt={"logo"} className={styles.icon}/>
+                        <Image roundedCircle={true} thumbnail={true} src={data.logo} alt={"logo"} className={styles.icon}/>
                     </Col>
                     <Col>
                         <Stack direction="horizontal" gap={3} className={styles.stack}>
-                            <h4 id={styles.restaurantName}>{restaurant.name}</h4>
+                            <h4 id={styles.restaurantName}>{data.name}</h4>
                             <Button variant="primary">Like</Button>
                             <Button variant="primary">Follow</Button>
                             <Button variant="danger" id={styles.edit}>Edit profile</Button>
@@ -30,22 +35,22 @@ const RestaurantBanner: React.VFC = () => {
                         <br/>
                         <Stack direction="horizontal" gap={3}>
                             <p>
-                                {restaurant.likes} Likes
+                                {data.likes} Likes
                             </p>
                             <p>
-                                {restaurant.follows} Followers
+                                {data.follows} Followers
                             </p>
                         </Stack>
                         <Stack direction="horizontal" gap={3}>
                             <p>
-                                {restaurant.phone_num}
+                                {data.phone_num}
                             </p>
                             <p>
-                                {restaurant.address}
+                                {data.address}
                             </p>
                         </Stack>
                         <Card.Text>
-                            {restaurant.description}
+                            {data.description}
                         </Card.Text>
                     </Col>
                 </Row>
