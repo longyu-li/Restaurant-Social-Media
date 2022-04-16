@@ -73,7 +73,8 @@ const Home: React.VFC = () => {
           "alignContent": "top",
           "justifyContent": "center",
           "alignItems": "flex-start",
-          "gap": "1rem"
+          "gap": "1rem",
+          "paddingBottom": "30px"
         }}
         scrollThreshold={0.95}
       >
