@@ -16,7 +16,7 @@ const RestaurantCard: React.VFC<Props> = ({ data }) => {
     const navigate = useNavigate();
     
     const link = () => {
-        navigate(`/restaurants/${data.id}/`)
+        navigate(`/restaurant/${data.id}/`)
     }
 
     const likes = data.likes ? <p><b>{data.likes}</b> likes</p> : <></>;
