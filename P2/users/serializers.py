@@ -29,9 +29,9 @@ class UserSerializer(serializers.ModelSerializer):
 
         super().__init__(*args, **kwargs)
 
-        request = self.context["request"]
+        request = self.context.get("request")
 
-        if request.method != "POST":
+        if request and request.method != "POST":
             self.fields["email"].read_only = True
 
     # adapted from django.contrib.auth.forms.UserCreationForm

@@ -16,6 +16,6 @@ class CreateMenuItemView(CreateAPIView):
 
         menu_item = serializer.save(restaurant=restaurant)
 
-        followers = Restaurant.follows.all()
+        followers = restaurant.follows.all()
         for f in followers:
-            NMenu(owner=f, restaurant=restaurant, menu=menu_item, change="c")
+            NMenu(owner=f, restaurant=restaurant, menu=menu_item, change="c").save()
