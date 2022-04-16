@@ -1,6 +1,7 @@
 import { features } from "process";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import RestaurantCard from "../components/RestaurantCard";
 import Search, { Kind } from "../components/Search";
 import { AuthContext } from "../contexts/AuthContext";
@@ -21,6 +22,7 @@ const shuffle = <T,>(array: T[]) => {
 }
 
 const Home: React.VFC = () => {
+  const navigate = useNavigate();
   const [feat, setFeat] = useState(undefined! as Restaurant[]);
 
   useEffect(() => {
@@ -37,6 +39,11 @@ const Home: React.VFC = () => {
     document.title = "Restify"
   }, []);
 
+  const onSearch = useCallback((search, kind) => {
+    navigate("/search", {
+         state: { search, kind }
+     })}, []);
+
   const featured = feat === undefined ?
     <h3 style={{color: "red"}}>Loading featured restaurants...</h3>
     : feat.length === 0 ? <h3>No restaurants.</h3>
@@ -44,7 +51,7 @@ const Home: React.VFC = () => {
 
   return <main className="d-flex flex-column align-items-stretch flex-grow-1 justify-content-around">
     <div className="d-flex flex-column align-items-center justify-content-center">
-      <Search kind_={Kind.name} search_="" />
+      <Search kind_={Kind.name} search_="" onSearch={onSearch} />
     </div>
     <div className="d-flex flex-column align-items-center">
       <h2 className="mb-3" id="featured">Featured</h2>
