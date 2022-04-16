@@ -12,7 +12,7 @@ import SignUp from "./pages/SignUp";
 import { AuthProvider } from "./contexts/AuthContext";
 import SignIn from "./pages/SignIn";
 import Settings from "./pages/Settings";
-import Restaurant from "./pages/Restaurant"
+import Restaurant from "./pages/Restaurant/Restaurant"
 import Search from "./pages/Search";
 import ProtectedRoute from "./components/ProtectedRoute";
 

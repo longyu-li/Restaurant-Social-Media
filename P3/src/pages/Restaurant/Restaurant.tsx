@@ -2,9 +2,11 @@ import React, {useEffect, useState} from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import RestaurantBanner from "../components/RestaurantBanner";
-import RestaurantNav from "../components/RestaurantNav";
+import RestaurantBanner from "../../components/RestaurantBanner";
 import {useParams} from "react-router-dom";
+import styles from "./Restaurant.module.css";
+import {Tab, Tabs} from "react-bootstrap";
+import Menu from "../../components/Menu";
 
 
 const Restaurant: React.VFC = () => {
@@ -53,7 +55,17 @@ const Restaurant: React.VFC = () => {
               <Row>
                   <Col xs={{ span: 8, offset: 2 }}>
                       <RestaurantBanner data={restaurant}/>
-                      <RestaurantNav />
+                      <Tabs variant="tabs" defaultActiveKey="menu" className={styles.tabs}>
+                          <Tab eventKey="menu" tabClassName={styles.tab} title="Menu">
+                              <Menu />
+                          </Tab>
+                          <Tab eventKey="blogs" tabClassName={styles.tab} title="Blog Posts">
+                          </Tab>
+                          <Tab eventKey="comments" tabClassName={styles.tab} title="Comments">
+                          </Tab>
+                          <Tab eventKey="images" tabClassName={styles.tab} title="Images">
+                          </Tab>
+                      </Tabs>
                   </Col>
               </Row>
           </Container> : <h1>Restaurant Does Not Exist</h1>
