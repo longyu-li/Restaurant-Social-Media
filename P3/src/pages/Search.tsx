@@ -21,6 +21,7 @@ const Home: React.VFC = () => {
 
   const [next, setNext] = useState<string | null>(fmtUrl(search, kind));
   const [data, setData] = useState<Restaurant[]>([]);
+  const [refresh, setRefresh] = useState(true);
 
   const more = () => {
     // if (!next)
@@ -39,10 +40,16 @@ const Home: React.VFC = () => {
   const onSearch = (search: string, kind: Kind) => {
     setNext(fmtUrl(search, kind));
     setData([]);
+    setRefresh(true);
   }
 
   // ?
-  useEffect(more, []);
+  useEffect(() => {
+    if (!refresh)
+      return;
+    setRefresh(false);
+    more()
+  }, [refresh]);
 
   return <main id="main" className="d-flex flex-column align-items-stretch flex-grow-1 justify-content-around">
     <div style={{paddingTop: "110px"}}>
