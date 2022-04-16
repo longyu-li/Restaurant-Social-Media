@@ -63,8 +63,6 @@ const Home: React.VFC = () => {
         hasMore={next !== null}
         loader={<h4>Loading...</h4>}
         endMessage={<h5>You reached the end.</h5>}
-        // :'(
-        // scrollableTarget="results"
         style={{
           "display": "flex",
           "flexWrap": "wrap",
@@ -73,6 +71,7 @@ const Home: React.VFC = () => {
           "alignItems": "flex-start",
           "gap": "1rem"
         }}
+        scrollThreshold={0.95}
       >
         {data.map(rst => <RestaurantCard key={rst.id} data={rst} />)}
       </InfiniteScroll>
