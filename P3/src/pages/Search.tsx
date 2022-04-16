@@ -45,7 +45,9 @@ const Home: React.VFC = () => {
   useEffect(more, []);
 
   return <main id="main" className="d-flex flex-column align-items-stretch flex-grow-1 justify-content-around">
-    <Search search_={search} kind_={kind} onSearch={onSearch} />
+    <div style={{paddingTop: "110px"}}>
+      <Search search_={search} kind_={kind} onSearch={onSearch} />
+    </div>
     <div id="results" className="d-flex flex-column align-items-center gap-2">
       <h3>Results</h3>
       <InfiniteScroll
