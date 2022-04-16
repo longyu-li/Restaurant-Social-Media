@@ -16,6 +16,6 @@ class CreateBlogPostView(CreateAPIView):
 
         blog = serializer.save(restaurant=restaurant)
         
-        followers = Restaurant.follows.all()
+        followers = restaurant.follows.all()
         for f in followers:
             NBlog(owner=f, restaurant=restaurant, blog=blog).save()

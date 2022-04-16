@@ -2,7 +2,9 @@ from django.http import HttpRequest, HttpResponse
 
 from rest_framework.response import Response
 
-from .models import Comment, Like, Follow
+from .models import Comment, Like, Follow, Menu, Blog, RestaurantNotification
+
+from restaurants.models import Blog as MBlog, Restaurant as MRestaurant, MenuItem as MMenuItem
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -16,10 +18,12 @@ def notifications(req: HttpRequest) -> HttpResponse:
     comments = iter(Comment.objects.filter(owner=user))
     likes = iter(Like.objects.filter(owner=user))
     follows = iter(Follow.objects.filter(owner=user))
+    menu = iter(Menu.objects.filter(owner=user))
+    blog = iter(Blog.objects.filter(owner=user))
 
     # Sort by datetime descending
     all_ = sorted(
-        (*comments, *likes, *follows), key=lambda obj: obj.timestamp, reverse=True
+        (*comments, *likes, *follows, *menu, *blog), key=lambda obj: obj.timestamp, reverse=True
     )
 
     if "page_size" in req.GET:
@@ -53,13 +57,49 @@ def notifications(req: HttpRequest) -> HttpResponse:
             data = {
                 "type": "follow",
             }
+        elif isinstance(obj, Blog):
+            blog: MBlog = obj.blog
+            rst: MRestaurant = blog.restaurant
+            data = {
+                "type": "blog",
+                "restaurant": {
+                    "id": rst.id,
+                    "name": rst.name,
+                    "logo": rst.logo
+                },
+                "blog": {
+                    "content": blog.content,
+                    "date": blog.date,
+                    "likes": blog.likes
+                }
+            }
+        elif isinstance(obj, Menu):
+            menu: MMenuItem = obj.menu
+            rst: MRestaurant = menu.restaurant
+            data = {
+                "type": "menu",
+                "restaurant": {
+                    "id": rst.id,
+                    "name": rst.name,
+                    "logo": rst.logo
+                },
+                "change": obj.change,
+                "item": {
+                    "id": menu.id,
+                    "image": menu.image,
+                    "name": menu.name,
+                    "description": menu.description,
+                    "price": menu.price
+                }
+            }
         data["timestamp"] = obj.timestamp
-        user = obj.user
-        data["user"] = {
-            "id": user.id,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-        }
+        if isinstance(obj, RestaurantNotification):
+            user = obj.user
+            data["user"] = {
+                "id": user.id,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+            }
         response.append(data)
 
     return Response(response)
