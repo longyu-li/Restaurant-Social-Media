@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import styles from "./Search.module.css";
 import { ReactComponent as SearchIcon } from "bootstrap-icons/icons/search.svg";
@@ -11,24 +11,31 @@ export enum Kind {
 const Kinds = Object.values(Kind);
 
 interface Props {
-    kind_: Kind | null,
-    search_: string | null
+    kind_?: Kind,
+    search_?: string,
+    onSearch: (search: string, kind: Kind) => void,
 }
 
-const Search: React.VFC<Props> = ({ kind_, search_ }) => {
+const Search: React.VFC<Props> = ({ kind_, search_, onSearch }) => {
     const [kind, setKind] = useState(kind_ ?? Kind.name);
     const [search, setSearch] = useState(search_ ?? "");
-
-    const navigate = useNavigate();
+    const [err, setErr] = useState(false);
 
     const doSearch = (e: React.MouseEvent) => {
         e.preventDefault();
-        if (!search)
+        if (!search) {
+            setErr(true);
             return;
-        navigate("/search", {
-            state: { search, kind }
-        })
+        }
+        onSearch(search, kind);
     };
+
+    const onText = (val: string) => {
+        if (val)
+            setErr(false);
+
+        setSearch(val);
+    }
 
     return <Form id={styles.search}>
         <Form.Group className="d-flex flex-row align-items-center justify-content-center">
@@ -40,13 +47,15 @@ const Search: React.VFC<Props> = ({ kind_, search_ }) => {
                 type="text"
                 required
                 value={search}
-                onChange={ev => setSearch(ev.target.value)}
+                isInvalid={err}
+                onChange={ev => onText(ev.target.value)}
                 placeholder={`Search Restaurants by ${kind.toLowerCase()}`}
             />
             <Button id={styles.btn} type="submit" variant="" onClick={doSearch}>
                 <SearchIcon />
             </Button>
         </Form.Group>
+        <b style={{color: 'red', visibility: err ? 'visible' : 'hidden'}}>Search field cannot be empty.</b>
     </Form>
 }
 
