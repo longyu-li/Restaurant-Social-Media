@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .models import Comment, Like, Follow, Menu, Blog, RestaurantNotification
 
 from restaurants.models import Blog as MBlog, Restaurant as MRestaurant, MenuItem as MMenuItem
-
+from users.models import RestifyUser
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
@@ -94,11 +94,12 @@ def notifications(req: HttpRequest) -> HttpResponse:
             }
         data["timestamp"] = obj.timestamp
         if isinstance(obj, RestaurantNotification):
-            user = obj.user
+            user: RestifyUser = obj.user
             data["user"] = {
                 "id": user.id,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
+                "avatar": user.avatar
             }
         response.append(data)
 
