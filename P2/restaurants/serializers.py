@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from users.serializers import UserSerializer
 from restaurants.models import Blog, Comment, Image, MenuItem, Restaurant, Tag
 
 
@@ -64,7 +64,9 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+
     class Meta:
         model = Comment
-        fields = ["owner", "content", "date"]
-        read_only_fields = ["owner", "date"]
+        fields = ["id", "owner", "content", "date"]
+        read_only_fields = ["id", "owner", "date"]
