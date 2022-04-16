@@ -155,3 +155,5 @@ MEDIA_URL = "media/"
 
 # custom test runner that deletes uploaded files from tests
 TEST_RUNNER = "shared.test_runner.CustomTestRunner"
+
+USE_X_FORWARDED_HOST = True
