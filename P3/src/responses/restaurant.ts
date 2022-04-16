@@ -9,3 +9,9 @@ export interface Restaurant {
     follows: number;
     likes: number;
 }
+
+export interface SearchResult {
+    next: string | null,
+    previous: string | null,
+    results: Restaurant[]
+}

@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import styles from "./Search.module.css";
 import { ReactComponent as SearchIcon } from "bootstrap-icons/icons/search.svg";
-import { useNavigate } from "react-router-dom";
 
 export enum Kind {
-    food = "Food", address = "Address", name = "Name"
+    food = "food", address = "address", name = "name"
 }
 
 const Kinds = Object.values(Kind);
@@ -15,6 +14,8 @@ interface Props {
     search_?: string,
     onSearch: (search: string, kind: Kind) => void,
 }
+
+const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const Search: React.VFC<Props> = ({ kind_, search_, onSearch }) => {
     const [kind, setKind] = useState(kind_ ?? Kind.name);
@@ -40,7 +41,7 @@ const Search: React.VFC<Props> = ({ kind_, search_, onSearch }) => {
     return <Form id={styles.search}>
         <Form.Group className="d-flex flex-row align-items-center justify-content-center">
             <Form.Select id={styles.select} value={kind} onChange={ev => setKind(ev.target.value as Kind)}>
-                {Kinds.map(k => <option key={k} value={k}>{k}</option>)}
+                {Kinds.map(k => <option key={k} value={k}>{capital(k)}</option>)}
             </Form.Select>
             <Form.Control
                 id={styles.text}
