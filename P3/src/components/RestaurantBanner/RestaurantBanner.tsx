@@ -6,28 +6,22 @@ import {Restaurant} from "../../responses/restaurant";
 
 
 interface Props {
-    data: Restaurant
+    restaurant: Restaurant;
 }
 
-const RestaurantBanner: React.VFC<Props> = ({ data }) => {
-
-    // const restaurant = useContext(RestaurantContext).restaurant;
-
-    // if (restaurant === null){
-    //     return (<h1> This Restaurant Does Not Exist</h1>);
-    // }
+const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
 
     return (
         <Card style={{}} id={styles.bannerCard}>
-            <Card.Img variant="top" src={data.banner} id={styles.banner}/>
+            <Card.Img variant="top" src={restaurant.banner} id={styles.banner}/>
             <Card.Body>
                 <Row>
                     <Col xs={2}>
-                        <Image roundedCircle={true} thumbnail={true} src={data.logo} alt={"logo"} className={styles.icon}/>
+                        <Image roundedCircle={true} thumbnail={true} src={restaurant.logo} alt={"logo"} className={styles.icon}/>
                     </Col>
                     <Col>
                         <Stack direction="horizontal" gap={3} className={styles.stack}>
-                            <h4 id={styles.restaurantName}>{data.name}</h4>
+                            <h4 id={styles.restaurantName}>{restaurant.name}</h4>
                             <Button variant="primary">Like</Button>
                             <Button variant="primary">Follow</Button>
                             <Button variant="danger" id={styles.edit}>Edit profile</Button>
@@ -35,22 +29,22 @@ const RestaurantBanner: React.VFC<Props> = ({ data }) => {
                         <br/>
                         <Stack direction="horizontal" gap={3}>
                             <p>
-                                {data.likes} Likes
+                                {restaurant.likes} Likes
                             </p>
                             <p>
-                                {data.follows} Followers
+                                {restaurant.follows} Followers
                             </p>
                         </Stack>
                         <Stack direction="horizontal" gap={3}>
                             <p>
-                                {data.phone_num}
+                                {restaurant.phone_num}
                             </p>
                             <p>
-                                {data.address}
+                                {restaurant.address}
                             </p>
                         </Stack>
                         <Card.Text>
-                            {data.description}
+                            {restaurant.description}
                         </Card.Text>
                     </Col>
                 </Row>
