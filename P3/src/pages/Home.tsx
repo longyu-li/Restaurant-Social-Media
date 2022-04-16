@@ -40,9 +40,8 @@ const Home: React.VFC = () => {
   }, []);
 
   const onSearch = useCallback((search, kind) => {
-    navigate("/search", {
-         state: { search, kind }
-     })}, []);
+    navigate(`/search?kind=${kind}&search=${search}`)
+  }, []);
 
   const featured = feat === undefined ?
     <h3 style={{color: "red"}}>Loading featured restaurants...</h3>

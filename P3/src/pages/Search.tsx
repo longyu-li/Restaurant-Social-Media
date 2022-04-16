@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useCallback, useContext, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import RestaurantCard from "../components/RestaurantCard";
 import Search, { Kind } from "../components/Search";
 import { AuthContext } from "../contexts/AuthContext";
@@ -11,9 +11,9 @@ const fmtUrl = (search: string, kind: Kind) => `/restaurants/search?type=${kind}
 
 const Home: React.VFC = () => {
   const auth = useContext(AuthContext);
-  const { state } = useLocation() as any;
-  const search = state?.search ?? '';
-  const kind = state?.kind ?? Kind.name;
+  const [param, setParam] = useSearchParams();
+  const search = param.get("search") ?? '';
+  const kind = param.get("kind") as Kind ?? Kind.name;
 
   useEffect(() => {
     document.title = "Restify - Search"
@@ -38,6 +38,10 @@ const Home: React.VFC = () => {
   };
 
   const onSearch = (search: string, kind: Kind) => {
+    param.set("search", search);
+    param.set("kind", kind);
+    setParam(param);
+
     setNext(fmtUrl(search, kind));
     setData([]);
     setRefresh(true);
@@ -62,7 +66,7 @@ const Home: React.VFC = () => {
         next={more}
         hasMore={next !== null}
         loader={<h4>Loading...</h4>}
-        endMessage={<h5>You reached the end.</h5>}
+        endMessage={<></>}
         style={{
           "display": "flex",
           "flexWrap": "wrap",
