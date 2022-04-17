@@ -3,7 +3,6 @@ import {Badge, Image, ListGroup} from "react-bootstrap";
 import {MenuItem} from "../../responses/menuItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./Menu.module.css";
-import logo from "../../assets/logo-cropped.png";
 
 interface Props {
     menu: MenuItem [];
@@ -25,7 +24,7 @@ const Menu: React.VFC<Props> = (data) => {
                 as="li" key={item.id}
                 className="d-flex justify-content-between align-items-start dank"
             >
-                    <Image src={item.image} alt={logo} className={styles.menuImage}/>
+                    <Image src={item.image} className={styles.menuImage}/>
                     <div className="ms-2 me-auto">
                         <div className="fw-bold">{item.name}</div>
                         {item.description}

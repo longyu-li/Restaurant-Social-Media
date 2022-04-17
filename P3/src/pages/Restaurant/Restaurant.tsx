@@ -101,7 +101,7 @@ const Restaurant: React.VFC = () => {
                 }})
     }, [params.id]);
 
-    const fetchComment= async () => {
+    const fetchComment = async () => {
         fetch(`/restaurants/${params.id}/comments?cursor=${commentCursor}`)
             .then(res => {
                 if (res.ok) {
