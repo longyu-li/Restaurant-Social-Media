@@ -1,7 +1,7 @@
 cd ../P2
 pip install pipenv
 pipenv install
-pipenv shell
+source "$(pipenv --venv)/bin/activate"
 /bin/bash gendata.sh
 
 cd ../P3
