@@ -48,7 +48,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 class BlogSerializer(serializers.ModelSerializer):
     likes = serializers.SerializerMethodField(read_only=True)
-    restaurant = serializers.RelatedField(read_only=True)
+    restaurant = RestaurantSerializer()
 
     class Meta:
         model = Blog
