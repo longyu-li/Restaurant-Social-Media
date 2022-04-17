@@ -27,7 +27,7 @@ const Menu: React.VFC<Props> = (data) => {
                         <div className="fw-bold">{item.owner.first_name}</div>
                         {item.content}
                     </div>
-                    ${item.date}
+                    {new Date(item.date).toLocaleString()}
                 </ListGroup.Item>;
             })}  </ListGroup>
         </InfiniteScroll>);
