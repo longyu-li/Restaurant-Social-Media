@@ -2,15 +2,15 @@ import subprocess as sp
 import os, sys, re, shutil
 from random import random
 
-shutil.rmtree('media')
+# shutil.rmtree('media')
 
-try:
-    os.remove("db.sqlite3")
-except Exception as e:
-    print(e)
+# try:
+#     os.remove("db.sqlite3")
+# except Exception as e:
+#     print(e)
 
-proc = sp.Popen(["manage.py", "migrate"], shell=True, stdout=sp.PIPE)
-proc.wait()
+# proc = sp.Popen(["manage.py", "migrate"], shell=True, stdout=sp.PIPE)
+# proc.wait()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "phase2.settings")
 
