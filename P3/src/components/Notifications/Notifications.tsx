@@ -8,8 +8,8 @@ interface Props {
 }
 
 const Notifications: React.VFC<Props> = ({ show, setShow, nots }) => {
-    return <Offcanvas placement="end" show={show} style={{width: "600px"}}>
-        <Offcanvas.Header closeButton onHide={() => setShow(false)}>
+    return <Offcanvas placement="end" onHide={() => setShow(false)} show={show} style={{width: "600px"}}>
+        <Offcanvas.Header closeButton>
             <Offcanvas.Title>Notifications</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>

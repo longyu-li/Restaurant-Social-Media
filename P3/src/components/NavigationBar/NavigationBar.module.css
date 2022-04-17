@@ -2,3 +2,26 @@
     height: 30px;
     margin-right: 2px;
 }
+
+#bell {
+
+}
+
+#bell svg {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+}
+
+#bell span {
+    position: relative;
+    top: -8px;
+    right: 6px;
+    font-weight: bold;
+    color: red;
+    background-color: white;
+    padding: 0 4px;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-size: 11pt;
+}
