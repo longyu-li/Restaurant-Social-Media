@@ -8,7 +8,7 @@ interface Props {
     fetchComment: () => {};
     hasComment: boolean;
 }
-const Menu: React.VFC<Props> = (data) => {
+const Comments: React.VFC<Props> = (data) => {
 
     return (
         <InfiniteScroll
@@ -34,4 +34,4 @@ const Menu: React.VFC<Props> = (data) => {
 
 
 }
-export default Menu;
+export default Comments;
