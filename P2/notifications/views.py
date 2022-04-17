@@ -65,12 +65,13 @@ def notifications(req: HttpRequest) -> HttpResponse:
                 "restaurant": {
                     "id": rst.id,
                     "name": rst.name,
-                    "logo": rst.logo
+                    "logo": rst.logo.url
                 },
                 "blog": {
+                    "title": blog.title,
                     "content": blog.content,
                     "date": blog.date,
-                    "likes": blog.likes
+                    "likes": blog.likes.count()
                 }
             }
         elif isinstance(obj, Menu):
@@ -81,12 +82,12 @@ def notifications(req: HttpRequest) -> HttpResponse:
                 "restaurant": {
                     "id": rst.id,
                     "name": rst.name,
-                    "logo": rst.logo
+                    "logo": rst.logo.url
                 },
                 "change": obj.change,
                 "item": {
                     "id": menu.id,
-                    "image": menu.image,
+                    "image": menu.image.url,
                     "name": menu.name,
                     "description": menu.description,
                     "price": menu.price
@@ -99,7 +100,7 @@ def notifications(req: HttpRequest) -> HttpResponse:
                 "id": user.id,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
-                "avatar": user.avatar
+                "avatar": user.avatar.url
             }
         response.append(data)
 
