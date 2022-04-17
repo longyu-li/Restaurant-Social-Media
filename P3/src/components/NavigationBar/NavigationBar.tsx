@@ -59,7 +59,7 @@ const NavigationBar: React.VFC = () => {
         </Container>
       </Navbar>
 
-      <Notifications show={show} setShow={setShow} nots={nots}/>
+    {/*<Notifications show={show} setShow={setShow} nots={nots}/>*/}
     </>;
 }
 

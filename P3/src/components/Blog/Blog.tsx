@@ -22,13 +22,13 @@ const Blog: React.VFC<Props> = (data) => {
 
     useEffect(() => {
         if (user !== null && data.restaurant.id !== user.id){
-            data.blog.map(item => {
+            data.blog.forEach(item => {
                 fetch(`/restaurants/blog/${item.id}/like/`, {headers: {'Authorization': `Bearer ${access.access}`}})
                     .then(res => {
                         if (res.ok) {
                             res.json().then(res => {
                                 updateLiked(item.id, res);
-                                console.log(item.id, res);
+                                // console.log(item.id, res);
                             })
 
                         }})
@@ -36,7 +36,7 @@ const Blog: React.VFC<Props> = (data) => {
 
         }
         else {
-            data.blog.map(item => {
+            data.blog.forEach(item => {
                 updateLiked(item.id, false);
             })
         }
@@ -66,22 +66,24 @@ const Blog: React.VFC<Props> = (data) => {
             hasMore={data.hasBlog}
             loader={<h1>Loading Blog ...</h1>}
             endMessage={<></>}
-        ><ListGroup as="ul">
-            {data.blog.map((item) => {
-                return <ListGroup.Item
-                    as="li" key={item.id}
-                    className="d-flex justify-content-between align-items-start"
-                >
-                    <div className="ms-2 me-auto">
-                        <div className="fw-bold">{item.title}</div>
-                        <p className={"mb-1"}>{item.content}</p>
-                         <small className={styles.vote}> <a id={styles.like} type="checkbox" onClick={() => toggleLike(item.id)}>{liked.get(item.id) ? <>❤</>: <>🤍</>}</a> {item.likes}</small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill>
-                            Delete
-                        </Badge> : <></>}
-                    </div>
-                    {new Date(item.date).toLocaleString()}
-                </ListGroup.Item>;
-            })}  </ListGroup>
+        >
+            <ListGroup as="ul">
+                {data.blog.map((item) => {
+                    return <ListGroup.Item
+                        as="li" key={item.id}
+                        className="d-flex justify-content-between align-items-start"
+                    >
+                        <div className="ms-2 me-auto">
+                            <div className="fw-bold">{item.title}</div>
+                            <p className={"mb-1"}>{item.content}</p>
+                             <small className={styles.vote}> <a id={styles.like} type="checkbox" onClick={() => toggleLike(item.id)}>{liked.get(item.id) ? <>❤</>: <>🤍</>}</a> {item.likes}</small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill>
+                                Delete
+                            </Badge> : <></>}
+                        </div>
+                        {new Date(item.date).toLocaleString()}
+                    </ListGroup.Item>;
+                })}
+            </ListGroup>
         </InfiniteScroll>);
 
 
