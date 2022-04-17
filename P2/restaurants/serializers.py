@@ -6,11 +6,13 @@ from restaurants.models import Blog, Comment, Image, MenuItem, Restaurant, Tag
 class RestaurantSerializer(serializers.ModelSerializer):
     follows = serializers.SerializerMethodField(read_only=True)
     likes = serializers.SerializerMethodField(read_only=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Restaurant
         fields = [
             "id",
+            "user",
             "name",
             "address",
             # "street",
