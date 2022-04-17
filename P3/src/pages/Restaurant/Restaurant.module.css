@@ -1,17 +1,11 @@
-.tab{
-    width: 310px;
-    display: flex;
+.tabsContainer {
     background-color: rgb(255, 195, 0) !important;
-    color: white;
-    font-weight: bold;
-
 }
-.tab:focus, .tab:hover{
-    color: black !important;
+
+.tab {
+    color: var(--bs-white) !important;
+}
+
+.tab:global(.active) {
     background-color: rgb(219, 128, 23) !important;
 }
-
-.tabs {
-     justify-content: center;
-}
-
