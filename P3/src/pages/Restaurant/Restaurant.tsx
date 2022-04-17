@@ -13,7 +13,6 @@ import {BlogPost} from "../../responses/blogPost";
 import Comments from "../../components/Comments";
 import {Comment} from "../../responses/comment";
 
-
 const Restaurant: React.VFC = () => {
 
     const params = useParams();
@@ -31,6 +30,7 @@ const Restaurant: React.VFC = () => {
     const [hasComment, sethasComment] = useState(true);
     const [commentCursor, setcommentCursor] = useState("");
 
+    const [tab, setTab] = useState("menu")
 
     useEffect(() => {
         fetch(`/restaurants/${params.id}`)
@@ -113,26 +113,31 @@ const Restaurant: React.VFC = () => {
     };
 
   return ((restaurant !== undefined) ?
-          <Container fluid>
-              <Row>
-                  <Col xs={{ span: 8, offset: 2 }}>
-                      <RestaurantBanner restaurant={restaurant}/>
-                      <Tabs variant="tabs" defaultActiveKey="menu" className={styles.tabs}>
-                          <Tab eventKey="menu" tabClassName={styles.tab} title="Menu">
-                              <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={hasMenu}/>
-                          </Tab>
-                          <Tab eventKey="blogs" tabClassName={styles.tab} title="Blog Posts">
-                              <Blog blog={blog} fetchBlog={fetchBlog} hasBlog={hasBlog}/>
-                          </Tab>
-                          <Tab eventKey="comments" tabClassName={styles.tab} title="Comments">
-                              <Comments comments={comment} fetchComment={fetchComment} hasComment={hasComment}/>
-                          </Tab>
-                          <Tab eventKey="images" tabClassName={styles.tab} title="Images">
-                          </Tab>
-                      </Tabs>
-                  </Col>
-              </Row>
-          </Container> : <h1>Restaurant Does Not Exist</h1>
+      <Container fluid>
+          <Row>
+              <Col xs={{ span: 8, offset: 2 }}>
+                  <RestaurantBanner restaurant={restaurant}/>
+                  <Tabs
+                      variant="tabs"
+                      className={styles.tabs}
+                      activeKey={tab}
+                      onSelect={(k) => setTab(k || "menu")}
+                  >
+                      <Tab eventKey="menu" tabClassName={styles.tab} title="Menu">
+                          {tab === "menu" && <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={hasMenu}/>}
+                      </Tab>
+                      <Tab eventKey="blogs" tabClassName={styles.tab} title="Blog Posts">
+                          {tab === "blogs" && <Blog blog={blog} fetchBlog={fetchBlog} hasBlog={hasBlog}/>}
+                      </Tab>
+                      <Tab eventKey="comments" tabClassName={styles.tab} title="Comments">
+                          {tab === "comments" && <Comments comments={comment} fetchComment={fetchComment} hasComment={hasComment}/>}
+                      </Tab>
+                      <Tab eventKey="images" tabClassName={styles.tab} title="Images">
+                      </Tab>
+                  </Tabs>
+              </Col>
+          </Row>
+      </Container> : <h1>Restaurant Does Not Exist</h1>
   );
 }
 
