@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import RestaurantBanner from "../../components/RestaurantBanner";
 import {useParams} from "react-router-dom";
 import styles from "./Restaurant.module.css";
-import {Tab, Tabs} from "react-bootstrap";
+import {Nav, Tab} from "react-bootstrap";
 import Menu from "../../components/Menu";
 import {MenuItem} from "../../responses/menuItem";
 import Blog from "../../components/Blog";
@@ -14,7 +14,6 @@ import Comments from "../../components/Comments";
 import {Comment} from "../../responses/comment";
 import Images from "../../components/Images";
 import {Image} from "../../responses/image";
-
 
 const Restaurant: React.VFC = () => {
 
@@ -36,6 +35,7 @@ const Restaurant: React.VFC = () => {
     const [image, setImage] = useState<Image[]>([]);
     const [hasImage, sethasImage] = useState(true);
     const [imageCursor, setimageCursor] = useState("");
+    const [tab, setTab] = useState("menu")
 
     useEffect(() => {
         fetch(`/restaurants/${params.id}`)
@@ -141,27 +141,54 @@ const Restaurant: React.VFC = () => {
     };
 
   return ((restaurant !== undefined) ?
-          <Container fluid>
-              <Row>
-                  <Col xs={{ span: 8, offset: 2 }}>
-                      <RestaurantBanner restaurant={restaurant}/>
-                      <Tabs variant="tabs" defaultActiveKey="menu" className={styles.tabs}>
-                          <Tab eventKey="menu" tabClassName={styles.tab} title="Menu">
-                              <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={hasMenu} restaurant={restaurant}/>
-                          </Tab>
-                          <Tab eventKey="blogs" tabClassName={styles.tab} title="Blog Posts">
-                              <Blog blog={blog} fetchBlog={fetchBlog} hasBlog={hasBlog}/>
-                          </Tab>
-                          <Tab eventKey="comments" tabClassName={styles.tab} title="Comments">
-                              <Comments comments={comment} fetchComment={fetchComment} hasComment={hasComment}/>
-                          </Tab>
-                          <Tab eventKey="images" tabClassName={styles.tab} title="Images">
+      <Container fluid>
+          <Row>
+              <Col xs={{ span: 8, offset: 2 }}>
+                  <RestaurantBanner restaurant={restaurant}/>
+                  <Tab.Container
+                      activeKey={tab}
+                      onSelect={(k) => setTab(k || "menu")}
+                  >
+                      <Nav variant="pills" justify className={`my-3 ${styles.tabsContainer}`}>
+                          <Nav.Item>
+                              <Nav.Link eventKey="menu" type="button" className={styles.tab}>
+                                  Menu
+                              </Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                              <Nav.Link eventKey="blogs" type="button" className={styles.tab}>
+                                  Blog Posts
+                              </Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                              <Nav.Link eventKey="comments" type="button" className={styles.tab}>
+                                  Comments
+                              </Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                              <Nav.Link eventKey="images" type="button" className={styles.tab}>
+                                  Images
+                              </Nav.Link>
+                          </Nav.Item>
+                      </Nav>
+                      <Tab.Content>
+                          <Tab.Pane eventKey="menu">
+                              {tab === "menu" && <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={hasMenu}/>}
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="blogs">
+                              {tab === "blogs" && <Blog blog={blog} fetchBlog={fetchBlog} hasBlog={hasBlog}/>}
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="comments">
+                              {tab === "comments" && <Comments comments={comment} fetchComment={fetchComment} hasComment={hasComment}/>}
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="images">
                               <Images images={image} fetchImage={fetchImage} hasImage={hasImage}/>
-                          </Tab>
-                      </Tabs>
-                  </Col>
-              </Row>
-          </Container> : <h1>Restaurant Does Not Exist</h1>
+                          </Tab.Pane>
+                      </Tab.Content>
+                  </Tab.Container>
+              </Col>
+          </Row>
+      </Container> : <h1>Restaurant Does Not Exist</h1>
   );
 }
 
