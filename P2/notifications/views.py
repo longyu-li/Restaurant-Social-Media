@@ -94,6 +94,7 @@ def notifications(req: HttpRequest) -> HttpResponse:
                 }
             }
         data["timestamp"] = obj.timestamp
+        data["id"] = f"{data['type']}#{obj.id}"
         if isinstance(obj, RestaurantNotification):
             user: RestifyUser = obj.user
             data["user"] = {
