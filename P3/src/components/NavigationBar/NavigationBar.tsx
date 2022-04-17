@@ -43,11 +43,12 @@ const NavigationBar: React.VFC = () => {
           </Navbar.Brand>
           <Nav>
             {user ? <>
+              <Nav.Link as={Link} to="feed" className="fw-bold text-white">Feed</Nav.Link>
               <Nav.Link as={Link} to="#" className="fw-bold text-white" onClick={() => setShow(!show)}>
-              <div id={styles.bell}>
-                  <BellIcon />
-                  <span>{nots.length}</span>
-              </div>
+                <div id={styles.bell}>
+                    <BellIcon />
+                    <span>{nots.length}</span>
+                </div>
               </Nav.Link>
               <UserDropdown user={user} signOut={signOut} />
             </>

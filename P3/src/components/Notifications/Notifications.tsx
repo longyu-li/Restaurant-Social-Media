@@ -1,4 +1,5 @@
 import { Offcanvas } from "react-bootstrap";
+import { timeSince } from "../..";
 import { BlogNotification, CommentNotif, FollowNotif, LikeNotif, MenuChange, MenuNotification, Notification, NotifType } from "../../responses/notification";
 
 interface Props {
@@ -19,19 +20,7 @@ const Notifications: React.VFC<Props> = ({ show, setShow, nots }) => {
                     let msg;
                     let msg2;
 
-                    const since_s = (Date.now() - new Date(n.timestamp).getTime()) / 1000;
-                    const since_m = since_s / 60;
-                    const since_h = since_m / 60;
-                    let when;
-                    if (since_m < 1) {
-                        when = `${Math.round(since_s)} seconds ago`;
-                    } else if (since_h < 1) {
-                        when = `${Math.round(since_m)} minutes ago`;
-                    } else if (since_h < 24) {
-                        when = `${Math.round(since_h)} hours ago`;
-                    } else {
-                        when = `${Math.round(since_h / 24)} days ago`;
-                    }
+                    const when = timeSince(new Date(n.timestamp));
 
                     switch (n.type) {
                         case NotifType.like: {
