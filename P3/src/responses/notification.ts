@@ -1,3 +1,5 @@
+import { MenuItem } from "./menuItem"
+
 export enum NotifType {
     comment = "comment",
     like = "like",
@@ -66,11 +68,5 @@ export enum MenuChange {
 
 export interface MenuNotification extends UserNotification {
     change: MenuChange,
-    item: {
-        id: number,
-        image: string,
-        name: string,
-        description: string,
-        price: number
-    }
+    item: MenuItem
 }
