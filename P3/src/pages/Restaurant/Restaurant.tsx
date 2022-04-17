@@ -176,7 +176,7 @@ const Restaurant: React.VFC = () => {
                               {tab === "menu" && <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={hasMenu} restaurant={restaurant}/>}
                           </Tab.Pane>
                           <Tab.Pane eventKey="blogs">
-                              {tab === "blogs" && <Blog blog={blog} fetchBlog={fetchBlog} hasBlog={hasBlog}/>}
+                              {tab === "blogs" && <Blog blog={blog} fetchBlog={fetchBlog} hasBlog={hasBlog} restaurant={restaurant}/>}
                           </Tab.Pane>
                           <Tab.Pane eventKey="comments">
                               {tab === "comments" && <Comments comments={comment} fetchComment={fetchComment} hasComment={hasComment}/>}
