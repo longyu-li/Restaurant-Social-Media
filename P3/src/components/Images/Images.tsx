@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Col, ListGroup, Row} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
 import {Image} from "../../responses/image";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -21,7 +21,7 @@ const Images: React.VFC<Props> = (data) => {
         >
         <Row xs={1} md={4} className="g-4">
                 {data.images.map((item) => {
-                    return <Col><Card key={item.id}>
+                    return <Col key={item.id}><Card >
                         <Card.Img variant="top" src={item.image}/>
                         <Card.Body>
                             <Card.Title>{item.title}</Card.Title>

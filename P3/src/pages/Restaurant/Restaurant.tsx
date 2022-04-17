@@ -55,7 +55,7 @@ const Restaurant: React.VFC = () => {
                     res.json().then(data => {
                         setMenu(data.results);
                         let cursorURL = data.next;
-                        setmenuCursor(cursorURL.substring(cursorURL.lastIndexOf("=")+1));
+                        if(cursorURL) setmenuCursor(cursorURL.substring(cursorURL.lastIndexOf("=")+1));
                     })
                 }})
     }, [params.id]);
@@ -78,7 +78,7 @@ const Restaurant: React.VFC = () => {
                     res.json().then(data => {
                         setBlog(data.results);
                         let blogURL = data.next;
-                        setblogCursor(blogURL.substring(blogURL.lastIndexOf("=")+1));
+                        if(blogURL) setblogCursor(blogURL.substring(blogURL.lastIndexOf("=")+1));
                     })
                 }})
     }, [params.id]);
@@ -101,7 +101,7 @@ const Restaurant: React.VFC = () => {
                     res.json().then(data => {
                         setComment(data.results);
                         let commentURL = data.next;
-                        setcommentCursor(commentURL.substring(commentURL.lastIndexOf("=")+1));
+                        if(commentURL) setcommentCursor(commentURL.substring(commentURL.lastIndexOf("=")+1));
                     })
                 }})
     }, [params.id]);
@@ -124,7 +124,7 @@ const Restaurant: React.VFC = () => {
                     res.json().then(data => {
                         setImage(data.results);
                         let imageURL = data.next;
-                        setimageCursor(imageURL.substring(imageURL.lastIndexOf("=")+1));
+                        if(imageURL) setimageCursor(imageURL.substring(imageURL.lastIndexOf("=")+1));
                     })
                 }})
     }, [params.id]);
