@@ -12,6 +12,8 @@ import Blog from "../../components/Blog";
 import {BlogPost} from "../../responses/blogPost";
 import Comments from "../../components/Comments";
 import {Comment} from "../../responses/comment";
+import Images from "../../components/Images";
+import {Image} from "../../responses/image";
 
 
 const Restaurant: React.VFC = () => {
@@ -31,6 +33,9 @@ const Restaurant: React.VFC = () => {
     const [hasComment, sethasComment] = useState(true);
     const [commentCursor, setcommentCursor] = useState("");
 
+    const [image, setImage] = useState<Image[]>([]);
+    const [hasImage, sethasImage] = useState(true);
+    const [imageCursor, setimageCursor] = useState("");
 
     useEffect(() => {
         fetch(`/restaurants/${params.id}`)
@@ -112,6 +117,29 @@ const Restaurant: React.VFC = () => {
                 }})
     };
 
+    useEffect(() => {
+        fetch(`/restaurants/${params.id}/images?cursor=${imageCursor}`)
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(data => {
+                        setImage(data.results);
+                        let imageURL = data.next;
+                        setimageCursor(imageURL.substring(imageURL.lastIndexOf("=")+1));
+                    })
+                }})
+    }, [params.id]);
+
+    const fetchImage = async () => {
+        fetch(`/restaurants/${params.id}/images?cursor=${imageCursor}`)
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(data => {
+                        setImage([...image, ...data.results]);
+                        (data.next)? setimageCursor(data.next.substring(data.next.lastIndexOf("=")+1)) : sethasImage(false);
+                    })
+                }})
+    };
+
   return ((restaurant !== undefined) ?
           <Container fluid>
               <Row>
@@ -119,7 +147,7 @@ const Restaurant: React.VFC = () => {
                       <RestaurantBanner restaurant={restaurant}/>
                       <Tabs variant="tabs" defaultActiveKey="menu" className={styles.tabs}>
                           <Tab eventKey="menu" tabClassName={styles.tab} title="Menu">
-                              <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={hasMenu}/>
+                              <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={hasMenu} restaurant={restaurant}/>
                           </Tab>
                           <Tab eventKey="blogs" tabClassName={styles.tab} title="Blog Posts">
                               <Blog blog={blog} fetchBlog={fetchBlog} hasBlog={hasBlog}/>
@@ -128,6 +156,7 @@ const Restaurant: React.VFC = () => {
                               <Comments comments={comment} fetchComment={fetchComment} hasComment={hasComment}/>
                           </Tab>
                           <Tab eventKey="images" tabClassName={styles.tab} title="Images">
+                              <Images images={image} fetchImage={fetchImage} hasImage={hasImage}/>
                           </Tab>
                       </Tabs>
                   </Col>

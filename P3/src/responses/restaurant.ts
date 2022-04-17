@@ -1,5 +1,8 @@
+import {User} from "./user";
+
 export interface Restaurant {
     id: number;
+    user: User;
     name: string;
     address: string;
     logo: string;

@@ -3,6 +3,7 @@ import styles from "./RestaurantBanner.module.css";
 import logo from "../../assets/logo-cropped.png";
 import {Button, Card, Col, Image, Row, Stack} from "react-bootstrap";
 import {Restaurant} from "../../responses/restaurant";
+import {AuthContext} from "../../contexts/AuthContext";
 
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 }
 
 const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
-
+    const user = useContext(AuthContext).user;
     return (
         <Card style={{}} id={styles.bannerCard}>
             <Card.Img variant="top" src={restaurant.banner} id={styles.banner}/>
@@ -22,9 +23,10 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
                     <Col>
                         <Stack direction="horizontal" gap={3} className={styles.stack}>
                             <h4 id={styles.restaurantName}>{restaurant.name}</h4>
-                            <Button variant="primary">Like</Button>
-                            <Button variant="primary">Follow</Button>
-                            <Button variant="danger" id={styles.edit}>Edit profile</Button>
+                            {(user !== null && restaurant.id !== user.id) ?
+                                <><Button variant="primary">Like</Button>
+                                <Button variant="primary">Follow</Button></> : <></>}
+                            {(user !== null && restaurant.id === user.id) ? <Button variant="danger" id={styles.edit}>Edit profile</Button> : <></>}
                         </Stack>
                         <br/>
                         <Stack direction="horizontal" gap={3}>
