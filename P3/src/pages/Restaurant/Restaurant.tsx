@@ -178,7 +178,7 @@ const Restaurant: React.VFC = () => {
                       </Nav>
                       <Tab.Content>
                           <Tab.Pane eventKey="menu">
-                              {tab === "menu" && <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={!!menuCursor} restaurant={restaurant}/>}
+                              {tab === "menu" && <Menu menu={menu} setMenu={setMenu} fetchMenu={fetchMenu} hasMenu={!!menuCursor} restaurant={restaurant}/>}
                           </Tab.Pane>
                           <Tab.Pane eventKey="blogs">
                               {tab === "blogs" &&
