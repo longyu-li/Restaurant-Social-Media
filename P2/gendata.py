@@ -1,6 +1,27 @@
 import subprocess as sp
 import os, sys, re, shutil
-from random import random
+from random import choice, random, randint, choices
+from typing import Tuple
+
+from faker import Faker
+
+from lorem.text import TextLorem
+
+fake = Faker()
+
+# def fake_name() -> Tuple[str, str]:
+#     while name := fake.name():
+#         spl = name.split(' ')
+#         if len(spl) != 2:
+#             continue
+
+#         return spl
+
+def fake_phonenum() -> str:
+    n = [randint(0,9) for _ in range(10)]
+    return f"{min(n[0]+1,9)}{n[1]}{n[2]}-{n[3]}{n[4]}{n[5]}-{n[6]}{n[7]}{n[8]}{n[9]}"
+
+lorem = TextLorem(srange=(8, 14), prange=(4, 7), trange=(1,3))
 
 # shutil.rmtree('media')
 
@@ -21,18 +42,45 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 from rest_framework.test import APIClient
 
-from restaurants.models import Restaurant, Image, MenuItem
-from users import models
+from notifications.models import Blog as NBlog, Like as NLike, Comment as NComment, Follow as NFollow, Menu as NMenu
+from restaurants.models import Restaurant, Image, MenuItem, Blog, Comment
+from users import models as usermodels
 
-# with open("live_linus_reaction.png", "rb") as file:
-#     image_data = file.read()
+with open("live_linus_reaction.png", 'rb') as file:
+    av_data = file.read()
 
-# avatar = SimpleUploadedFile("avatar.png", image_data)
+avatar = SimpleUploadedFile("avatar.png", av_data)
+
+users = []
+for _ in range(15):
+    while 1:
+        email = fake.email()
+        try:
+            user = usermodels.RestifyUser.objects.create_user(
+                email,
+                email,
+                "mypassword"
+            )
+        except django.db.utils.IntegrityError:
+            continue
+        break
+
+    user.first_name = fake.first_name()
+    user.last_name = fake.last_name()
+    user.avatar = avatar
+    user.phone_num = fake_phonenum()
+
+    user.save()
+
+    print(f"Create user '{user.first_name}.{user.last_name}' with email [{user.email}]")
+
+    users.append(user)
 
 with open("data/data.csv") as file:
     data = file.read()
 
 straunts = []
+mitems = {}
 for line in data.split('\n'):
     name, site, phonenum, addr, *descmenu = line.split(",")
     if "#" in descmenu[-1]:
@@ -53,7 +101,8 @@ for line in data.split('\n'):
     print(name, site, phonenum, addr, desc, menu)
 
     try:
-        domain = re.findall('(?:\w+\.)+\w+$', site)[0]
+        domain: str = re.findall('(?:\w+\.)+\w+', site)[0]
+        domain = domain.removeprefix("www.")
     except:
         print("no match:", site)
         raise
@@ -71,16 +120,17 @@ for line in data.split('\n'):
             else:
                 menu_images.append(uploaded)
 
-    user = models.RestifyUser.objects.create_user(
+    print(f"owner@{domain}")
+    user = usermodels.RestifyUser.objects.create_user(
         f"owner@{domain}",
         f"owner@{domain}",
         "mypassword"
     )
 
-    user.first_name = "owner"
-    user.last_name = "owner"
+    user.first_name = fake.first_name()
+    user.last_name = fake.last_name()
     user.avatar = images[6 % len(images)]
-    user.phone_num = "222-222-2222"
+    user.phone_num = fake_phonenum()
 
     user.save()
 
@@ -98,14 +148,78 @@ for line in data.split('\n'):
             restaurant=rest,
             image=img,
             title=f"Image #{i}",
-            description="..."
+            description=lorem.sentence()
         )
 
+    mitems_ = []
     for i, item in enumerate(menu):
-        MenuItem.objects.create(
-            name=item,
+        mitem = MenuItem.objects.create(
+            name=item.replace('_', ' '),
             restaurant=rest,
-            description="...",
+            description=lorem.sentence(),
             price=random()*30 + 5,
             image=menu_images[i],
         )
+        mitems_.append(mitem)
+
+    straunts.append(rest)
+    mitems[rest.id] = mitems_
+
+for straunt in straunts:
+    for user in choices(users, k=randint(1,13)):
+        straunt.likes.add(user)
+        NLike.objects.create(
+            user=user,
+            owner=straunt.user,
+            kind=NLike.Kind.Restaurant
+        )
+
+    followers = choices(users, k=randint(1,13))
+    for user in followers:
+        straunt.follows.add(user)
+
+    blogs = []
+    for _ in range(randint(2, 6)):
+        blog = Blog.objects.create(
+            title=lorem.sentence(),
+            content=lorem.text(),
+            restaurant=straunt
+        )
+
+        for follower in followers:
+            NBlog.objects.create(
+                blog=blog,
+                restaurant=straunt,
+                owner=follower
+            )
+
+            if random() > 0.5:
+                blog.likes.add(follower)
+
+                NLike.objects.create(
+                    user=follower,
+                    owner=straunt.user,
+                    kind=NLike.Kind.Post
+                )
+
+    for user in followers:
+        if random() > 0.3:
+            comm = Comment.objects.create(
+                owner=user,
+                restaurant=straunt,
+                content=lorem.paragraph()
+            )
+            NComment.objects.create(
+                comment=comm,
+                user=user,
+                owner=straunt.user,
+            )
+        if len(mitems[straunt.id]) > 0:
+            if random() > 0.7:
+                mitem = choice(mitems[straunt.id])
+                NMenu.objects.create(
+                    change="c",
+                    menu=mitem,
+                    restaurant=straunt,
+                    owner=user
+                )
