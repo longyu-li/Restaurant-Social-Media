@@ -57,7 +57,7 @@ const Home: React.VFC = () => {
     <div style={{paddingTop: "110px"}}>
       <Search search_={search} kind_={kind} onSearch={onSearch} />
     </div>
-    <div id="results" className="d-flex flex-column align-items-center gap-2">
+    <div id="results" className="d-flex flex-column align-items-center gap-2" style={{padding: "0 50px"}}>
       <h3>Results</h3>
       <InfiniteScroll
         dataLength={data.length}
