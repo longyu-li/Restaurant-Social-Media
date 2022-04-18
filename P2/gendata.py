@@ -23,15 +23,15 @@ def fake_phonenum() -> str:
 
 lorem = TextLorem(srange=(8, 14), prange=(4, 7), trange=(1,3))
 
-# shutil.rmtree('media')
+shutil.rmtree('media')
 
-# try:
-#     os.remove("db.sqlite3")
-# except Exception as e:
-#     print(e)
+try:
+    os.remove("db.sqlite3")
+except Exception as e:
+    print(e)
 
-# proc = sp.Popen(["manage.py", "migrate"], shell=True, stdout=sp.PIPE)
-# proc.wait()
+proc = sp.Popen(["manage.py", "migrate"], shell=True, stdout=sp.PIPE)
+proc.wait()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "phase2.settings")
 
@@ -43,7 +43,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework.test import APIClient
 
 from notifications.models import Blog as NBlog, Like as NLike, Comment as NComment, Follow as NFollow, Menu as NMenu
-from restaurants.models import Restaurant, Image, MenuItem, Blog, Comment
+from restaurants.models import Restaurant, Image, MenuItem, Blog, Comment, Tag
 from users import models as usermodels
 
 with open("live_linus_reaction.png", 'rb') as file:
@@ -75,6 +75,17 @@ for _ in range(15):
     print(f"Create user '{user.first_name}.{user.last_name}' with email [{user.email}]")
 
     users.append(user)
+
+tagdata = {
+    "Abu_Hummus": "shwarma,middle eastern,middle-eastern,vegetarian",
+    "Holy_Cow_Japanese_Steakhouse": "steak,japanese",
+    "KINKA_IZAKAYA_ORIGINAL": "japanese",
+    "King_Taps": "beer,pub,comfort food",
+    "Nodo_Restaurant": "italian,pizza,pasta",
+    "Sabai_Sabai_Kitchen_and_Bar": "indian,curry,naan",
+    "Three_Monks_and_a_Duck": "vegan,vegetarian,brunch,asian",
+    "The_Oxley": "british,roast,cheap"
+}
 
 with open("data/data.csv") as file:
     data = file.read()
@@ -142,6 +153,13 @@ for line in data.split('\n'):
         banner=images[1],
         description=desc
     )
+
+    if name in tagdata:
+        for tag in tagdata[name].split(','):
+            Tag.objects.create(
+                restaurant=rest,
+                tag=tag
+            )
 
     for i, img in enumerate(images):
         Image.objects.create(
