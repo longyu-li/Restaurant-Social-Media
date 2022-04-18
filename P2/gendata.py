@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 import subprocess as sp
 import os, sys, re, shutil
 from random import choice, random, randint, choices
@@ -123,7 +124,7 @@ for line in data.split('\n'):
         raise
 
     images = []
-    menu_images = []
+    menu_images = {}
 
     for fname in os.listdir(f'data/images/{name}'):
         if fname.endswith('.jpg'):
@@ -133,7 +134,7 @@ for line in data.split('\n'):
             if re.match("^\d+", fname):
                 images.append(uploaded)
             else:
-                menu_images.append(uploaded)
+                menu_images[fname.removesuffix('.jpg')] = uploaded
 
     print(f"owner@{domain}")
     user = usermodels.RestifyUser.objects.create_user(
@@ -182,7 +183,7 @@ for line in data.split('\n'):
             restaurant=rest,
             description=lorem.sentence(),
             price=random()*30 + 5,
-            image=menu_images[i],
+            image=menu_images[item],
         )
         mitems_.append(mitem)
 
