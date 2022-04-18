@@ -20,7 +20,7 @@ const Restaurant: React.VFC = () => {
     const params = useParams();
     const [query, setQuery] = useSearchParams();
 
-    const [restaurant, setRestaurant] = useState<RestaurantType>();
+    const [restaurant, setRestaurant] = useState<RestaurantType | null>();
 
     const [menu, setMenu] = useState<MenuItem[]>([]);
     const [menuCursor, setmenuCursor] = useState("");
@@ -38,8 +38,17 @@ const Restaurant: React.VFC = () => {
 
     const fetchRst = () => {
         fetch(`/restaurants/${params.id}`)
-            .then(r => r.json())
-            .then(setRestaurant);
+            .then(res => {
+
+                if (res.ok) {
+                    res.json().then(setRestaurant);
+                } else if (res.status === 404) {
+                    setRestaurant(null);
+                } else {
+                    res.json().then(console.log);
+                }
+
+            });
     }
 
     useEffect(fetchRst, [params.id]);
@@ -143,8 +152,8 @@ const Restaurant: React.VFC = () => {
                 }})
     };
 
-  return ((restaurant !== undefined) ?
-      <Container fluid>
+  return ((restaurant === undefined) ? <h1 className="text-center">Loading...</h1> :
+      (restaurant ? <Container fluid>
           <Row>
               <Col xs={{ span: 8, offset: 2 }}>
                   <RestaurantBanner
@@ -204,7 +213,7 @@ const Restaurant: React.VFC = () => {
                   </Tab.Container>
               </Col>
           </Row>
-      </Container> : <h1>Restaurant Does Not Exist</h1>
+      </Container> : <h1 className="text-center">Restaurant Does Not Exist</h1>)
   );
 }
 
