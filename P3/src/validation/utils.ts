@@ -12,3 +12,5 @@ export function mergeErrors(fieldErrors: string[]) {
   return fieldErrors.map(fieldError => capitalize(fieldError)).join("\n");
 
 }
+
+export const IMG_TYPES = "image/png, image/jpeg";

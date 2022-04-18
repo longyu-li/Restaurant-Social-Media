@@ -15,8 +15,23 @@ const NavigationBar: React.VFC = () => {
   const { header, user, signOut } = useContext(AuthContext);
   const [nots, setNots] = useState<Notification[]>([]);
   const [show, setShow] = useState(false);
+  const [restaurantId, setRestaurantId] = useState<number>();
 
   useEffect(() => {
+
+    fetch("/restaurants/", {
+      headers: { ...header }
+    })
+      .then(res => {
+        if (res.ok) {
+          res.json().then(value => setRestaurantId(value.id));
+        } else if (res.status === 404) {
+          setRestaurantId(0);
+        } else {
+          res.json().then(value => console.log(value));
+        }
+      });
+
     const fetchNots = () => {
       if (!header)
         return;
@@ -36,14 +51,20 @@ const NavigationBar: React.VFC = () => {
 
   return <>
       <Navbar bg="red" variant="dark">
-        <Container fluid>
+        <Container fluid className="justify-content-start">
           <Navbar.Brand className="d-flex" as={Link} to="/">
             <img src={logo} className={styles.logo} alt="Logo" />
             <span>estify™</span>
           </Navbar.Brand>
-          <Nav>
+          <Nav className="me-auto">
+            {user && <Nav.Link as={Link} to="feed" className="text-white">Feed</Nav.Link>}
+            {user && restaurantId !== undefined && (
+              restaurantId ? <Nav.Link as={Link} to={`/restaurant/${restaurantId}`} className="text-white">My Restaurant</Nav.Link> :
+                  <Nav.Link as={Link} to="/create-restaurant" className="text-white">Create Restaurant</Nav.Link>
+            )}
+          </Nav>
+          <div className="d-flex">
             {user ? <>
-              <Nav.Link as={Link} to="feed" className="fw-bold text-white">Feed</Nav.Link>
               <Nav.Link as={Link} to="#" className="fw-bold text-white" onClick={() => setShow(!show)}>
                 <div id={styles.bell}>
                     <BellIcon />
@@ -57,7 +78,7 @@ const NavigationBar: React.VFC = () => {
                 <Nav.Link as={Link} to="/signin" className="fw-bold text-white ms-2">Sign In</Nav.Link>
               </>
             }
-          </Nav>
+          </div>
         </Container>
       </Navbar>
 

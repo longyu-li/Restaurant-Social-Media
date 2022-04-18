@@ -6,6 +6,7 @@ import styles from "./AvatarField.module.css";
 // import SVG itself for color flexibility
 import { ReactComponent as AvatarSvg } from "bootstrap-icons/icons/person-circle.svg";
 import {EditProfileRequest} from "../../../validation/editProfile";
+import {IMG_TYPES} from "../../../validation/utils";
 
 interface Props {
   formMethods: UseFormReturn<SignUpRequest> | UseFormReturn<EditProfileRequest>;
@@ -43,7 +44,7 @@ const AvatarField: React.VFC<Props> = ({
       </Form.Label>
       <Form.Control
         type="file"
-        accept="image/png, image/jpeg"
+        accept={IMG_TYPES}
         {...register("avatar")}
         className="visually-hidden"
         isInvalid={!!errors.avatar}
