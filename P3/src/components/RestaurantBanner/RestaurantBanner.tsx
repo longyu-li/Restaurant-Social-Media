@@ -22,7 +22,7 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
             method: set ? "POST" : "GET",
             headers: header
         }).then(res => res.json() as Promise<boolean>)
-            .then(d => setLiked(d === true ? true : false));
+            .then(d => setLiked(d === true));
     }
 
     const refreshLike = () => doLike(false);
@@ -37,7 +37,7 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
             method: set ? "POST" : "GET",
             headers: header
         }).then(res => res.json() as Promise<boolean>)
-        .then(d => setFollowing(d === true ? true : false));
+        .then(d => setFollowing(d === true));
     }
 
     const refreshFollow = () => doFollow(false);
