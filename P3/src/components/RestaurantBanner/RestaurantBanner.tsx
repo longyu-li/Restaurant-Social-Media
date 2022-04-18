@@ -22,7 +22,7 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
             method: set ? "POST" : "GET",
             headers: header
         }).then(res => res.json() as Promise<boolean>)
-            .then(setLiked);
+            .then(d => setLiked(d === true ? true : false));
     }
 
     const refreshLike = () => doLike(false);
@@ -37,13 +37,15 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
             method: set ? "POST" : "GET",
             headers: header
         }).then(res => res.json() as Promise<boolean>)
-            .then(setFollowing);
+        .then(d => setFollowing(d === true ? true : false));
     }
 
     const refreshFollow = () => doFollow(false);
     const toggleFollow = () => doFollow(true);
 
     useEffect(refreshFollow, [header]);
+
+    const isOwner = user?.id === restaurant.user.id;
 
     const calcLikes = restaurant.likes + (liked ? 1 : 0);
     const calcFollows = restaurant.follows + (following ? 1 : 0);
@@ -88,7 +90,8 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
                             <div style={{
                                 display: "flex",
                                 gap: "10px",
-                                alignItems: "center"
+                                alignItems: "center",
+                                visibility: isOwner ? "hidden" : "visible"
                             }}>
                                 <ToggleButton className={styles.toggle} id="toggle-like" type="checkbox" variant="outline-dark" checked={liked ?? false} value="1"
                                     onChange={toggleLike}>
