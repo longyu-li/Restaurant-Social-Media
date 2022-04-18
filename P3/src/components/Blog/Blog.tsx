@@ -23,18 +23,21 @@ const Blog: React.VFC<Props> = (data) => {
         setLiked(prevLiked => new Map(prevLiked.set(k,v)));
     }
 
-    const [blogIds] = useState(() => data.blog.map(blog => blog.id));
-
     useEffect(() => {
         if (!header)
             return;
-        blogIds.forEach(blogId => {
-            fetch(`/restaurants/blog/${blogId}/like/`, {
-                headers: header
-            }).then(res => res.json())
-              .then(res => updateLiked(blogId, res));
-        })
-    }, [header, blogIds]);
+
+        if (data.blog && data.blog.length !== liked.size) {
+            data.blog.forEach(blog => {
+                fetch(`/restaurants/blog/${blog.id}/like/`, {
+                    headers: header
+                }).then(res => res.json())
+                    .then(res => updateLiked(blog.id, res));
+            })
+        }
+
+
+    }, [header, data.blog, liked]);
 
     const toggleLike = async (id: number) => {
         if (!header)
@@ -68,7 +71,7 @@ const Blog: React.VFC<Props> = (data) => {
 
     return (
         <div className="d-grid gap-2">
-            {(user !== null && data.restaurant.id === user.id) ?
+            {(user !== null && data.restaurant.user.id === user.id) ?
                 <AddBlogPostForm  blog={data.blog} setBlog={data.setBlog}/> : <></>}
 
             <InfiniteScroll
@@ -91,7 +94,7 @@ const Blog: React.VFC<Props> = (data) => {
                                  <a id={styles.like} type="checkbox" onClick={() => toggleLike(item.id)}>
                                      {liked.get(item.id) ? "❤" : "🤍"}
                                  </a> {item.likes}
-                             </small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteBlogPost(item.id)} className={styles.delete}>
+                             </small> {(user !== null && data.restaurant.user.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteBlogPost(item.id)} className={styles.delete}>
                                  Delete
                             </Badge> : <></>}
                         </div>

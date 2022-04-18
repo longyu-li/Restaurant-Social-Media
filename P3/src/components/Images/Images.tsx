@@ -33,7 +33,7 @@ const Images: React.VFC<Props> = (data) => {
 
     return (
         <div className="d-grid gap-2">
-            {(user !== null && data.restaurant.id === user.id) ?
+            {(user !== null && data.restaurant.user.id === user.id) ?
                 <AddImageForm image={data.images} setImage={data.setImage}/> : <></>}
         <InfiniteScroll
             dataLength={data.images.length} //This is important field to render the next data
@@ -57,7 +57,7 @@ const Images: React.VFC<Props> = (data) => {
                             <Card.Text>
                                 {item.description}
                             </Card.Text>
-                            {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteImages(item.id)} className={styles.delete}>
+                            {(user !== null && data.restaurant.user.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteImages(item.id)} className={styles.delete}>
                                 Delete
                             </Badge> : <></>}
                         </Card.Body>

@@ -34,7 +34,7 @@ const Menu: React.VFC<Props> = (data) => {
 
     return (
         <div className="d-grid gap-2">
-            {(user !== null && data.restaurant.id === user.id) ? <AddMenuItemForm menu={data.menu} setMenu={data.setMenu}/> : <></>}
+            {(user !== null && data.restaurant.user.id === user.id) ? <AddMenuItemForm menu={data.menu} setMenu={data.setMenu}/> : <></>}
         <InfiniteScroll
             dataLength={data.menu.length} //This is important field to render the next data
             next={data.fetchMenu}
@@ -49,9 +49,9 @@ const Menu: React.VFC<Props> = (data) => {
             >
                     <Image src={item.image} className={styles.menuImage}/>
                     <div className="ms-2 me-auto">
-                        <div className="fw-bold">{item.name} {(user !== null && data.restaurant.id === user.id) ? <EditMenuItemForm menuItem={item} menu={data.menu} setMenu={data.setMenu}/>:<></>} </div>
+                        <div className="fw-bold">{item.name} {(user !== null && data.restaurant.user.id === user.id) ? <EditMenuItemForm menuItem={item} menu={data.menu} setMenu={data.setMenu}/>:<></>} </div>
                         <p className={"mb-1"}>{item.description}</p>
-                        {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteMenuItem(item.id)} className={styles.delete}>
+                        {(user !== null && data.restaurant.user.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteMenuItem(item.id)} className={styles.delete}>
                             Delete
                         </Badge> : <></>}
                     </div>
