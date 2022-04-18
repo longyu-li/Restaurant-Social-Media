@@ -1,9 +1,12 @@
-#bannerCard {
+.bannerCard {
     background-color: rgba(247, 245, 154, 0.623);
 }
 
-#banner {
+.banner {
     height: 250px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .icon {
