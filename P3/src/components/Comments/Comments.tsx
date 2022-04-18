@@ -1,5 +1,5 @@
 import React from "react";
-import {ListGroup} from "react-bootstrap";
+import {Button, ListGroup} from "react-bootstrap";
 import {Comment} from "../../responses/comment";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -11,6 +11,10 @@ interface Props {
 const Comments: React.VFC<Props> = (data) => {
 
     return (
+        <div className="d-grid gap-2">
+            <Button variant="dark" size="lg">
+                Add Comment
+            </Button>
         <InfiniteScroll
             dataLength={data.comments.length} //This is important field to render the next data
             next={data.fetchComment}
@@ -30,7 +34,7 @@ const Comments: React.VFC<Props> = (data) => {
                     {new Date(item.date).toLocaleString()}
                 </ListGroup.Item>;
             })}  </ListGroup>
-        </InfiniteScroll>);
+        </InfiniteScroll></div>);
 
 
 }

@@ -67,7 +67,13 @@ const Blog: React.VFC<Props> = (data) => {
     }
 
     return (
-        <InfiniteScroll
+        <div className="d-grid gap-2">
+            {(user !== null && data.restaurant.id === user.id) ?
+                <Button variant="dark" size="lg">
+                    Add Blog Post
+                </Button> : <></>}
+
+            <InfiniteScroll
             dataLength={data.blog.length} //This is important field to render the next data
             next={data.fetchBlog}
             hasMore={data.hasBlog}
@@ -95,7 +101,7 @@ const Blog: React.VFC<Props> = (data) => {
                     </ListGroup.Item>;
                 })}
             </ListGroup>
-        </InfiniteScroll>);
+        </InfiniteScroll></div>);
 
 
 }
