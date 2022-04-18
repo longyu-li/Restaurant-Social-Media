@@ -19,6 +19,7 @@ const Notifications: React.VFC<Props> = ({ show, setShow, nots }) => {
                     let img;
                     let msg;
                     let msg2;
+                    let link;
 
                     const when = timeSince(new Date(n.timestamp));
 
@@ -41,6 +42,7 @@ const Notifications: React.VFC<Props> = ({ show, setShow, nots }) => {
                             const comment = n as CommentNotif;
                             const user = comment.user;
                             img = user.avatar;
+                            // link = `/restaurants/${auser.}/?tab=menu`;
                             msg = `${user.first_name} ${user.last_name} commented on your restaurant: ${comment.comment.content}`;
                         }
                             break;
@@ -48,6 +50,7 @@ const Notifications: React.VFC<Props> = ({ show, setShow, nots }) => {
                             const menu = n as MenuNotification;
                             const rst = menu.restaurant;
                             img = rst.logo;
+                            link = `/restaurant/${rst.id}/?tab=menu`;
                             let verb;
                             switch (menu.change) {
                                 case MenuChange.Create:
@@ -70,6 +73,7 @@ const Notifications: React.VFC<Props> = ({ show, setShow, nots }) => {
                             const blog = n as BlogNotification;
                             const rst = blog.restaurant;
                             img = rst.logo;
+                            link = `/restaurant/${rst.id}/?tab=blogs`;
                             msg = `${rst.name} made a new blog post: ${blog.blog.title}`;
                             msg2 = `${blog.blog.likes} likes`;
                         }
@@ -78,7 +82,7 @@ const Notifications: React.VFC<Props> = ({ show, setShow, nots }) => {
                             return <></>
                     }
 
-                    return <a key={n.id} href="#" className="list-group-item list-group-item-action">
+                    return <a key={n.id} href={link ?? "#"} className="list-group-item list-group-item-action">
                         <div className="d-flex align-items-center gap-3">
                             <img src={img} style={{ width: "50px", height: "50px", objectFit: "cover" }} className="avatar rounded-circle" />
                             <div className="d-flex flex-column flex-grow-1">
