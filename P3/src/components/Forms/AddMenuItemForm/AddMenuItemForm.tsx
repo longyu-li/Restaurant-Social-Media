@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {addMenuItemRequest, addMenuItemSchema} from "../../../validation/addMenuItem";
@@ -24,9 +24,23 @@ const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting},
+        formState: { errors, isSubmitting },
         setError,
+        watch,
+        setValue
     } = formMethods;
+
+    const price = watch("price");
+
+    useEffect(() => {
+        if (price) {
+            const decimals = price.split(".");
+
+            if (decimals.length === 2 && decimals[1].length > 2) {
+                setValue("price", decimals[0] + "." + decimals[1].substring(0, 2));
+            }
+        }
+    }, [price, setValue]);
 
     const { header } = useContext(AuthContext);
 
@@ -109,8 +123,9 @@ const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
                     <InputGroup className="mb-3">
                         <InputGroup.Text>$</InputGroup.Text>
                         <FormControl
-                            type="text"
+                            type="number"
                             placeholder="0.00"
+                            step="0.01"
                             {...register("price")}
                             isInvalid={!!errors.price}
                         />
