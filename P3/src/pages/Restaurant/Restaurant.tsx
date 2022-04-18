@@ -17,7 +17,6 @@ import {Image} from "../../responses/image";
 import {Restaurant as RestaurantType} from "../../responses/restaurant";
 
 const Restaurant: React.VFC = () => {
-
     const params = useParams();
 
     const [restaurant, setRestaurant] = useState<RestaurantType>();
@@ -36,16 +35,13 @@ const Restaurant: React.VFC = () => {
 
     const [tab, setTab] = useState("menu")
 
-    useEffect(() => {
+    const fetchRst = () => {
         fetch(`/restaurants/${params.id}`)
-          .then(res => {
-             if (res.ok) {
+            .then(r => r.json())
+            .then(setRestaurant);
+    }
 
-               res.json().then(data => setRestaurant(data));
-
-             }
-          });
-    }, [params.id]);
+    useEffect(fetchRst, [params.id]);
 
     useEffect(() => {
         fetch(`/restaurants/${params.id}/menu?cursor=`)
@@ -153,6 +149,7 @@ const Restaurant: React.VFC = () => {
                   <RestaurantBanner
                       restaurant={restaurant}
                       setRestaurant={setRestaurant}
+                      fetchRst={fetchRst}
                   />
                   <Tab.Container
                       activeKey={tab}

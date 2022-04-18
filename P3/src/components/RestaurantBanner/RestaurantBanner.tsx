@@ -8,11 +8,12 @@ import { ReactComponent as MapIcon } from "bootstrap-icons/icons/geo-alt-fill.sv
 import EditRestaurantForm from "../Forms/EditRestaurantForm";
 
 interface Props {
-    restaurant: Restaurant;
-    setRestaurant: React.Dispatch<React.SetStateAction<Restaurant | undefined>>
+    restaurant: Restaurant,
+    setRestaurant: (rst?: Restaurant) => void,
+    fetchRst: () => void
 }
 
-const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant }) => {
+const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant, fetchRst }) => {
     const [liked, setLiked] = useState<boolean>();
     const [following, setFollowing] = useState<boolean>();
     const { user, header } = useContext(AuthContext);
@@ -24,7 +25,11 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant }) => {
             method: set ? "POST" : "GET",
             headers: header
         }).then(res => res.json() as Promise<boolean>)
-            .then(d => setLiked(d === true));
+            .then(d => {
+                if (set)
+                    fetchRst();
+                setLiked(d === true);
+            });
     }
 
     const refreshLike = () => doLike(false);
@@ -39,7 +44,11 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant }) => {
             method: set ? "POST" : "GET",
             headers: header
         }).then(res => res.json() as Promise<boolean>)
-        .then(d => setFollowing(d === true));
+        .then(d => {
+            if (set)
+                fetchRst();
+            setFollowing(d === true);
+        });
     }
 
     const refreshFollow = () => doFollow(false);
@@ -49,8 +58,8 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant }) => {
 
     const isOwner = user?.id === restaurant.user.id;
 
-    const calcLikes = restaurant.likes + (liked ? 1 : 0);
-    const calcFollows = restaurant.follows + (following ? 1 : 0);
+    const calcLikes = restaurant.likes;
+    const calcFollows = restaurant.follows;
 
     const [editOpen, setEditOpen] = useState(false);
 
