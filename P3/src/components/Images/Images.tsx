@@ -42,7 +42,9 @@ const Images: React.VFC<Props> = (data) => {
             hasMore={data.hasImage}
             loader={<h1>Loading Images ...</h1>}
             endMessage={<></>}
-
+            style={{
+                overflow: "hidden"
+            }}
         >
         <Row xs={1} md={4} className="g-4">
                 {data.images.map((item) => {
