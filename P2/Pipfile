@@ -11,6 +11,7 @@ djangorestframework-simplejwt = "*"
 django-extensions = "*"
 pyparsing = "*"
 pydot = "*"
+lorem = "*"
 
 [dev-packages]
 autoflake = "*"
