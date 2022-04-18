@@ -37,7 +37,7 @@ const Restaurant: React.VFC = () => {
     const [tab, setTab] = useState(query.get("tab") ?? "menu")
 
     useEffect(() => {
-        document.title = `Restify - ${restaurant?.name}`;
+        document.title = `Restify - ${restaurant ? restaurant.name : 'Not Found'}`;
     }, [restaurant]);
 
     const fetchRst = () => {
@@ -208,7 +208,7 @@ const Restaurant: React.VFC = () => {
                               }
                           </Tab.Pane>
                           <Tab.Pane eventKey="comments">
-                              {tab === "comments" && <Comments comments={comment} fetchComment={fetchComment} hasComment={!!commentCursor}/>}
+                              {tab === "comments" && <Comments comments={comment} fetchComment={fetchComment} hasComment={!!commentCursor} setComment={setComment} id={restaurant.id}/>}
                           </Tab.Pane>
                           <Tab.Pane eventKey="images">
                               {tab === "images" && <Images images={image} fetchImage={fetchImage} hasImage={!!imageCursor} restaurant={restaurant} setImage={setImage}/>}

@@ -13,7 +13,7 @@ interface Props {
 }
 const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+
     const handleShow = () => setShow(true);
 
     const formMethods = useForm<addMenuItemRequest>({
@@ -27,8 +27,19 @@ const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
         formState: { errors, isSubmitting },
         setError,
         watch,
-        setValue
+        setValue,
+        reset
     } = formMethods;
+
+    const handleClose = () => {
+        setShow(false);
+        reset({
+            image: "",
+            name: "",
+            price: "",
+            description: "" // clear submitted file
+        });
+    };
 
     const price = watch("price");
 
@@ -61,13 +72,9 @@ const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
 
         if (res.ok) {
             res.json().then(data => {
-                console.log(data.results);
-                // const newMenu = new Array<MenuItem>();
-                // newMenu.push(data.results);
-                setMenu([...menu, data]);
-
+                setMenu([data, ...menu]);
             });
-
+            handleClose();
 
         } else if (res.status === 400) {
 
@@ -151,7 +158,7 @@ const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
                     </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-                <Button type="submit" variant="dark"  onClick={handleClose} disabled={isSubmitting}>
+                <Button type="submit" variant="dark" disabled={isSubmitting}>
                     Add to Menu
                 </Button>
             </Modal.Footer>

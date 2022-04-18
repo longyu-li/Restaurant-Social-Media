@@ -1,11 +1,12 @@
-import React, {useContext, useState} from "react";
-import {Badge, Button, Form, FormControl, Image, InputGroup, ListGroup, Modal} from "react-bootstrap";
+import React, {useContext} from "react";
+import {Badge, Image, ListGroup} from "react-bootstrap";
 import {MenuItem} from "../../responses/menuItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./Menu.module.css";
 import {AuthContext} from "../../contexts/AuthContext";
 import {Restaurant} from "../../responses/restaurant";
 import AddMenuItemForm from "../Forms/AddMenuItemForm";
+import EditMenuItemForm from "../Forms/EditMenuItemForm";
 
 interface Props {
     menu: MenuItem [];
@@ -48,7 +49,7 @@ const Menu: React.VFC<Props> = (data) => {
             >
                     <Image src={item.image} className={styles.menuImage}/>
                     <div className="ms-2 me-auto">
-                        <div className="fw-bold">{item.name} {(user !== null && data.restaurant.id === user.id) ? <Button variant="outline-info" id={item.id.toString()} className={styles.editMenu}>Edit</Button>:<></>} </div>
+                        <div className="fw-bold">{item.name} {(user !== null && data.restaurant.id === user.id) ? <EditMenuItemForm menuItem={item} menu={data.menu} setMenu={data.setMenu}/>:<></>} </div>
                         <p className={"mb-1"}>{item.description}</p>
                         {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteMenuItem(item.id)} className={styles.delete}>
                             Delete

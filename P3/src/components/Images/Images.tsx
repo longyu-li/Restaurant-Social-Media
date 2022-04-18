@@ -1,10 +1,11 @@
 import React, {useContext} from "react";
-import {Badge, Button, Card, Col, Row} from "react-bootstrap";
+import {Badge, Card, Col, Row} from "react-bootstrap";
 import {Image} from "../../responses/image";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {AuthContext} from "../../contexts/AuthContext";
 import {Restaurant} from "../../responses/restaurant";
 import styles from "./Images.module.css";
+import AddImageForm from "../Forms/AddImageForm";
 
 interface Props {
     images: Image [];
@@ -33,9 +34,7 @@ const Images: React.VFC<Props> = (data) => {
     return (
         <div className="d-grid gap-2">
             {(user !== null && data.restaurant.id === user.id) ?
-                <Button variant="dark" size="lg">
-                    Add Image
-                </Button> : <></>}
+                <AddImageForm image={data.images} setImage={data.setImage}/> : <></>}
         <InfiniteScroll
             dataLength={data.images.length} //This is important field to render the next data
             next={data.fetchImage}
