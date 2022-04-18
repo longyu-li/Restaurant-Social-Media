@@ -156,7 +156,9 @@ const Restaurant: React.VFC = () => {
                       activeKey={tab}
                       onSelect={k => {
                           query.set("tab", k ?? "menu");
-                          setQuery(query);
+                          setQuery(query, {
+                              replace: true
+                          });
                           setTab(k ?? "menu");
                         }
                     }
