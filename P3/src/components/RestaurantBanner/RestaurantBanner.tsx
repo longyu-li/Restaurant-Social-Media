@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./RestaurantBanner.module.css";
-import { Card, Image, ToggleButton } from "react-bootstrap";
+import { Button, Card, Image, ToggleButton } from "react-bootstrap";
 import { Restaurant } from "../../responses/restaurant";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ReactComponent as PhoneIcon } from "bootstrap-icons/icons/telephone-fill.svg";
@@ -91,16 +91,22 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
                                 display: "flex",
                                 gap: "10px",
                                 alignItems: "center",
-                                visibility: isOwner ? "hidden" : "visible"
+                                justifyContent: "space-between",
+                                visibility: isOwner || !header ? "hidden" : "visible"
                             }}>
-                                <ToggleButton className={styles.toggle} id="toggle-like" type="checkbox" variant="outline-dark" checked={liked ?? false} value="1"
-                                    onChange={toggleLike}>
-                                    {liked ? "liked" : "like"}
-                                </ToggleButton>
-                                <ToggleButton className={styles.toggle} id="toggle-follow" type="checkbox" variant="outline-dark" checked={following ?? false} value="1"
-                                    onChange={toggleFollow}>
-                                    {following ? "followed" : "follow"}
-                                </ToggleButton>
+                                <div>
+                                    <ToggleButton className={styles.toggle} id="toggle-like" type="checkbox" variant="outline-dark" checked={liked ?? false} value="1"
+                                        onChange={toggleLike}>
+                                        {liked ? "liked" : "like"}
+                                    </ToggleButton>
+                                    <ToggleButton className={styles.toggle} id="toggle-follow" type="checkbox" variant="outline-dark" checked={following ?? false} value="1"
+                                        onChange={toggleFollow}>
+                                        {following ? "followed" : "follow"}
+                                    </ToggleButton>
+                                </div>
+                                <div>
+                                    <Button variant="danger" id={styles.edit}>Edit Restaurant</Button>
+                                </div>
                             </div>
                         </div>
                         <div style={{
