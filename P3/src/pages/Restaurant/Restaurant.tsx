@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import RestaurantBanner from "../../components/RestaurantBanner";
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import styles from "./Restaurant.module.css";
 import {Nav, Tab} from "react-bootstrap";
 import Menu from "../../components/Menu";
@@ -17,10 +17,10 @@ import {Image} from "../../responses/image";
 import {Restaurant as RestaurantType} from "../../responses/restaurant";
 
 const Restaurant: React.VFC = () => {
-
     const params = useParams();
+    const [query, setQuery] = useSearchParams();
 
-    const [restaurant, setRestaurant] = useState<RestaurantType>();
+    const [restaurant, setRestaurant] = useState<RestaurantType | null>();
 
     const [menu, setMenu] = useState<MenuItem[]>([]);
     const [menuCursor, setmenuCursor] = useState("");
@@ -34,18 +34,28 @@ const Restaurant: React.VFC = () => {
     const [image, setImage] = useState<Image[]>([]);
     const [imageCursor, setimageCursor] = useState("");
 
-    const [tab, setTab] = useState("menu")
+    const [tab, setTab] = useState(query.get("tab") ?? "menu")
 
     useEffect(() => {
+        document.title = `Restify - ${restaurant?.name}`;
+    }, [restaurant]);
+
+    const fetchRst = () => {
         fetch(`/restaurants/${params.id}`)
-          .then(res => {
-             if (res.ok) {
+            .then(res => {
 
-               res.json().then(data => setRestaurant(data));
+                if (res.ok) {
+                    res.json().then(setRestaurant);
+                } else if (res.status === 404) {
+                    setRestaurant(null);
+                } else {
+                    res.json().then(console.log);
+                }
 
-             }
-          });
-    }, [params.id]);
+            });
+    }
+
+    useEffect(fetchRst, [params.id]);
 
     useEffect(() => {
         fetch(`/restaurants/${params.id}/menu?cursor=`)
@@ -146,17 +156,25 @@ const Restaurant: React.VFC = () => {
                 }})
     };
 
-  return ((restaurant !== undefined) ?
-      <Container fluid>
+  return ((restaurant === undefined) ? <h1 className="text-center">Loading...</h1> :
+      (restaurant ? <Container fluid>
           <Row>
               <Col xs={{ span: 8, offset: 2 }}>
                   <RestaurantBanner
                       restaurant={restaurant}
                       setRestaurant={setRestaurant}
+                      fetchRst={fetchRst}
                   />
                   <Tab.Container
                       activeKey={tab}
-                      onSelect={(k) => setTab(k || "menu")}
+                      onSelect={k => {
+                          query.set("tab", k ?? "menu");
+                          setQuery(query, {
+                              replace: true
+                          });
+                          setTab(k ?? "menu");
+                        }
+                    }
                   >
                       <Nav variant="pills" justify className={`my-3 ${styles.tabsContainer}`}>
                           <Nav.Item>
@@ -199,7 +217,7 @@ const Restaurant: React.VFC = () => {
                   </Tab.Container>
               </Col>
           </Row>
-      </Container> : <h1>Restaurant Does Not Exist</h1>
+      </Container> : <h1 className="text-center">Restaurant Does Not Exist</h1>)
   );
 }
 

@@ -5,6 +5,7 @@ import {BlogPost} from "../../responses/blogPost";
 import styles from "./Blog.module.css";
 import {AuthContext} from "../../contexts/AuthContext";
 import {Restaurant} from "../../responses/restaurant";
+import { timeSince } from "../..";
 import AddBlogPostForm from "../Forms/AddBlogPostForm";
 
 interface Props {
@@ -14,70 +15,55 @@ interface Props {
     hasBlog: boolean;
     restaurant: Restaurant;
 }
+
 const Blog: React.VFC<Props> = (data) => {
-    const user = useContext(AuthContext).user;
+    const {user, header} = useContext(AuthContext);
     const [liked, setLiked] = useState(new Map<Number, boolean>());
-    const access  = useContext(AuthContext).tokens!;
-    const updateLiked = (k:Number,v:boolean) => {
+    const updateLiked = (k: number, v: boolean) => {
         setLiked(prevLiked => new Map(prevLiked.set(k,v)));
-        data.setBlog(prevState => prevState.map(value => {
-            if (value.id === k) value.likes += v ? 1 : -1;
-            return value;
-        }));
     }
 
     const [blogIds] = useState(() => data.blog.map(blog => blog.id));
 
     useEffect(() => {
-        if (user !== null){
-            blogIds.forEach(blogId => {
-                fetch(`/restaurants/blog/${blogId}/like/`, {headers: {'Authorization': `Bearer ${access.access}`}})
-                    .then(res => {
-                        if (res.ok) {
-                            res.json().then(res => {
-                                updateLiked(blogId, res);
-                                // console.log(item.id, res);
-                            })
+        if (!header)
+            return;
+        blogIds.forEach(blogId => {
+            fetch(`/restaurants/blog/${blogId}/like/`, {
+                headers: header
+            }).then(res => res.json())
+              .then(res => updateLiked(blogId, res));
+        })
+    }, [header, blogIds]);
 
-                        }})
-            })
+    const toggleLike = async (id: number) => {
+        if (!header)
+            return;
+        if (data.restaurant.user.id === user!.id)
+            return;
 
-        }
-        else {
-            blogIds.forEach(blogId => {
-                updateLiked(blogId, false);
-            })
-        }
-    }, [access.access, user, blogIds]);
-
-    const toggleLike = async (id: Number) => {
-        if (user !== null && data.restaurant.id !== user.id) {
-            fetch(`/restaurants/blog/${id}/like/`, {
-                method: "POST",
-                headers: {'Authorization': `Bearer ${access.access}`}
-            })
-                .then(res => {
-                        if (res.ok) {
-                            res.json().then(res => {
-                                updateLiked(id, res);
-                            })
-                        }
-                    }
-                )
-        }
+        fetch(`/restaurants/blog/${id}/like/`, {
+            method: "POST",
+            headers: header
+        }).then(res => res.json() as Promise<boolean>)
+            .then(res => updateLiked(id, res))
+            .then(_ => fetch(`/restaurants/blogs/${id}/`))
+            .then(res => res.json() as Promise<BlogPost>)
+            .then(post => {
+                data.setBlog(prev => prev.map(bp => bp.id === post.id ? post : bp));
+            });
     }
 
-    const deleteBlogPost = async(id: Number) => {
+    const deleteBlogPost = async(id: number) => {
+        if (!header)
+            return;
+
         fetch(`/restaurants/blog/${id}`, {
             method: "DELETE",
-            headers: {'Authorization': `Bearer ${access.access}`}
-        })
-            .then(res => {
-                    if (res.ok) {
-                        data.setBlog(data.blog.filter(item => item.id !== id));
-                    }
-                }
-            )
+            headers: header
+        }).then(_ => {
+            data.setBlog(prev => prev.filter(item => item.id !== id));
+        });
     }
 
     return (
@@ -93,23 +79,23 @@ const Blog: React.VFC<Props> = (data) => {
             endMessage={<></>}
         >
             <ListGroup as="ul">
-                {data.blog.map((item) => {
+                {data.blog.map(item => {
                     return <ListGroup.Item
                         as="li" key={item.id}
-                        className="d-flex justify-content-between align-items-start"
+                        className="d-flex justify-content-between align-items-start gap-4"
                     >
                         <div className="ms-2 me-auto">
                             <div className="fw-bold">{item.title}</div>
                             <p className={"mb-1"}>{item.content}</p>
                              <small className={styles.vote}>
                                  <a id={styles.like} type="checkbox" onClick={() => toggleLike(item.id)}>
-                                     {liked.get(item.id) ? <>❤</>: <>🤍</>}
+                                     {liked.get(item.id) ? "❤" : "🤍"}
                                  </a> {item.likes}
                              </small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteBlogPost(item.id)} className={styles.delete}>
                                  Delete
                             </Badge> : <></>}
                         </div>
-                        {new Date(item.date).toLocaleString()}
+                        <span style={{flexShrink: "0"}}>{timeSince(new Date(item.date))}</span>
                     </ListGroup.Item>;
                 })}
             </ListGroup>

@@ -12,9 +12,9 @@ import {AuthContext} from "../../../contexts/AuthContext";
 
 interface Props {
   editOpen: boolean;
-  setEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditOpen: (edit: boolean) => void;
   restaurant: Restaurant;
-  setRestaurant: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
+  setRestaurant: (rst?: Restaurant) => void,
 }
 
 const EditRestaurantForm: React.VFC<Props> = ({

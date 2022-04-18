@@ -8,7 +8,7 @@ from restaurants.models import Blog
 class GetBlogPostView(RetrieveAPIView):
 
     serializer_class = BlogSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = []
 
     def get_object(self):
         return get_object_or_404(Blog, id=self.kwargs["blog_id"])

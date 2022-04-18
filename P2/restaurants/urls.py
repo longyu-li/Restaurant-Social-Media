@@ -3,6 +3,7 @@ from restaurants.views.create_image_view import CreateImageView
 from restaurants.views.create_update_delete_restaurant_view import (
     CreateUpdateDeleteRestaurantView,
 )
+from restaurants.views.get_blog_post_view import GetBlogPostView
 from restaurants.views.get_image_list_view import GetImageListView
 from restaurants.views.get_menu_list_view import GetMenuListView
 from restaurants.views.get_restaurant_view import GetRestaurantView
@@ -39,6 +40,7 @@ urlpatterns = [
         GetCreateCommentsView.as_view(),
         name="get_create_comment",
     ),
+    path("blogs/<int:blog_id>/", GetBlogPostView.as_view(), name="get_blog_post"),
     path(
         "<int:restaurant_id>/blogs/",
         GetBlogPostListView.as_view(),
