@@ -40,8 +40,8 @@ const NavigationBar: React.VFC = () => {
       }).then(r => r.json())
       .catch(e => console.log(e))
         .then(d => {
-          console.log(d);
-          setNots(d);
+          console.error("If you're seeing this then something bad happened to the notifications");
+          setNots(d ?? []);
         });
     } 
     fetchNots();

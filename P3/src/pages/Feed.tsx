@@ -53,8 +53,10 @@ const Feed: React.VFC = () => {
                 feed.map(f => {
                     const when = timeSince(new Date(f.date));
                     return <a key={f.id} href="#" className="list-group-item list-group-item-action">
-                    <div className="d-flex align-items-stretch gap-3" style={{padding: "10px"}}>
-                        <img src={f.restaurant.logo} style={{ width: "100px" }} className="avatar rounded-circle" />
+                    <div className="d-flex align-items-center gap-3" style={{padding: "10px"}}>
+                        {/* <div> */}
+                            <img src={f.restaurant.logo} style={{ width: "100px", height: "100px", objectFit: "cover" }} className="avatar rounded-circle" />
+                        {/* </div> */}
                         <div className="d-flex flex-column flex-grow-1" style={{padding: "0 10px"}}>
                             <div className="d-flex w-100 justify-content-between">
                                 <h5 style={{ margin: "0" }}>{f.restaurant.name} - {f.title}</h5>

@@ -16,6 +16,20 @@ interface Props {
 }
 const Menu: React.VFC<Props> = (data) => {
     const user = useContext(AuthContext).user;
+    const access  = useContext(AuthContext).tokens!;
+
+    const deleteMenuItem = async(id: Number) => {
+        fetch(`/restaurants/menu/${id}`, {
+            method: "DELETE",
+            headers: {'Authorization': `Bearer ${access.access}`}
+        })
+            .then(res => {
+                    if (res.ok) {
+                        data.setMenu(data.menu.filter(item => item.id !== id));
+                    }
+                }
+            )
+    }
 
     return (
         <div className="d-grid gap-2">
@@ -35,7 +49,10 @@ const Menu: React.VFC<Props> = (data) => {
                     <Image src={item.image} className={styles.menuImage}/>
                     <div className="ms-2 me-auto">
                         <div className="fw-bold">{item.name} {(user !== null && data.restaurant.id === user.id) ? <Button variant="outline-info" id={item.id.toString()} className={styles.editMenu}>Edit</Button>:<></>} </div>
-                        {item.description}
+                        <p className={"mb-1"}>{item.description}</p>
+                        {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteMenuItem(item.id)} className={styles.delete}>
+                            Delete
+                        </Badge> : <></>}
                     </div>
                     <Badge bg="success" pill>
                         ${item.price}
@@ -43,7 +60,5 @@ const Menu: React.VFC<Props> = (data) => {
             </ListGroup.Item>;
         })}  </ListGroup>
         </InfiniteScroll> </div>);
-
-
 }
 export default Menu;
