@@ -64,8 +64,8 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant, fetchRs
     const [editOpen, setEditOpen] = useState(false);
 
     return (
-        <Card style={{marginTop: "15px"}} id={styles.bannerCard}>
-            {/* <Card.Img variant="top" src={restaurant.banner} id={styles.banner} /> */}
+        <Card style={{marginTop: "15px"}} className={styles.bannerCard}>
+            <Card.Img variant="top" as="div" style={{ backgroundImage: `url(${restaurant.banner})` }} className={styles.banner} />
             <Card.Body>
                 <div style={{
                     display: "flex",
@@ -79,8 +79,9 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant, fetchRs
                     <div style={{
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "space-around"
-                    }}>
+                        justifyContent: "space-around",
+                        flexGrow: 1
+                    }} className="me-2">
                         <div style={{
                             display: "flex",
                             gap: "25px"
