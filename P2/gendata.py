@@ -204,7 +204,7 @@ for straunt in straunts:
         straunt.follows.add(user)
 
     blogs = []
-    for _ in range(randint(2, 6)):
+    for _ in range(randint(15, 20)):
         blog = Blog.objects.create(
             title=lorem.sentence(),
             content=lorem.text(),
