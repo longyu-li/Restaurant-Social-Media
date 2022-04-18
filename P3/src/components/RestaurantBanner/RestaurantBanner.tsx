@@ -91,7 +91,7 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
                                 display: "flex",
                                 gap: "10px",
                                 alignItems: "center",
-                                visibility: isOwner ? "hidden" : "visible"
+                                visibility: isOwner || !header ? "hidden" : "visible"
                             }}>
                                 <ToggleButton className={styles.toggle} id="toggle-like" type="checkbox" variant="outline-dark" checked={liked ?? false} value="1"
                                     onChange={toggleLike}>
