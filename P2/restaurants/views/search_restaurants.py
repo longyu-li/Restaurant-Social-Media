@@ -11,7 +11,7 @@ from django.db.models import Q
 
 
 class CursorSetPagination(CursorPagination):
-    page_size = 10
+    page_size = 100
     page_size_query_param = "page_size"
     ordering = "-q_count"
 
