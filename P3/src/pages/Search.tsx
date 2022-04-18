@@ -30,7 +30,6 @@ const Home: React.VFC = () => {
     fetch(next!)
     .then(resp => resp.json() as Promise<SearchResult>)
     .then(resp => {
-      console.log(resp.next);
       setNext(resp.next);
       setData([...data, ...resp.results]);
     });
