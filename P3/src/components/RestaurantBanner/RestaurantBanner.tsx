@@ -89,12 +89,15 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
                             </div>
                             <div style={{
                                 display: "flex",
-                                gap: "10px",
                                 alignItems: "center",
                                 justifyContent: "space-between",
-                                visibility: isOwner || !header ? "hidden" : "visible"
+                                flexGrow: "1"
                             }}>
-                                <div>
+                                <div style={{
+                                    display: "flex",
+                                    gap: "10px",
+                                    visibility: isOwner || !header ? "hidden" : "visible"
+                                }}>
                                     <ToggleButton className={styles.toggle} id="toggle-like" type="checkbox" variant="outline-dark" checked={liked ?? false} value="1"
                                         onChange={toggleLike}>
                                         {liked ? "liked" : "like"}
@@ -104,7 +107,9 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
                                         {following ? "followed" : "follow"}
                                     </ToggleButton>
                                 </div>
-                                <div>
+                                <div style={{
+                                    visibility: isOwner ? "visible" : "hidden"
+                                }}>
                                     <Button variant="danger" id={styles.edit}>Edit Restaurant</Button>
                                 </div>
                             </div>
