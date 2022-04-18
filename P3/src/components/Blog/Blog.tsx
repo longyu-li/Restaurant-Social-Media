@@ -5,6 +5,7 @@ import {BlogPost} from "../../responses/blogPost";
 import styles from "./Blog.module.css";
 import {AuthContext} from "../../contexts/AuthContext";
 import {Restaurant} from "../../responses/restaurant";
+import { timeSince } from "../..";
 
 interface Props {
     blog: BlogPost [];
@@ -82,7 +83,7 @@ const Blog: React.VFC<Props> = (data) => {
                 {data.blog.map(item => {
                     return <ListGroup.Item
                         as="li" key={item.id}
-                        className="d-flex justify-content-between align-items-start"
+                        className="d-flex justify-content-between align-items-start gap-4"
                     >
                         <div className="ms-2 me-auto">
                             <div className="fw-bold">{item.title}</div>
@@ -95,7 +96,7 @@ const Blog: React.VFC<Props> = (data) => {
                                  Delete
                             </Badge> : <></>}
                         </div>
-                        {new Date(item.date).toLocaleString()}
+                        <span style={{flexShrink: "0"}}>{timeSince(new Date(item.date))}</span>
                     </ListGroup.Item>;
                 })}
             </ListGroup>
