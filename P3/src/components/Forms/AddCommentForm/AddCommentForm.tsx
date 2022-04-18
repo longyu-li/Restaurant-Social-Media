@@ -56,7 +56,7 @@ const AddCommentForm: React.VFC<Props> = ({id, comment, setComment}) => {
 
         if (res.ok) {
             res.json().then(data => {
-                setComment([...comment, data]);
+                setComment([data, ...comment]);
             });
             handleClose();
 

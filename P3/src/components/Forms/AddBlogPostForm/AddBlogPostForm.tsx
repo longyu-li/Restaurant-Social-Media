@@ -55,7 +55,7 @@ const AddBlogPostForm: React.VFC<Props> = ({blog, setBlog}) => {
 
         if (res.ok) {
             res.json().then(data => {
-                setBlog([...blog, data]);
+                setBlog([data, ...blog]);
             });
             handleClose();
 
