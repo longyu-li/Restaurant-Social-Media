@@ -7,6 +7,7 @@ from restaurants.views.get_image_list_view import GetImageListView
 from restaurants.views.get_menu_list_view import GetMenuListView
 from restaurants.views.get_restaurant_view import GetRestaurantView
 from restaurants.views.create_menu_item_view import CreateMenuItemView
+from restaurants.views.get_tag_list_view import get_tags
 from restaurants.views.update_delete_image_view import UpdateDeleteImageView
 from restaurants.views.update_delete_menu_item_view import UpdateDeleteMenuItemView
 from restaurants.views.create_blog_post import CreateBlogPostView
@@ -29,8 +30,9 @@ urlpatterns = [
         name="create_blog_post",
     ),
     path("blog/<int:blog_id>/", DeleteBlogPostView.as_view(), name="delete_blog_post"),
-    path("<int:restaurant_id>/tag", CreateTagView.as_view(), name="create_tag"),
-    path("tags/<int:tag_id>", DeleteTagView.as_view(), name="delete_tag"),
+    path("<int:restaurant_id>/tag/", CreateTagView.as_view(), name="create_tag"),
+    path("<int:restaurant_id>/tags/", get_tags, name="list_tags"),
+    path("tags/<int:tag_id>/", DeleteTagView.as_view(), name="delete_tag"),
     path("search/", SearchRestaurantsView.as_view(), name="search_restaurants"),
     path(
         "<int:restaurant_id>/comments/",
