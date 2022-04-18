@@ -95,7 +95,7 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant, fetchRs
                                 <div style={{
                                     display: "flex",
                                     gap: "15px",
-                                    justifyContent: "center"
+                                    justifyContent: "start"
                                 }}>
                                     <span>{calcLikes} {calcLikes === 1 ? "like" : "likes"}</span>
                                     <span>{calcFollows} {calcFollows === 1 ? "follower" : "followers"}</span>
