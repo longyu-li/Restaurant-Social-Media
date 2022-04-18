@@ -182,7 +182,7 @@ const Restaurant: React.VFC = () => {
                               {tab === "comments" && <Comments comments={comment} fetchComment={fetchComment} hasComment={hasComment}/>}
                           </Tab.Pane>
                           <Tab.Pane eventKey="images">
-                              <Images images={image} fetchImage={fetchImage} hasImage={hasImage}/>
+                              <Images images={image} fetchImage={fetchImage} hasImage={hasImage} restaurant={restaurant}/>
                           </Tab.Pane>
                       </Tab.Content>
                   </Tab.Container>

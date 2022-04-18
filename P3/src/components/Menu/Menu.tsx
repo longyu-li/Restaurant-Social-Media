@@ -1,10 +1,11 @@
-import React, {useContext} from "react";
-import {Badge, Button, Image, ListGroup} from "react-bootstrap";
+import React, {useContext, useState} from "react";
+import {Badge, Button, Form, FormControl, Image, InputGroup, ListGroup, Modal} from "react-bootstrap";
 import {MenuItem} from "../../responses/menuItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./Menu.module.css";
 import {AuthContext} from "../../contexts/AuthContext";
 import {Restaurant} from "../../responses/restaurant";
+import AddMenuItemForm from "../Forms/AddMenuItemForm";
 
 interface Props {
     menu: MenuItem [];
@@ -14,7 +15,10 @@ interface Props {
 }
 const Menu: React.VFC<Props> = (data) => {
     const user = useContext(AuthContext).user;
+
     return (
+        <div className="d-grid gap-2">
+            {(user !== null && data.restaurant.id === user.id) ? <AddMenuItemForm/> : <></>}
         <InfiniteScroll
             dataLength={data.menu.length} //This is important field to render the next data
             next={data.fetchMenu}
@@ -37,7 +41,7 @@ const Menu: React.VFC<Props> = (data) => {
                     </Badge>
             </ListGroup.Item>;
         })}  </ListGroup>
-        </InfiniteScroll>);
+        </InfiniteScroll> </div>);
 
 
 }

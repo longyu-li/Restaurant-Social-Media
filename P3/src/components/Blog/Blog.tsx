@@ -60,7 +60,13 @@ const Blog: React.VFC<Props> = (data) => {
     }
 
     return (
-        <InfiniteScroll
+        <div className="d-grid gap-2">
+            {(user !== null && data.restaurant.id === user.id) ?
+                <Button variant="dark" size="lg">
+                    Add Blog Post
+                </Button> : <></>}
+
+            <InfiniteScroll
             dataLength={data.blog.length} //This is important field to render the next data
             next={data.fetchBlog}
             hasMore={data.hasBlog}
@@ -75,14 +81,16 @@ const Blog: React.VFC<Props> = (data) => {
                     <div className="ms-2 me-auto">
                         <div className="fw-bold">{item.title}</div>
                         <p className={"mb-1"}>{item.content}</p>
-                         <small className={styles.vote}> <a id={styles.like} type="checkbox" onClick={() => toggleLike(item.id)}>{liked.get(item.id) ? <>❤</>: <>🤍</>}</a> {item.likes}</small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill>
-                            Delete
-                        </Badge> : <></>}
+                        <small className={styles.vote}> <a id={styles.like} type="checkbox"
+                                                           onClick={() => toggleLike(item.id)}>{liked.get(item.id) ? <>❤</> : <>🤍</>}</a> {item.likes}
+                        </small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill>
+                        Delete
+                    </Badge> : <></>}
                     </div>
                     {new Date(item.date).toLocaleString()}
                 </ListGroup.Item>;
             })}  </ListGroup>
-        </InfiniteScroll>);
+        </InfiniteScroll></div>);
 
 
 }
