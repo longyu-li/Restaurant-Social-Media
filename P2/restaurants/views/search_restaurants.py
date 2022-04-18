@@ -13,7 +13,7 @@ from django.db.models import Q
 class CursorSetPagination(CursorPagination):
     page_size = 10
     page_size_query_param = "page_size"
-    ordering = "-likes"
+    ordering = "-q_count"
 
 
 class SearchRestaurantsView(ListAPIView):
@@ -21,7 +21,6 @@ class SearchRestaurantsView(ListAPIView):
     pagination_class = CursorSetPagination
 
     def get_queryset(self):
-        print(self.kwargs)
         query = self.request.query_params
         try:
             search = query["search"]
@@ -34,12 +33,12 @@ class SearchRestaurantsView(ListAPIView):
             case "food":
                 tags = Tag.objects.filter(tag__icontains=search)
                 mitems = MenuItem.objects.filter(Q(name__icontains=search) | Q(description__icontains=search))
-                restaurants = [x.restaurant.id for x in (tags + mitems)]
-                return Restaurant.objects.annotate(q_count=Count('follows')).order_by("q_count").filter(pk__in=restaurants)
+                restaurants = [x.restaurant.id for x in tags] + [x.restaurant.id for x in mitems]
+                return Restaurant.objects.annotate(q_count=Count('follows')).filter(pk__in=restaurants)
             case "address":
-                return Restaurant.objects.annotate(q_count=Count('follows')).order_by("q_count").filter(address__icontains=search)
+                return Restaurant.objects.annotate(q_count=Count('follows')).filter(address__icontains=search)
             case "name":
-                return Restaurant.objects.annotate(q_count=Count('follows')).order_by("q_count").filter(name__icontains=search)
+                return Restaurant.objects.annotate(q_count=Count('follows')).filter(name__icontains=search)
             case _:
                 ex = APIException("Incorrect search type")
                 ex.status_code = HTTPStatus.BAD_REQUEST
