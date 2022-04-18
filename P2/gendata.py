@@ -23,15 +23,15 @@ def fake_phonenum() -> str:
 
 lorem = TextLorem(srange=(8, 14), prange=(4, 7), trange=(1,3))
 
-shutil.rmtree('media')
+# shutil.rmtree('media')
 
-try:
-    os.remove("db.sqlite3")
-except Exception as e:
-    print(e)
+# try:
+#     os.remove("db.sqlite3")
+# except Exception as e:
+#     print(e)
 
-proc = sp.Popen(["manage.py", "migrate"], shell=True, stdout=sp.PIPE)
-proc.wait()
+# proc = sp.Popen(["manage.py", "migrate"], shell=True, stdout=sp.PIPE)
+# proc.wait()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "phase2.settings")
 
@@ -50,6 +50,8 @@ with open("live_linus_reaction.png", 'rb') as file:
     av_data = file.read()
 
 avatar = SimpleUploadedFile("avatar.png", av_data)
+
+logins = open("logins.txt", 'w')
 
 users = []
 for _ in range(15):
@@ -73,6 +75,8 @@ for _ in range(15):
     user.save()
 
     print(f"Create user '{user.first_name}.{user.last_name}' with email [{user.email}]")
+
+    logins.write(f"Regular user [{user.first_name}.{user.last_name}] with email [{user.email}] and password [mypassword]\n")
 
     users.append(user)
 
@@ -144,6 +148,8 @@ for line in data.split('\n'):
     user.phone_num = fake_phonenum()
 
     user.save()
+
+    logins.write(f"restaurant owner [{user.first_name} {user.last_name}] with email [{user.email}] and password [mypassword]\n")
 
     rest = Restaurant.objects.create(
         user=user, name=realname,
@@ -241,3 +247,5 @@ for straunt in straunts:
                     restaurant=straunt,
                     owner=user
                 )
+
+logins.close()
