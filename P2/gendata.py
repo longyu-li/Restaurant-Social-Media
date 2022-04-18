@@ -97,7 +97,8 @@ for line in data.split('\n'):
         Image.objects.create(
             restaurant=rest,
             image=img,
-            description=f"Image #{i}"
+            title=f"Image #{i}",
+            description="..."
         )
 
     for i, item in enumerate(menu):

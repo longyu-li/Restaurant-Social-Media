@@ -1,116 +1,132 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./RestaurantBanner.module.css";
-import logo from "../../assets/logo-cropped.png";
-import {Button, Card, Col, Image, Row, Stack, ToggleButton} from "react-bootstrap";
-import {Restaurant} from "../../responses/restaurant";
-import {AuthContext} from "../../contexts/AuthContext";
-
+import { Card, Image, ToggleButton } from "react-bootstrap";
+import { Restaurant } from "../../responses/restaurant";
+import { AuthContext } from "../../contexts/AuthContext";
+import { ReactComponent as PhoneIcon } from "bootstrap-icons/icons/telephone-fill.svg";
+import { ReactComponent as MapIcon } from "bootstrap-icons/icons/geo-alt-fill.svg";
 
 interface Props {
     restaurant: Restaurant;
 }
 
-const RestaurantBanner: React.VFC<Props> = ({ restaurant}) => {
-    const user = useContext(AuthContext).user;
-    const [liked, setLiked] = useState(true);
-    const [following, setFollowing] = useState(true);
-    const access  = useContext(AuthContext).tokens!;
+const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
+    const [liked, setLiked] = useState<boolean>();
+    const [following, setFollowing] = useState<boolean>();
+    const { user, header } = useContext(AuthContext);
 
-    useEffect(() => {
-        if (access){
-            fetch(`/restaurants/${restaurant.id}/like/`, {headers: {'Authorization': `Bearer ${access.access}`}})
-                .then(res => {
-                    if (res.ok) {
-                        res.json().then(data => {
-                            setLiked(!data);
-                        })
-                    }})
-        }
-    });
-
-    const toggleLike = async () => {
+    const doLike = (set: boolean) => {
+        if (!header)
+            return;
         fetch(`/restaurants/${restaurant.id}/like/`, {
-            method: "POST",
-            headers: {'Authorization': `Bearer ${access.access}`}})
-            .then(res => {
-                if (res.ok) {
-                    res.json().then(data => {
-                        setLiked(!data);
-                    })
-                }})
-    };
+            method: set ? "POST" : "GET",
+            headers: header
+        }).then(res => res.json() as Promise<boolean>)
+            .then(setLiked);
+    }
 
-    useEffect(() => {
-        if (access){
-            fetch(`/restaurants/${restaurant.id}/follow/`, {headers: {'Authorization': `Bearer ${access.access}`}})
-                .then(res => {
-                    if (res.ok) {
-                        res.json().then(data => {
-                            setFollowing(!data);
-                        })
-                    }})
-        }
-    });
+    const refreshLike = () => doLike(false);
+    const toggleLike = () => doLike(true);
 
-    const toggleFollow = async () => {
+    useEffect(refreshLike, [header]);
+
+    const doFollow = (set: boolean) => {
+        if (!header)
+            return;
         fetch(`/restaurants/${restaurant.id}/follow/`, {
-            method: "POST",
-            headers: {'Authorization': `Bearer ${access.access}`}})
-            .then(res => {
-                if (res.ok) {
-                    res.json().then(data => {
-                        setFollowing(!data);
-                    })
-                }})
-    };
+            method: set ? "POST" : "GET",
+            headers: header
+        }).then(res => res.json() as Promise<boolean>)
+            .then(setFollowing);
+    }
+
+    const refreshFollow = () => doFollow(false);
+    const toggleFollow = () => doFollow(true);
+
+    useEffect(refreshFollow, [header]);
+
+    const calcLikes = restaurant.likes + (liked ? 1 : 0);
+    const calcFollows = restaurant.follows + (following ? 1 : 0);
 
     return (
         <Card style={{}} id={styles.bannerCard}>
-            <Card.Img variant="top" src={restaurant.banner} id={styles.banner}/>
+            <Card.Img variant="top" src={restaurant.banner} id={styles.banner} />
             <Card.Body>
-                <Row>
-                    <Col xs={2}>
-                        <Image roundedCircle={true} thumbnail={true} src={restaurant.logo} alt={"logo"} className={styles.icon}/>
-                    </Col>
-                    <Col>
-                        <Stack direction="horizontal" gap={3} className={styles.stack}>
-                            <h4 id={styles.restaurantName}>{restaurant.name}</h4>
-                            {(user !== null && restaurant.id !== user.id) ?
-                                <>
-                                    <ToggleButton  className={styles.toggle} id="toggle-like" type="checkbox" variant="outline-dark" checked={liked} value="1"
-                                                   onChange={toggleLike}>
-                                        {liked ? <>Like</>: <>Liked</>}
-                                    </ToggleButton>
-                                    <ToggleButton  className={styles.toggle} id="toggle-follow" type="checkbox" variant="outline-dark" checked={following} value="1"
-                                                   onChange={toggleFollow}>
-                                        {following ? <>Follow</>: <>Following</>}
-                                    </ToggleButton></> : <></>}
-                            {(user !== null && restaurant.id === user.id) ? <Button variant="danger" id={styles.edit}>Edit profile</Button> : <></>}
-                        </Stack>
-                        <Stack direction="horizontal" gap={3}>
-                            <p>
-                                {restaurant.likes} Likes
-                            </p>
-                            <p>
-                                {restaurant.follows} Followers
-                            </p>
-                        </Stack>
-                        <Stack direction="horizontal" gap={3}>
-                            <p>
-                                {restaurant.phone_num}
-                            </p>
-                            <p>
-                                {restaurant.address}
-                            </p>
-                        </Stack>
-                        <Card.Text>
-                            {restaurant.description}
-                        </Card.Text>
-                    </Col>
-                </Row>
+                <div style={{
+                    display: "flex",
+                    gap: "30px"
+                }}>
+                    <div style={{
+                        flexShrink: "0"
+                    }}>
+                        <Image roundedCircle={true} thumbnail={true} src={restaurant.logo} alt={"logo"} className={styles.icon} />
+                    </div>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-around"
+                    }}>
+                        <div style={{
+                            display: "flex",
+                            gap: "25px"
+                        }}>
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center"
+                            }}>
+                                <h4 id={styles.restaurantName}>{restaurant.name}</h4>
+                                <div style={{
+                                    display: "flex",
+                                    gap: "15px",
+                                    justifyContent: "center"
+                                }}>
+                                    <span>{calcLikes} {calcLikes === 1 ? "like" : "likes"}</span>
+                                    <span>{calcFollows} {calcFollows === 1 ? "follower" : "followers"}</span>
+                                </div>
+                            </div>
+                            <div style={{
+                                display: "flex",
+                                gap: "10px",
+                                alignItems: "center"
+                            }}>
+                                <ToggleButton className={styles.toggle} id="toggle-like" type="checkbox" variant="outline-dark" checked={liked ?? false} value="1"
+                                    onChange={toggleLike}>
+                                    {liked ? "liked" : "like"}
+                                </ToggleButton>
+                                <ToggleButton className={styles.toggle} id="toggle-follow" type="checkbox" variant="outline-dark" checked={following ?? false} value="1"
+                                    onChange={toggleFollow}>
+                                    {following ? "followed" : "follow"}
+                                </ToggleButton>
+                            </div>
+                        </div>
+                        <div style={{
+                            display: "flex",
+                            gap: "15px"
+                        }}>
+                            <div style={{
+                                display: "flex",
+                                gap: "5px",
+                                alignItems: "center"
+                            }}>
+                                <PhoneIcon />
+                                <span>{restaurant.phone_num}</span>
+                            </div>
+                            <div style={{
+                                display: "flex",
+                                gap: "5px",
+                                alignItems: "center"
+                            }}>
+                                <MapIcon />
+                                <span>{restaurant.address}</span>
+                            </div>
+                        </div>
+                        <div><span>{restaurant.description}</span></div>
+                    </div>
+                </div>
             </Card.Body>
         </Card>
-  );
+    );
 }
 
 export default RestaurantBanner;

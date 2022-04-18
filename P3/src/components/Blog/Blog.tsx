@@ -8,6 +8,7 @@ import {Restaurant} from "../../responses/restaurant";
 
 interface Props {
     blog: BlogPost [];
+    setBlog: React.Dispatch<React.SetStateAction<BlogPost[]>>;
     fetchBlog: () => {};
     hasBlog: boolean;
     restaurant: Restaurant;
@@ -17,18 +18,24 @@ const Blog: React.VFC<Props> = (data) => {
     const [liked, setLiked] = useState(new Map<Number, boolean>());
     const access  = useContext(AuthContext).tokens!;
     const updateLiked = (k:Number,v:boolean) => {
-        setLiked(liked.set(k,v));
+        setLiked(prevLiked => new Map(prevLiked.set(k,v)));
+        data.setBlog(prevState => prevState.map(value => {
+            if (value.id === k) value.likes += v ? 1 : -1;
+            return value;
+        }));
     }
 
+    const [blogIds] = useState(() => data.blog.map(blog => blog.id));
+
     useEffect(() => {
-        if (user !== null && data.restaurant.id !== user.id){
-            data.blog.map(item => {
-                fetch(`/restaurants/blog/${item.id}/like/`, {headers: {'Authorization': `Bearer ${access.access}`}})
+        if (user !== null){
+            blogIds.forEach(blogId => {
+                fetch(`/restaurants/blog/${blogId}/like/`, {headers: {'Authorization': `Bearer ${access.access}`}})
                     .then(res => {
                         if (res.ok) {
                             res.json().then(res => {
-                                updateLiked(item.id, res);
-                                console.log(item.id, res);
+                                updateLiked(blogId, res);
+                                // console.log(item.id, res);
                             })
 
                         }})
@@ -36,11 +43,11 @@ const Blog: React.VFC<Props> = (data) => {
 
         }
         else {
-            data.blog.map(item => {
-                updateLiked(item.id, false);
+            blogIds.forEach(blogId => {
+                updateLiked(blogId, false);
             })
         }
-    });
+    }, [access.access, user, blogIds]);
 
     const toggleLike = async (id: Number) => {
         if (user !== null && data.restaurant.id !== user.id) {
@@ -72,24 +79,28 @@ const Blog: React.VFC<Props> = (data) => {
             hasMore={data.hasBlog}
             loader={<h1>Loading Blog ...</h1>}
             endMessage={<></>}
-        ><ListGroup as="ul">
-            {data.blog.map((item) => {
-                return <ListGroup.Item
-                    as="li" key={item.id}
-                    className="d-flex justify-content-between align-items-start"
-                >
-                    <div className="ms-2 me-auto">
-                        <div className="fw-bold">{item.title}</div>
-                        <p className={"mb-1"}>{item.content}</p>
-                        <small className={styles.vote}> <a id={styles.like} type="checkbox"
-                                                           onClick={() => toggleLike(item.id)}>{liked.get(item.id) ? <>❤</> : <>🤍</>}</a> {item.likes}
-                        </small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill>
-                        Delete
-                    </Badge> : <></>}
-                    </div>
-                    {new Date(item.date).toLocaleString()}
-                </ListGroup.Item>;
-            })}  </ListGroup>
+        >
+            <ListGroup as="ul">
+                {data.blog.map((item) => {
+                    return <ListGroup.Item
+                        as="li" key={item.id}
+                        className="d-flex justify-content-between align-items-start"
+                    >
+                        <div className="ms-2 me-auto">
+                            <div className="fw-bold">{item.title}</div>
+                            <p className={"mb-1"}>{item.content}</p>
+                             <small className={styles.vote}>
+                                 <a id={styles.like} type="checkbox" onClick={() => toggleLike(item.id)}>
+                                     {liked.get(item.id) ? <>❤</>: <>🤍</>}
+                                 </a> {item.likes}
+                             </small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill>
+                                 Delete
+                            </Badge> : <></>}
+                        </div>
+                        {new Date(item.date).toLocaleString()}
+                    </ListGroup.Item>;
+                })}
+            </ListGroup>
         </InfiniteScroll></div>);
 
 
