@@ -9,6 +9,10 @@ const Feed: React.VFC = () => {
     const [feed, setFeed] = useState<BlogPost[]>([]);
     const [next, setNext] = useState<string | null>(`/users/feed/`);
 
+    useEffect(() => {
+        document.title = "Restify - Feed";
+    }, []);
+
     const more = () => {
         fetch(next!, {
             headers: header!
