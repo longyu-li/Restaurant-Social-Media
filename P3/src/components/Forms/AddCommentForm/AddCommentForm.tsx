@@ -14,7 +14,6 @@ interface Props {
 }
 const AddCommentForm: React.VFC<Props> = ({id, comment, setComment}) => {
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const formMethods = useForm<addCommentRequest>({
@@ -26,8 +25,17 @@ const AddCommentForm: React.VFC<Props> = ({id, comment, setComment}) => {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-        setError
+        setError,
+        reset
     } = formMethods;
+
+    const handleClose = () => {
+        setShow(false);
+        reset({
+            title: "",
+            content: "" // clear submitted file
+        });
+    };
 
 
     const { header } = useContext(AuthContext);

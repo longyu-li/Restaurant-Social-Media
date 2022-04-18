@@ -13,7 +13,7 @@ interface Props {
 }
 const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+
     const handleShow = () => setShow(true);
 
     const formMethods = useForm<addMenuItemRequest>({
@@ -27,8 +27,19 @@ const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
         formState: { errors, isSubmitting },
         setError,
         watch,
-        setValue
+        setValue,
+        reset
     } = formMethods;
+
+    const handleClose = () => {
+        setShow(false);
+        reset({
+            image: "",
+            name: "",
+            price: "",
+            description: "" // clear submitted file
+        });
+    };
 
     const price = watch("price");
 
@@ -61,7 +72,7 @@ const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
 
         if (res.ok) {
             res.json().then(data => {
-                setMenu([...menu, data]);
+                setMenu([data, ...menu]);
             });
             handleClose();
 

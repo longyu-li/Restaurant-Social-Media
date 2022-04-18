@@ -2,21 +2,22 @@ import React, {useContext, useState} from "react";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Button, Form, Modal} from "react-bootstrap";
-import {mergeErrors} from "../../../validation/utils";
+import {IMG_TYPES, mergeErrors} from "../../../validation/utils";
 import {AuthContext} from "../../../contexts/AuthContext";
-import {addBlogPostRequest, addBlogPostSchema} from "../../../validation/addBlogPost";
-import {BlogPost} from "../../../responses/blogPost";
+import {Image} from "../../../responses/image";
+import {addImageRequest, addImageSchema} from "../../../validation/addImage";
 
 interface Props {
-    blog: BlogPost [];
-    setBlog: React.Dispatch<React.SetStateAction<BlogPost[]>>;
+    image: Image [];
+    setImage: React.Dispatch<React.SetStateAction<Image[]>>;
 }
-const AddBlogPostForm: React.VFC<Props> = ({blog, setBlog}) => {
+const AddImageForm: React.VFC<Props> = ({image, setImage}) => {
     const [show, setShow] = useState(false);
+
     const handleShow = () => setShow(true);
 
-    const formMethods = useForm<addBlogPostRequest>({
-        resolver: yupResolver(addBlogPostSchema),
+    const formMethods = useForm<addImageRequest>({
+        resolver: yupResolver(addImageSchema),
         mode: "onTouched"
     });
 
@@ -32,20 +33,21 @@ const AddBlogPostForm: React.VFC<Props> = ({blog, setBlog}) => {
         setShow(false);
         reset({
             title: "",
-            content: "" // clear submitted file
+            description: "",
+            image: "" // clear submitted file
         });
     };
 
-
     const { header } = useContext(AuthContext);
 
-    const onSubmit = async (data: addBlogPostRequest) => {
+    const onSubmit = async (data: addImageRequest) => {
         const reqBody = new FormData();
         for (const field in data) {
-            reqBody.append(field, data[field]);
+            if (field !== "image") reqBody.append(field, data[field]);
         }
+        reqBody.append("image", data.image[0]);
 
-        const res = await fetch("/restaurants/blog/", {
+        const res = await fetch("/restaurants/images/", {
             method: "POST",
             body: reqBody,
             headers: {
@@ -55,9 +57,10 @@ const AddBlogPostForm: React.VFC<Props> = ({blog, setBlog}) => {
 
         if (res.ok) {
             res.json().then(data => {
-                setBlog([...blog, data]);
+                setImage([data, ...image]);
+                handleClose();
             });
-            handleClose();
+
 
         } else if (res.status === 400) {
 
@@ -74,20 +77,32 @@ const AddBlogPostForm: React.VFC<Props> = ({blog, setBlog}) => {
     return (
         <>
             <Button variant="dark" size="lg" onClick={handleShow} >
-                Add Blog Post
+                Add Image
             </Button>
-
             <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
                 <Form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add Blog Post</Modal.Title>
+                        <Modal.Title>Add Image</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Group className="mb-3">
-                            <Form.Label>Blog Title</Form.Label>
+                            <Form.Label>Image</Form.Label>
+                            <Form.Control
+                                type="file"
+                                size="sm"
+                                accept={IMG_TYPES}
+                                {...register("image")}
+                                isInvalid={!!errors.image}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.image?.message}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Image Title</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Add Blog Title"
+                                placeholder="Add Image Title"
                                 {...register("title")}
                                 isInvalid={!!errors.title}
                             />
@@ -99,22 +114,22 @@ const AddBlogPostForm: React.VFC<Props> = ({blog, setBlog}) => {
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                         >
-                            <Form.Label>Blog Content</Form.Label>
+                            <Form.Label>Image Description</Form.Label>
                             <Form.Control
                                 as="textarea"
                                 rows={3}
-                                placeholder="Add Blog Content"
-                                {...register("content")}
-                                isInvalid={!!errors.content}
+                                placeholder="Add Image Description"
+                                {...register("description")}
+                                isInvalid={!!errors.description}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.content?.message}
+                                {errors.description?.message}
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button type="submit" variant="dark" disabled={isSubmitting}>
-                            Post
+                            Add Image
                         </Button>
                     </Modal.Footer>
                 </Form>
@@ -123,4 +138,4 @@ const AddBlogPostForm: React.VFC<Props> = ({blog, setBlog}) => {
 }
 
 
-export default AddBlogPostForm;
+export default AddImageForm;
