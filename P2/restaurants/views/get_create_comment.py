@@ -8,7 +8,7 @@ from notifications.models import Comment as NotifComment
 
 
 class CursorSetPagination(CursorPagination):
-    page_size = 5
+    page_size = 8
     page_size_query_param = "page_size"
     ordering = "-date"
 
