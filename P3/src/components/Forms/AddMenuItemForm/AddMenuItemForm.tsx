@@ -61,13 +61,9 @@ const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
 
         if (res.ok) {
             res.json().then(data => {
-                console.log(data.results);
-                // const newMenu = new Array<MenuItem>();
-                // newMenu.push(data.results);
                 setMenu([...menu, data]);
-
             });
-
+            handleClose();
 
         } else if (res.status === 400) {
 
@@ -151,7 +147,7 @@ const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
                     </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-                <Button type="submit" variant="dark"  onClick={handleClose} disabled={isSubmitting}>
+                <Button type="submit" variant="dark" disabled={isSubmitting}>
                     Add to Menu
                 </Button>
             </Modal.Footer>

@@ -1,10 +1,13 @@
 import React from "react";
-import {Button, ListGroup} from "react-bootstrap";
+import { ListGroup} from "react-bootstrap";
 import {Comment} from "../../responses/comment";
 import InfiniteScroll from "react-infinite-scroll-component";
+import AddCommentForm from "../Forms/AddCommentForm";
 
 interface Props {
+    id: Number;
     comments: Comment [];
+    setComment: React.Dispatch<React.SetStateAction<Comment[]>>;
     fetchComment: () => {};
     hasComment: boolean;
 }
@@ -12,9 +15,7 @@ const Comments: React.VFC<Props> = (data) => {
 
     return (
         <div className="d-grid gap-2">
-            <Button variant="dark" size="lg">
-                Add Comment
-            </Button>
+            <AddCommentForm  comment={data.comments} id={data.id} setComment={data.setComment}/>
         <InfiniteScroll
             dataLength={data.comments.length} //This is important field to render the next data
             next={data.fetchComment}

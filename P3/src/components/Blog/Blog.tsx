@@ -1,10 +1,11 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Badge, Button, ListGroup} from "react-bootstrap";
+import {Badge, ListGroup} from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {BlogPost} from "../../responses/blogPost";
 import styles from "./Blog.module.css";
 import {AuthContext} from "../../contexts/AuthContext";
 import {Restaurant} from "../../responses/restaurant";
+import AddBlogPostForm from "../Forms/AddBlogPostForm";
 
 interface Props {
     blog: BlogPost [];
@@ -82,9 +83,7 @@ const Blog: React.VFC<Props> = (data) => {
     return (
         <div className="d-grid gap-2">
             {(user !== null && data.restaurant.id === user.id) ?
-                <Button variant="dark" size="lg">
-                    Add Blog Post
-                </Button> : <></>}
+                <AddBlogPostForm  blog={data.blog} setBlog={data.setBlog}/> : <></>}
 
             <InfiniteScroll
             dataLength={data.blog.length} //This is important field to render the next data
