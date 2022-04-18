@@ -1,7 +1,5 @@
 import {object, string, mixed, InferType, ref} from "yup";
-import {PHONE_REGEX, REQUIRED} from "./utils";
-
-const OPT_PHONE_REGEX = new RegExp(`^(${PHONE_REGEX.source.slice(1, -1)})?$`);
+import {OPT_PHONE_REGEX, REQUIRED} from "./utils";
 
 export const editProfileSchema = object({
   first_name: string(),

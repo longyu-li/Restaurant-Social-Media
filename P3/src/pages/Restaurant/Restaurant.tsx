@@ -14,12 +14,13 @@ import Comments from "../../components/Comments";
 import {Comment} from "../../responses/comment";
 import Images from "../../components/Images";
 import {Image} from "../../responses/image";
+import {Restaurant as RestaurantType} from "../../responses/restaurant";
 
 const Restaurant: React.VFC = () => {
 
     const params = useParams();
 
-    const [restaurant, setRestaurant] = useState();
+    const [restaurant, setRestaurant] = useState<RestaurantType>();
 
     const [menu, setMenu] = useState<MenuItem[]>([]);
     const [menuCursor, setmenuCursor] = useState("");
@@ -149,7 +150,10 @@ const Restaurant: React.VFC = () => {
       <Container fluid>
           <Row>
               <Col xs={{ span: 8, offset: 2 }}>
-                  <RestaurantBanner restaurant={restaurant}/>
+                  <RestaurantBanner
+                      restaurant={restaurant}
+                      setRestaurant={setRestaurant}
+                  />
                   <Tab.Container
                       activeKey={tab}
                       onSelect={(k) => setTab(k || "menu")}

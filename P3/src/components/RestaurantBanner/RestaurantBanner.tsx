@@ -5,12 +5,14 @@ import { Restaurant } from "../../responses/restaurant";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ReactComponent as PhoneIcon } from "bootstrap-icons/icons/telephone-fill.svg";
 import { ReactComponent as MapIcon } from "bootstrap-icons/icons/geo-alt-fill.svg";
+import EditRestaurantForm from "../Forms/EditRestaurantForm";
 
 interface Props {
     restaurant: Restaurant;
+    setRestaurant: React.Dispatch<React.SetStateAction<Restaurant | undefined>>
 }
 
-const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
+const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant }) => {
     const [liked, setLiked] = useState<boolean>();
     const [following, setFollowing] = useState<boolean>();
     const { user, header } = useContext(AuthContext);
@@ -49,6 +51,8 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
 
     const calcLikes = restaurant.likes + (liked ? 1 : 0);
     const calcFollows = restaurant.follows + (following ? 1 : 0);
+
+    const [editOpen, setEditOpen] = useState(false);
 
     return (
         <Card style={{}} id={styles.bannerCard}>
@@ -110,7 +114,19 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant }) => {
                                 <div style={{
                                     visibility: isOwner ? "visible" : "hidden"
                                 }}>
-                                    <Button variant="danger" id={styles.edit}>Edit Restaurant</Button>
+                                    <Button
+                                        variant="danger"
+                                        id={styles.edit}
+                                        onClick={() => setEditOpen(true)}
+                                    >
+                                        Edit Restaurant
+                                    </Button>
+                                    <EditRestaurantForm
+                                        editOpen={editOpen}
+                                        setEditOpen={setEditOpen}
+                                        restaurant={restaurant}
+                                        setRestaurant={setRestaurant}
+                                    />
                                 </div>
                             </div>
                         </div>
