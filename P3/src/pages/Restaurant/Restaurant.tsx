@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import RestaurantBanner from "../../components/RestaurantBanner";
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import styles from "./Restaurant.module.css";
 import {Nav, Tab} from "react-bootstrap";
 import Menu from "../../components/Menu";
@@ -18,6 +18,7 @@ import {Restaurant as RestaurantType} from "../../responses/restaurant";
 
 const Restaurant: React.VFC = () => {
     const params = useParams();
+    const [query, setQuery] = useSearchParams();
 
     const [restaurant, setRestaurant] = useState<RestaurantType>();
 
@@ -33,7 +34,7 @@ const Restaurant: React.VFC = () => {
     const [image, setImage] = useState<Image[]>([]);
     const [imageCursor, setimageCursor] = useState("");
 
-    const [tab, setTab] = useState("menu")
+    const [tab, setTab] = useState(query.get("tab") ?? "menu")
 
     const fetchRst = () => {
         fetch(`/restaurants/${params.id}`)
@@ -153,7 +154,12 @@ const Restaurant: React.VFC = () => {
                   />
                   <Tab.Container
                       activeKey={tab}
-                      onSelect={(k) => setTab(k || "menu")}
+                      onSelect={k => {
+                          query.set("tab", k ?? "menu");
+                          setQuery(query);
+                          setTab(k ?? "menu");
+                        }
+                    }
                   >
                       <Nav variant="pills" justify className={`my-3 ${styles.tabsContainer}`}>
                           <Nav.Item>
