@@ -27,9 +27,8 @@ const Home: React.VFC = () => {
     // if (!next)
     //   return;
     console.log(next);
-    fetch(next!, {
-      headers: auth.header
-    }).then(resp => resp.json() as Promise<SearchResult>)
+    fetch(next!)
+    .then(resp => resp.json() as Promise<SearchResult>)
     .then(resp => {
       console.log(resp.next);
       setNext(resp.next);

@@ -1,0 +1,8 @@
+.vote {
+    color:rgba(255, 0, 128, 0.815);
+    font-weight: bold;
+}
+
+#like {
+    cursor: pointer;
+}

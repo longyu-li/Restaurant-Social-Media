@@ -20,21 +20,19 @@ const Restaurant: React.VFC = () => {
     const params = useParams();
 
     const [restaurant, setRestaurant] = useState();
+
     const [menu, setMenu] = useState<MenuItem[]>([]);
-    const [hasMenu, sethasMenu] = useState(true);
     const [menuCursor, setmenuCursor] = useState("");
 
     const [blog, setBlog] = useState<BlogPost[]>([]);
-    const [hasBlog, sethasBlog] = useState(true);
     const [blogCursor, setblogCursor] = useState("");
 
     const [comment, setComment] = useState<Comment[]>([]);
-    const [hasComment, sethasComment] = useState(true);
     const [commentCursor, setcommentCursor] = useState("");
 
     const [image, setImage] = useState<Image[]>([]);
-    const [hasImage, sethasImage] = useState(true);
     const [imageCursor, setimageCursor] = useState("");
+
     const [tab, setTab] = useState("menu")
 
     useEffect(() => {
@@ -49,93 +47,100 @@ const Restaurant: React.VFC = () => {
     }, [params.id]);
 
     useEffect(() => {
-        fetch(`/restaurants/${params.id}/menu?cursor=${menuCursor}`)
+        fetch(`/restaurants/${params.id}/menu?cursor=`)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
                         setMenu(data.results);
-                        let cursorURL = data.next;
-                        if(cursorURL) setmenuCursor(cursorURL.substring(cursorURL.lastIndexOf("=")+1));
+                        setmenuCursor(data.next);
                     })
                 }})
     }, [params.id]);
 
     const fetchMenu = async () => {
-        fetch(`/restaurants/${params.id}/menu?cursor=${menuCursor}`)
+        fetch(menuCursor)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
                         setMenu([...menu, ...data.results]);
-                        (data.next)? setmenuCursor(data.next.substring(data.next.lastIndexOf("=")+1)) : sethasMenu(false);
+                        setmenuCursor(data.next);
                     })
                 }})
     };
 
     useEffect(() => {
-        fetch(`/restaurants/${params.id}/blogs?cursor=${blogCursor}`)
+
+        // console.log("initial comments fetch")
+
+        fetch(`/restaurants/${params.id}/blogs?cursor=`)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
+                        // console.log(data);
                         setBlog(data.results);
-                        let blogURL = data.next;
-                        if(blogURL) setblogCursor(blogURL.substring(blogURL.lastIndexOf("=")+1));
+                        setblogCursor(data.next);
                     })
                 }})
     }, [params.id]);
 
+    // useEffect(() => {
+    //     console.log(blog)
+    // }, [blog]);
+
     const fetchBlog = async () => {
-        fetch(`/restaurants/${params.id}/blogs?cursor=${blogCursor}`)
+
+        // console.log("more comments fetch")
+
+        fetch(blogCursor)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
                         setBlog([...blog, ...data.results]);
-                        (data.next)? setblogCursor(data.next.substring(data.next.lastIndexOf("=")+1)) : sethasBlog(false);
+                        setblogCursor(data.next);
                     })
                 }})
     };
 
     useEffect(() => {
-        fetch(`/restaurants/${params.id}/comments?cursor=${commentCursor}`)
+        fetch(`/restaurants/${params.id}/comments?cursor=`)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
                         setComment(data.results);
-                        let commentURL = data.next;
-                        if(commentURL) setcommentCursor(commentURL.substring(commentURL.lastIndexOf("=")+1));
+                        setcommentCursor(data.next);
                     })
                 }})
     }, [params.id]);
 
     const fetchComment = async () => {
-        fetch(`/restaurants/${params.id}/comments?cursor=${commentCursor}`)
+        fetch(commentCursor)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
                         setComment([...comment, ...data.results]);
-                        (data.next)? setcommentCursor(data.next.substring(data.next.lastIndexOf("=")+1)) : sethasComment(false);
+                        setcommentCursor(data.next);
                     })
                 }})
     };
 
     useEffect(() => {
-        fetch(`/restaurants/${params.id}/images?cursor=${imageCursor}`)
+        fetch(`/restaurants/${params.id}/images?cursor=`)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
                         setImage(data.results);
-                        let imageURL = data.next;
-                        if(imageURL) setimageCursor(imageURL.substring(imageURL.lastIndexOf("=")+1));
+                        setimageCursor(data.next);
                     })
                 }})
     }, [params.id]);
 
     const fetchImage = async () => {
-        fetch(`/restaurants/${params.id}/images?cursor=${imageCursor}`)
+        fetch(imageCursor)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
                         setImage([...image, ...data.results]);
-                        (data.next)? setimageCursor(data.next.substring(data.next.lastIndexOf("=")+1)) : sethasImage(false);
+                        setimageCursor(data.next);
                     })
                 }})
     };
@@ -173,16 +178,18 @@ const Restaurant: React.VFC = () => {
                       </Nav>
                       <Tab.Content>
                           <Tab.Pane eventKey="menu">
-                              {tab === "menu" && <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={hasMenu} restaurant={restaurant}/>}
+                              {tab === "menu" && <Menu menu={menu} fetchMenu={fetchMenu} hasMenu={!!menuCursor} restaurant={restaurant}/>}
                           </Tab.Pane>
                           <Tab.Pane eventKey="blogs">
-                              {tab === "blogs" && <Blog blog={blog} fetchBlog={fetchBlog} hasBlog={hasBlog}/>}
+                              {tab === "blogs" &&
+                                  <Blog blog={blog} fetchBlog={fetchBlog} setBlog={setBlog} hasBlog={!!blogCursor} restaurant={restaurant}/>
+                              }
                           </Tab.Pane>
                           <Tab.Pane eventKey="comments">
-                              {tab === "comments" && <Comments comments={comment} fetchComment={fetchComment} hasComment={hasComment}/>}
+                              {tab === "comments" && <Comments comments={comment} fetchComment={fetchComment} hasComment={!!commentCursor}/>}
                           </Tab.Pane>
                           <Tab.Pane eventKey="images">
-                              <Images images={image} fetchImage={fetchImage} hasImage={hasImage}/>
+                              {tab === "images" && <Images images={image} fetchImage={fetchImage} hasImage={!!imageCursor}/>}
                           </Tab.Pane>
                       </Tab.Content>
                   </Tab.Container>

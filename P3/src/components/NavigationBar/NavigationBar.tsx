@@ -17,10 +17,11 @@ const NavigationBar: React.VFC = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    console.log(`user id: ${user?.id}`)
     const fetchNots = () => {
+      if (!header)
+        return;
       fetch("/notifications?page_size=50", {
-        headers: header
+        headers: header!
       }).then(r => r.json())
       .catch(e => console.log(e))
         .then(d => {
@@ -42,11 +43,12 @@ const NavigationBar: React.VFC = () => {
           </Navbar.Brand>
           <Nav>
             {user ? <>
+              <Nav.Link as={Link} to="feed" className="fw-bold text-white">Feed</Nav.Link>
               <Nav.Link as={Link} to="#" className="fw-bold text-white" onClick={() => setShow(!show)}>
-              <div id={styles.bell}>
-                  <BellIcon />
-                  <span>{nots.length}</span>
-              </div>
+                <div id={styles.bell}>
+                    <BellIcon />
+                    <span>{nots.length}</span>
+                </div>
               </Nav.Link>
               <UserDropdown user={user} signOut={signOut} />
             </>
@@ -59,7 +61,7 @@ const NavigationBar: React.VFC = () => {
         </Container>
       </Navbar>
 
-      <Notifications show={show} setShow={setShow} nots={nots}/>
+    {header ? <Notifications show={show} setShow={setShow} nots={nots}/> : <></>}
     </>;
 }
 
