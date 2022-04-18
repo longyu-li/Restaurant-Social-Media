@@ -1,13 +1,17 @@
-import SignUpForm from "../SignUpForm";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {useForm} from "react-hook-form";
-import {SignUpRequest, signUpSchema} from "../../../validation/signUp";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {addMenuItemRequest, addMenuItemSchema} from "../../../validation/addMenuItem";
 import {Button, Form, FormControl, InputGroup, Modal} from "react-bootstrap";
-import {mergeErrors} from "../../../validation/utils";
+import {IMG_TYPES, mergeErrors} from "../../../validation/utils";
+import {AuthContext} from "../../../contexts/AuthContext";
+import {MenuItem} from "../../../responses/menuItem";
 
-const AddMenuItemForm: React.VFC = () => {
+interface Props {
+    menu: MenuItem [];
+    setMenu: React.Dispatch<React.SetStateAction<MenuItem[]>>;
+}
+const AddMenuItemForm: React.VFC<Props> = ({menu, setMenu}) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -24,21 +28,32 @@ const AddMenuItemForm: React.VFC = () => {
         setError,
     } = formMethods;
 
+    const { header } = useContext(AuthContext);
+
     const onSubmit = async (data: addMenuItemRequest) => {
         const reqBody = new FormData();
         for (const field in data) {
             if (field !== "image") reqBody.append(field, data[field]);
         }
-        reqBody.append("avatar", data.image[0]);
+        reqBody.append("image", data.image[0]);
 
         const res = await fetch("/restaurants/menu/", {
             method: "POST",
-            body: reqBody
+            body: reqBody,
+            headers: {
+                ...header
+            }
         });
 
         if (res.ok) {
-            // res.json().then(data => {setMenu([...menu, ...data.results]);});
-            console.log(res.body);
+            res.json().then(data => {
+                console.log(data.results);
+                // const newMenu = new Array<MenuItem>();
+                // newMenu.push(data.results);
+                setMenu([...menu, data]);
+
+            });
+
 
         } else if (res.status === 400) {
 
@@ -59,19 +74,28 @@ const AddMenuItemForm: React.VFC = () => {
         </Button>
 
         <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+            <Form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Modal.Header closeButton>
                 <Modal.Title>Add Menu Item</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <Form.Group controlId="formFileSm" className="mb-3">
+
+                    <Form.Group className="mb-3">
                         <Form.Label>Image Item</Form.Label>
-                        <Form.Control type="file" size="sm" accept="image/png, image/jpeg" isInvalid={!!errors.image} />
+                        <Form.Control
+                            type="file"
+                            size="sm"
+                            accept={IMG_TYPES}
+                            {...register("image")}
+                            isInvalid={!!errors.image}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.image?.message}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Item Name</Form.Label>
                         <Form.Control
-                            required
                             type="text"
                             placeholder="Add Item Name"
                             {...register("name")}
@@ -85,7 +109,6 @@ const AddMenuItemForm: React.VFC = () => {
                     <InputGroup className="mb-3">
                         <InputGroup.Text>$</InputGroup.Text>
                         <FormControl
-                            required
                             type="text"
                             placeholder="0.00"
                             {...register("price")}
@@ -101,7 +124,6 @@ const AddMenuItemForm: React.VFC = () => {
                     >
                         <Form.Label>Item Description</Form.Label>
                         <Form.Control
-                            required
                             as="textarea"
                             rows={3}
                             placeholder="Add Item Description"
@@ -112,13 +134,13 @@ const AddMenuItemForm: React.VFC = () => {
                             {errors.description?.message}
                         </Form.Control.Feedback>
                     </Form.Group>
-                </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button type="submit" variant="dark"  disabled={isSubmitting}>
+                <Button type="submit" variant="dark"  onClick={handleClose} disabled={isSubmitting}>
                     Add to Menu
                 </Button>
             </Modal.Footer>
+        </Form>
         </Modal></>
     );
 }

@@ -9,6 +9,7 @@ import AddMenuItemForm from "../Forms/AddMenuItemForm";
 
 interface Props {
     menu: MenuItem [];
+    setMenu: React.Dispatch<React.SetStateAction<MenuItem[]>>;
     fetchMenu: () => {};
     hasMenu: boolean;
     restaurant: Restaurant;
@@ -18,7 +19,7 @@ const Menu: React.VFC<Props> = (data) => {
 
     return (
         <div className="d-grid gap-2">
-            {(user !== null && data.restaurant.id === user.id) ? <AddMenuItemForm/> : <></>}
+            {(user !== null && data.restaurant.id === user.id) ? <AddMenuItemForm menu={data.menu} setMenu={data.setMenu}/> : <></>}
         <InfiniteScroll
             dataLength={data.menu.length} //This is important field to render the next data
             next={data.fetchMenu}
