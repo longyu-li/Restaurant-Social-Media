@@ -45,7 +45,7 @@ const Images: React.VFC<Props> = (data) => {
                 overflow: "hidden"
             }}
         >
-        <Row xs={1} md={4} className="g-4">
+        <Row xs={1} md={3} className="g-4">
                 {data.images.map((item) => {
                     return <Col key={item.id}><Card style={{
                         borderColor: "black",

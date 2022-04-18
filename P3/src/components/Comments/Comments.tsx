@@ -20,7 +20,7 @@ const Comments: React.VFC<Props> = (data) => {
             dataLength={data.comments.length} //This is important field to render the next data
             next={data.fetchComment}
             hasMore={data.hasComment}
-            loader={<h1>Loading Comments ...</h1>}
+            loader={<></>}
             endMessage={<></>}
         ><ListGroup as="ul">
             {data.comments.map((item) => {

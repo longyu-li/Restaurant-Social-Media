@@ -75,7 +75,7 @@ const Blog: React.VFC<Props> = (data) => {
             dataLength={data.blog.length} //This is important field to render the next data
             next={data.fetchBlog}
             hasMore={data.hasBlog}
-            loader={<h1>Loading Blog ...</h1>}
+            loader={<></>}
             endMessage={<></>}
         >
             <ListGroup as="ul">

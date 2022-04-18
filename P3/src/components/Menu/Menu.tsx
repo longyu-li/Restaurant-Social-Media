@@ -39,7 +39,7 @@ const Menu: React.VFC<Props> = (data) => {
             dataLength={data.menu.length} //This is important field to render the next data
             next={data.fetchMenu}
             hasMore={data.hasMenu}
-            loader={<h1>Loading Menu ...</h1>}
+            loader={<></>}
             endMessage={<></>}
         ><ListGroup as="ol" numbered>
         {data.menu.map((item) => {
