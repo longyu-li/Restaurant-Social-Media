@@ -15,7 +15,7 @@ interface AuthContextType {
   signOut: () => void;
   user: User | null,
   setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
-  header: {"Authorization": string};
+  header: {"Authorization": string} | null;
 }
 
 
@@ -144,8 +144,12 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   const header = useMemo(() => {
-    return {
-      "Authorization": `Bearer ${tokens?.access}`
+    if (tokens) {
+      return {
+        "Authorization": `Bearer ${tokens?.access}`
+      }
+    } else {
+      return null;
     }
   }, [tokens]);
 

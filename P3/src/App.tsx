@@ -15,6 +15,7 @@ import Settings from "./pages/Settings";
 import Restaurant from "./pages/Restaurant/Restaurant"
 import Search from "./pages/Search";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Feed from './pages/Feed';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />}/>
             <Route path="search" element={<Search />} />
+            <Route path="feed" element={<Feed />} />
             <Route path="restaurant/:id/" element={<Restaurant />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="signin" element={<SignIn />} />
