@@ -12,6 +12,7 @@ django-extensions = "*"
 pyparsing = "*"
 pydot = "*"
 lorem = "*"
+faker = "*"
 
 [dev-packages]
 autoflake = "*"

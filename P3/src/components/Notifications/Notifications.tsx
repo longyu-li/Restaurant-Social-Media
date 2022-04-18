@@ -80,10 +80,17 @@ const Notifications: React.VFC<Props> = ({ show, setShow, nots }) => {
 
                     return <a key={n.id} href="#" className="list-group-item list-group-item-action">
                         <div className="d-flex align-items-center gap-3">
-                            <img src={img} style={{ width: "50px" }} className="avatar rounded-circle" />
+                            <img src={img} style={{ width: "50px", height: "50px", objectFit: "cover" }} className="avatar rounded-circle" />
                             <div className="d-flex flex-column flex-grow-1">
                                 <div className="d-flex w-100 justify-content-between">
-                                    <h6 style={{ margin: "0" }}>{msg}</h6>
+                                    <h6 style={{
+                                        margin: "0",
+                                        WebkitLineClamp: "3",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        display: "-webkit-box",
+                                        WebkitBoxOrient: "vertical"
+                                    }}>{msg}</h6>
                                     <small style={{
                                         flexShrink: "0",
                                         flexGrow: "0"
