@@ -48,7 +48,10 @@ const Images: React.VFC<Props> = (data) => {
         >
         <Row xs={1} md={4} className="g-4">
                 {data.images.map((item) => {
-                    return <Col key={item.id}><Card >
+                    return <Col key={item.id}><Card style={{
+                        borderColor: "black",
+                        borderRadius: "6px"
+                    }}>
                         <Card.Img variant="top" src={item.image}/>
                         <Card.Body>
                             <Card.Title>{item.title}</Card.Title>
