@@ -6,3 +6,7 @@
 .editMenu {
     margin-left: 10px;
 }
+
+.delete {
+    cursor: pointer;
+}

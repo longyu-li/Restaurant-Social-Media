@@ -66,6 +66,19 @@ const Blog: React.VFC<Props> = (data) => {
         }
     }
 
+    const deleteBlogPost = async(id: Number) => {
+        fetch(`/restaurants/blog/${id}`, {
+            method: "DELETE",
+            headers: {'Authorization': `Bearer ${access.access}`}
+        })
+            .then(res => {
+                    if (res.ok) {
+                        data.setBlog(data.blog.filter(item => item.id !== id));
+                    }
+                }
+            )
+    }
+
     return (
         <div className="d-grid gap-2">
             {(user !== null && data.restaurant.id === user.id) ?
@@ -93,7 +106,7 @@ const Blog: React.VFC<Props> = (data) => {
                                  <a id={styles.like} type="checkbox" onClick={() => toggleLike(item.id)}>
                                      {liked.get(item.id) ? <>❤</>: <>🤍</>}
                                  </a> {item.likes}
-                             </small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill>
+                             </small> {(user !== null && data.restaurant.id === user.id) ? <Badge bg="danger" pill onClick={() => deleteBlogPost(item.id)} className={styles.delete}>
                                  Delete
                             </Badge> : <></>}
                         </div>
