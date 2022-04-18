@@ -16,6 +16,7 @@ import Restaurant from "./pages/Restaurant/Restaurant"
 import Search from "./pages/Search";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Feed from './pages/Feed';
+import CreateRestaurant from "./pages/CreateRestaurant";
 
 function App() {
   return (
@@ -32,6 +33,11 @@ function App() {
             <Route path="settings" element={
               <ProtectedRoute>
                 <Settings />
+              </ProtectedRoute>
+            } />
+            <Route path="create-restaurant" element={
+              <ProtectedRoute>
+                <CreateRestaurant />
               </ProtectedRoute>
             } />
           </Route>
