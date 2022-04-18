@@ -55,8 +55,8 @@ const RestaurantBanner: React.VFC<Props> = ({ restaurant, setRestaurant }) => {
     const [editOpen, setEditOpen] = useState(false);
 
     return (
-        <Card style={{}} id={styles.bannerCard}>
-            <Card.Img variant="top" src={restaurant.banner} id={styles.banner} />
+        <Card style={{marginTop: "15px"}} id={styles.bannerCard}>
+            {/* <Card.Img variant="top" src={restaurant.banner} id={styles.banner} /> */}
             <Card.Body>
                 <div style={{
                     display: "flex",
