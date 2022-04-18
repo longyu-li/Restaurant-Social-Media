@@ -36,6 +36,10 @@ const Restaurant: React.VFC = () => {
 
     const [tab, setTab] = useState(query.get("tab") ?? "menu")
 
+    useEffect(() => {
+        document.title = `Restify - ${restaurant?.name}`;
+    }, [restaurant]);
+
     const fetchRst = () => {
         fetch(`/restaurants/${params.id}`)
             .then(res => {
