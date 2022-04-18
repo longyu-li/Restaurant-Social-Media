@@ -2,6 +2,7 @@ import React from "react";
 import {Button, ListGroup} from "react-bootstrap";
 import {Comment} from "../../responses/comment";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { timeSince } from "../..";
 
 interface Props {
     comments: Comment [];
@@ -9,7 +10,6 @@ interface Props {
     hasComment: boolean;
 }
 const Comments: React.VFC<Props> = (data) => {
-
     return (
         <div className="d-grid gap-2">
             <Button variant="dark" size="lg">
@@ -25,13 +25,13 @@ const Comments: React.VFC<Props> = (data) => {
             {data.comments.map((item) => {
                 return <ListGroup.Item
                     as="li" key={item.id}
-                    className="d-flex justify-content-between align-items-start dank"
+                    className="d-flex justify-content-between align-items-start gap-3"
                 >
                     <div className="ms-2 me-auto">
                         <div className="fw-bold">{item.owner.first_name}</div>
                         {item.content}
                     </div>
-                    {new Date(item.date).toLocaleString()}
+                    <span style={{flexShrink: "0"}}>{timeSince(new Date(item.date))}</span>
                 </ListGroup.Item>;
             })}  </ListGroup>
         </InfiniteScroll></div>);
