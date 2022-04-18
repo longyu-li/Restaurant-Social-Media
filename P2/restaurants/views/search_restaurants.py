@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView
-from restaurants.models import Restaurant, Tag
+from restaurants.models import MenuItem, Restaurant, Tag
 from restaurants.serializers import RestaurantSerializer
 from rest_framework.pagination import CursorPagination
 from rest_framework.exceptions import APIException
@@ -7,6 +7,7 @@ from http import HTTPStatus
 from django.db.models import Value
 from django.db.models.functions import Concat
 from django.db.models.aggregates import Count
+from django.db.models import Q
 
 
 class CursorSetPagination(CursorPagination):
@@ -32,7 +33,8 @@ class SearchRestaurantsView(ListAPIView):
         match kind:
             case "food":
                 tags = Tag.objects.filter(tag__icontains=search)
-                restaurants = [tag.restaurant.id for tag in tags]
+                mitems = MenuItem.objects.filter(Q(name__icontains=search) | Q(description__icontains=search))
+                restaurants = [x.restaurant.id for x in (tags + mitems)]
                 return Restaurant.objects.annotate(q_count=Count('follows')).order_by("q_count").filter(pk__in=restaurants)
             case "address":
                 return Restaurant.objects.annotate(q_count=Count('follows')).order_by("q_count").filter(address__icontains=search)
